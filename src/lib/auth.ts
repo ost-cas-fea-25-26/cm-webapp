@@ -1,12 +1,17 @@
 import { betterAuth } from "better-auth";
 import { nextCookies } from "better-auth/next-js";
 import { genericOAuth } from "better-auth/plugins";
-import Database from "better-sqlite3";
+import { createClient } from "@libsql/client";
 import { headers } from "next/headers";
 import { cache } from "react";
 
+const turso = createClient({
+  url: process.env.TURSO_DATABASE_URL ?? "",
+  authToken: process.env.TURSO_AUTH_TOKEN ?? "",
+});
+
 export const auth = betterAuth({
-  database: new Database("./sqlite.db"),
+  database: turso,
   plugins: [
     nextCookies(),
     genericOAuth({
