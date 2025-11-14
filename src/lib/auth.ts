@@ -14,8 +14,7 @@ export const auth = betterAuth({
         {
           providerId: "zitadel",
           clientId: process.env.ZITADEL_CLIENT_ID ?? "",
-          clientSecret: "",
-          // PKCE without client secret
+          clientSecret: "", // PKCE without client secret
           discoveryUrl:
             "https://cas-fee-adv-ed1ide.zitadel.cloud/.well-known/openid-configuration",
           scopes: [
@@ -29,6 +28,7 @@ export const auth = betterAuth({
       ],
     }),
   ],
+  secret: process.env.AUTH_SECRET ?? "this-is-very-secret",
 });
 
 export const getSession = cache(async () => {
