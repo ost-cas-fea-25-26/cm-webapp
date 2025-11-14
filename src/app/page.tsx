@@ -3,8 +3,7 @@ import { getSession } from "@/lib/auth";
 
 export default async function Home() {
   const session = await getSession();
-console.log(process.env.ZITADEL_PROJECT_ID);
-console.log(process.env.ZITADEL_CLIENT_ID);
+  
   return (
     <main>
       <h1>Hello In Mumble</h1>
