@@ -3,7 +3,7 @@ import { getSession } from "@/lib/auth";
 
 export default async function Home() {
   const session = await getSession();
-  
+
   return (
     <main>
       <h1>Hello In Mumble</h1>
@@ -13,9 +13,7 @@ export default async function Home() {
           <p>
             You are logged in as {session.user?.name} ({session.user?.email}).
           </p>
-          <div>
-            Logout
-          </div>
+          <div>Logout</div>
         </div>
       ) : (
         <div>
