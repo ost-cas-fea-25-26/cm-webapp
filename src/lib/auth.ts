@@ -7,7 +7,7 @@ import { Pool } from "pg";
 
 export const auth = betterAuth({
   database: new Pool({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: process.env.MUMBLE_DATABASE_URL,
   }),
   plugins: [
     nextCookies(),

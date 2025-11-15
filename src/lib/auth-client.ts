@@ -13,6 +13,7 @@ console.warn(process.env.VERCEL_URL);
 console.warn(process.env.VERCEL_BRANCH_URL);
 console.warn(process.env.NEXT_PUBLIC_VERCEL_URL);
 console.warn(process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL);
+console.warn(process.env.NEXT_PUBLIC_MUMBLE_DATABASE_URL);
 
 export const { signIn, signOut, useSession } = authClient;
 
