@@ -12,6 +12,7 @@ export const authClient = createAuthClient({
 
 console.warn(process.env.VERCEL_URL);
 console.warn(process.env.VERCEL_BRANCH_URL);
+console.warn(process.env.NEXT_PUBLIC_VERCEL_URL);
 
 export const { signIn, signOut, useSession } = authClient;
 
