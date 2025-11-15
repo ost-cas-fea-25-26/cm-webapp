@@ -6,8 +6,8 @@ import { headers } from "next/headers";
 import { cache } from "react";
 
 const turso = createClient({
-  url: process.env.TURSO_DATABASE_URL ?? "",
-  authToken: process.env.TURSO_AUTH_TOKEN ?? "",
+  url: process.env.STORAGE_TURSO_DATABASE_URL ?? "",
+  authToken: process.env.STORAGE_TURSO_AUTH_TOKEN ?? "",
 });
 
 export const auth = betterAuth({
