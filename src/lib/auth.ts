@@ -5,11 +5,6 @@ import { headers } from "next/headers";
 import { cache } from "react";
 import { Pool } from "pg";
 
-// const turso = createClient({
-//   url: process.env.STORAGE_TURSO_DATABASE_URL ?? "",
-//   authToken: process.env.STORAGE_TURSO_AUTH_TOKEN ?? "",
-// });
-
 export const auth = betterAuth({
   database: new Pool({
     connectionString: process.env.DATABASE_URL,

@@ -3,7 +3,7 @@ import { getSession } from "@/lib/auth";
 
 export default async function Home() {
   const session = await getSession();
-  console.log(process.env.VERCEL_URL);
+  
   return (
     <main>
       <h1>Hello In Mumble</h1>

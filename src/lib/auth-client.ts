@@ -3,7 +3,9 @@ import { genericOAuthClient } from "better-auth/client/plugins";
 
 export const authClient = createAuthClient({
   /** The base URL of the server (optional if you're using the same domain) */
-  baseURL: process.env.VERCEL_URL ?? "http://localhost:3000",
+  baseURL: process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "http://localhost:3000",
   plugins: [genericOAuthClient()],
 });
 
