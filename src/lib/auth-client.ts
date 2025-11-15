@@ -6,7 +6,7 @@ export const authClient = createAuthClient({
   baseURL:
     (process.env.VERCEL_URL ?? process.env.VERCEL_BRANCH_URL)
       ? `https://${process.env.VERCEL_URL}`
-      : "http://localhost:3000",
+      : "https://cm-webapp-git-feature-citurso-matej-mrnjecs-projects.vercel.app/",
   plugins: [genericOAuthClient()],
 });
 
