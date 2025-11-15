@@ -1,7 +1,6 @@
 import { betterAuth } from "better-auth";
 import { nextCookies } from "better-auth/next-js";
 import { genericOAuth } from "better-auth/plugins";
-import { createClient } from "@libsql/client";
 import { headers } from "next/headers";
 import { cache } from "react";
 import { Pool } from "pg";
