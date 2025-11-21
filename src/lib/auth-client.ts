@@ -1,17 +1,21 @@
 import { createAuthClient } from "better-auth/react";
 import { genericOAuthClient } from "better-auth/client/plugins";
 
-export const authClient = createAuthClient({
-  /** The base URL of the server (optional if you're using the same domain) */
-  baseURL: process.env.PUBLIC_URL ?? "http://localhost:3000",
-  plugins: [genericOAuthClient()],
-});
-
-export const { signIn, signOut, useSession } = authClient;
+export const getAuthClient = () =>
+  createAuthClient({
+    baseURL: window.location.origin,
+    plugins: [genericOAuthClient()],
+  });
 
 export const signinZitadel = async () => {
-  await signIn.oauth2({
-    providerId: "zitadel",
-    callbackURL: "/",
-  });
+  const { signIn } = getAuthClient();
+  try {
+    await signIn.oauth2({
+      providerId: "zitadel",
+      callbackURL: "/",
+    });
+  } catch (error) {
+    console.error("Zitadel sign-in error:", error);
+    throw error;
+  }
 };

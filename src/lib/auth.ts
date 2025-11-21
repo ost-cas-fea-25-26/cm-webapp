@@ -1,12 +1,14 @@
 import { betterAuth } from "better-auth";
 import { nextCookies } from "better-auth/next-js";
 import { genericOAuth } from "better-auth/plugins";
-import Database from "better-sqlite3";
 import { headers } from "next/headers";
 import { cache } from "react";
+import { Pool } from "pg";
 
 export const auth = betterAuth({
-  database: new Database("./sqlite.db"),
+  database: new Pool({
+    connectionString: process.env.MUMBLE_DATABASE_URL,
+  }),
   plugins: [
     nextCookies(),
     genericOAuth({

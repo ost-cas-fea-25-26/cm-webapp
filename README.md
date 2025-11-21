@@ -34,3 +34,21 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Authentication
+
+To run the authentication system locally, a PostgreSQL database is required.
+
+Start the database using the Docker Compose file provided in the project root:
+
+```bash
+docker-compose up -d
+```
+
+Initialize the database schema for Better Auth by running:
+
+```bash
+npx @better-auth/cli migrate
+```
+
+This will create all the necessary tables and structures that Better Auth needs to function correctly.
