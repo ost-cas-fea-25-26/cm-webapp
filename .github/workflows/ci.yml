@@ -36,6 +36,9 @@ jobs:
       - name: Run TypeScript compiler
         run: npm run typecheck
 
+      - name: Run Knip
+        run: npm run knip
+
   build:
     name: Build
     runs-on: ubuntu-latest
