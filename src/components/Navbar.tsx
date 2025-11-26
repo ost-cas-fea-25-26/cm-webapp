@@ -1,22 +1,16 @@
 "use client";
 
-import Link from "next/link";
-
 const Navbar = () => {
   return (
     <nav
-      className="fixed top-0 left-0 z-50 flex w-full items-center bg-violet-600 px-8 py-3"
+      className="fixed top-0 left-1/2 -translate-x-1/2 z-50 bg-violet-600 w-full max-w-[60ch] h-20 flex items-center justify-between px-4"
       style={{ height: "80px" }}
     >
-      <div className="flex w-full items-center justify-between gap-2  text-white">
-        {/* Left: Logo */}
-        <div>Logo here</div>
-        {/* Right: User Actions */}
-        <div className="flex items-center gap-4 text-white">
-          <div className="text-sm">Person goes here</div>
-          <button className="text-sm hover:opacity-80">Settings</button>
-          <button className="text-sm hover:opacity-80">Log Out</button>
-        </div>
+      <div className="text-white font-semibold text-lg">Logo here</div>
+      <div className="flex items-center gap-4 text-white">
+        <div className="text-sm">Person goes here</div>
+        <button className="text-sm bg-transparent">Settings</button>
+        <button className="text-sm bg-transparent">Log Out</button>
       </div>
     </nav>
   );
