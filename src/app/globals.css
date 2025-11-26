@@ -1,0 +1,25 @@
+.layout-wrapper {
+  display: grid;
+  grid-template-columns: 1fr minmax(auto, 60ch) 1fr; /* links – content – rechts */
+  background-color: var(--color-slate-100);
+  min-height: 100vh;
+}
+
+/* Content mittig unter Navbar */
+.layout-wrapper main {
+  grid-column: 2; /* mittlere Spalte */
+  padding-top: calc(
+    var(--spacing) * 20
+  ); /* Höhe Navbar 80px = 20 * 4px spacing */
+  padding-left: calc(var(--spacing) * 4);
+  padding-right: calc(var(--spacing) * 4);
+}
+
+/* Navbar Styling */
+.layout-wrapper nav {
+  grid-column: 1 / -1;
+  grid-column: 2; /* mittlere Spalte */
+
+  padding-left: calc(var(--spacing) * 4);
+  padding-right: calc(var(--spacing) * 4);
+}
