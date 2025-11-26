@@ -1,7 +1,11 @@
+"use client";
 import Link from "next/link";
 const Navbar = () => {
   return (
-    <nav className="fixed top-0 left-0 z-50 flex h-20 w-full items-center bg-violet-600 px-8 py-3">
+    <nav
+      className="fixed top-0 left-0 z-50 flex w-full items-center bg-violet-600 px-8 py-3"
+      style={{ height: "80px" }}
+    >
       <div className="flex w-full items-center justify-between gap-2">
         {/* Left: Logo */}
         <Link
@@ -21,4 +25,5 @@ const Navbar = () => {
     </nav>
   );
 };
+
 export default Navbar;
