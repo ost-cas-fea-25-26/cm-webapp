@@ -1,20 +1,16 @@
 "use client";
+
 import Link from "next/link";
+
 const Navbar = () => {
   return (
     <nav
       className="fixed top-0 left-0 z-50 flex w-full items-center bg-violet-600 px-8 py-3"
       style={{ height: "80px" }}
     >
-      <div className="flex w-full items-center justify-between gap-2">
+      <div className="flex w-full items-center justify-between gap-2  text-white">
         {/* Left: Logo */}
-        <Link
-          href="/"
-          className="text-xl font-semibold tracking-tight text-white"
-        >
-          Mumble
-        </Link>
-
+        <div>Logo here</div>
         {/* Right: User Actions */}
         <div className="flex items-center gap-4 text-white">
           <div className="text-sm">Person goes here</div>
