@@ -1,7 +1,6 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
-import "@krrli/cm-designsystem/dist/cm-designsystem.css";
-import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,10 +14,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-slate-100">
-        <div className="layout-wrapper">
+      <body className="bg-slate-100 min-h-screen">
+        <div className="grid grid-cols-[1fr_minmax(auto,60ch)_1fr] min-h-screen">
           <Navbar />
-          <main>{children}</main>
+
+          <main className="col-start-2 col-end-3 pt-20 px-4">{children}</main>
         </div>
       </body>
     </html>
