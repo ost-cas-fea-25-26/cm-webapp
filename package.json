@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "preflight": "npm run prettier && npm run lint && npm run typecheck && npm run build",
+    "preflight": "npm run prettier && npm run lint && npm run typecheck && npm run build && npm run knip",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
