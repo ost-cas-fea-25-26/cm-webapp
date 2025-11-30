@@ -6,12 +6,7 @@ First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -34,3 +29,41 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Authentication
+
+To run the authentication system locally, a PostgreSQL database is required.
+
+Start the database using the Docker Compose file provided in the project root:
+
+```bash
+docker-compose up -d
+```
+
+Initialize the database schema for Better Auth by running:
+
+```bash
+npx @better-auth/cli migrate
+```
+
+This will create all the necessary tables and structures that Better Auth needs to function correctly.
+
+---
+
+## EditorConfig & VS Code Settings
+
+This project uses a strict `.editorconfig` to ensure consistent code style across all editors and platforms. Most formatting rules (indentation, line endings, trailing whitespace, etc.) are enforced automatically if you have the [EditorConfig extension](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) installed in VS Code.
+
+Additionally, the repository includes a `.vscode/settings.json` file to avoid conflicts between VS Code's built-in formatting and EditorConfig:
+
+```json
+{
+  "editor.formatOnSave": true,
+  "files.trimTrailingWhitespace": false,
+  "files.insertFinalNewline": false,
+  "files.eol": "\n"
+}
+```
+
+- No further VS Code settings are required—just make sure the EditorConfig extension is enabled.
+- These settings ensure that formatting is always consistent, regardless of individual developer/editor preferences.
