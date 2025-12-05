@@ -22,7 +22,7 @@ const navbarStyles = tv({
       "justify-center",
     ],
     navigation: ["flex", "justify-between", "max-w-170", "w-170"],
-    action: ["flex", "gap-4"],
+    action: ["flex", "gap-4", "items-center"],
   },
 });
 
