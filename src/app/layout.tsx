@@ -17,7 +17,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className="bg-slate-100 min-h-screen">
+      <body className="min-h-screen bg-slate-100">
         <Navbar isLoggedIn={!!session?.user} />
         <main>{children}</main>
       </body>
