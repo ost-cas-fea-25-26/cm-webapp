@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 import { cache } from "react";
 import { Pool } from "pg";
 
-export const auth = betterAuth({
+export const authServer = betterAuth({
   database: new Pool({
     connectionString: process.env.MUMBLE_DATABASE_URL,
   }),
@@ -33,8 +33,15 @@ export const auth = betterAuth({
   secret: process.env.AUTH_SECRET ?? "this-is-very-secret",
 });
 
-export const getSession = cache(async () => {
-  return await auth.api.getSession({
-    headers: await headers(),
-  });
+const getAuthUser = cache(async () => {
+  return (
+    await authServer.api.getSession({
+      headers: await headers(),
+    })
+  )?.user;
+});
+
+export const isAuthenticated = cache(async () => {
+  const user = await getAuthUser();
+  return !!user;
 });
