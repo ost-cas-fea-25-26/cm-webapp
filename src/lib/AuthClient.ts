@@ -31,3 +31,8 @@ export const logout = async (
     throw error;
   }
 };
+
+export const getAuthUser = async () => {
+  const { getSession } = getAuthClient();
+  return (await getSession()).data?.user;
+};
