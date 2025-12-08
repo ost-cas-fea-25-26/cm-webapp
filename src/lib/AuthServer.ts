@@ -33,7 +33,7 @@ export const authServer = betterAuth({
   secret: process.env.AUTH_SECRET ?? "this-is-very-secret",
 });
 
-export const getAuthUser = cache(async () => {
+const getAuthUser = cache(async () => {
   return (
     await authServer.api.getSession({
       headers: await headers(),
