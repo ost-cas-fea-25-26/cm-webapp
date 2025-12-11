@@ -1,10 +1,9 @@
-"use client";
-
 import { tv, VariantProps } from "tailwind-variants";
 import LogoutButton from "./LogoutButton";
 import { Avatar, LogoLink } from "@krrli/cm-designsystem";
 import SettingsButton from "./SettingsButton";
 import { redirect } from "next/navigation";
+import ProfileAvatar from "./ProfileAvatar";
 
 const navbarStyles = tv({
   slots: {
@@ -35,12 +34,7 @@ const Navbar = (props: NavbarProps) => {
       <nav className={navigation()}>
         <LogoLink />
         <div className={action()}>
-          <Avatar
-            alt="Avatar image of your account"
-            size="sm"
-            src=""
-            onAvatarClick={() => redirect("/profile")}
-          ></Avatar>
+          <ProfileAvatar />
 
           <SettingsButton />
 

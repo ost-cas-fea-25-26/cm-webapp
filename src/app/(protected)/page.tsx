@@ -2,6 +2,8 @@ import { getPosts } from "@/actions/post.action";
 import PostFeed from "@/components/PostFeed";
 import PostPublisher from "@/components/PostPublisher";
 import WelcomeSection from "@/components/WelcomeSection";
+import { Paragraph } from "@krrli/cm-designsystem";
+import { Suspense } from "react";
 import { tv } from "tailwind-variants";
 
 const timelineStyles = tv({
@@ -19,7 +21,9 @@ export default async function TimelinePage() {
       <WelcomeSection />
       <div className={timeline()}>
         <PostPublisher />
-        <PostFeed posts={await getPosts()} />
+        <Suspense fallback={<Paragraph size="lg">Loading Posts...</Paragraph>}>
+          <PostFeed posts={await getPosts()} />
+        </Suspense>
       </div>
     </div>
   );

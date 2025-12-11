@@ -2,7 +2,6 @@ import { betterAuth } from "better-auth";
 import { nextCookies } from "better-auth/next-js";
 import { genericOAuth } from "better-auth/plugins";
 import { headers } from "next/headers";
-import { cache } from "react";
 import { Pool } from "pg";
 
 const PROVIDER_ID = "zitadel";
@@ -36,18 +35,18 @@ export class AuthServer {
     secret: process.env.AUTH_SECRET ?? "this-is-very-secret",
   });
 
-  public getAuthUser = cache(async () => {
+  public getAuthUser = async () => {
     return (
       await this.server.api.getSession({
         headers: await headers(),
       })
     )?.user;
-  });
+  };
 
-  public isAuthenticated = cache(async () => {
+  public isAuthenticated = async () => {
     const user = await this.getAuthUser();
     return !!user;
-  });
+  };
 
   public getAccessToken = async () => {
     return await this.server.api.getAccessToken({

@@ -1,3 +1,5 @@
+"use cache";
+
 import { Heading } from "@krrli/cm-designsystem";
 import { tv } from "tailwind-variants";
 
@@ -9,7 +11,7 @@ const welcomeSectionStyles = tv({
   },
 });
 
-const WelcomeSection = () => {
+const WelcomeSection = async () => {
   const { base, title, subtitle } = welcomeSectionStyles();
   return (
     <div className={base()}>
