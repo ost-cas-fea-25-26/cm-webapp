@@ -1,7 +1,7 @@
+import { getPosts } from "@/actions/post.action";
 import PostFeed from "@/components/PostFeed";
 import PostPublisher from "@/components/PostPublisher";
 import WelcomeSection from "@/components/WelcomeSection";
-import { apiClient } from "@/lib/ApiClient";
 import { tv } from "tailwind-variants";
 
 const timelineStyles = tv({
@@ -11,8 +11,6 @@ const timelineStyles = tv({
   },
 });
 
-const posts = (await apiClient.GET("/posts", {})).data?.data ?? [];
-
 export default async function TimelinePage() {
   const { base, timeline } = timelineStyles();
 
@@ -21,7 +19,7 @@ export default async function TimelinePage() {
       <WelcomeSection />
       <div className={timeline()}>
         <PostPublisher />
-        <PostFeed posts={posts} />
+        <PostFeed posts={await getPosts()} />
       </div>
     </div>
   );

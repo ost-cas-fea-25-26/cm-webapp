@@ -1,10 +1,10 @@
 "use client";
 
-import { components } from "@/types/api";
-import { Post } from "@krrli/cm-designsystem";
+import { Post as PostComponent } from "@krrli/cm-designsystem";
 import { redirect } from "next/navigation";
 import { tv } from "tailwind-variants";
 import { decodeTime } from "ulid";
+import { Post } from "../lib/api/posts/post.types";
 
 const postFeedStyles = tv({
   slots: {
@@ -13,7 +13,7 @@ const postFeedStyles = tv({
 });
 
 interface PostFeedProps {
-  posts: components["schemas"]["Post"][];
+  posts: Post[];
 }
 
 const PostFeed = (props: PostFeedProps) => {
@@ -22,8 +22,9 @@ const PostFeed = (props: PostFeedProps) => {
 
   return (
     <div className={base()}>
-      {props.posts.map((post) => (
-        <Post
+      {props.posts.map((post, index) => (
+        <PostComponent
+          key={index}
           size="md"
           displayName={post.creator?.displayName ?? ""}
           userName={post.creator?.username ?? ""}
@@ -36,7 +37,7 @@ const PostFeed = (props: PostFeedProps) => {
           onCommentClick={() => {}}
           onLikeClick={() => {}}
           onShareClick={() => {}}
-        ></Post>
+        ></PostComponent>
       ))}
     </div>
   );

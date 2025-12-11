@@ -1,4 +1,4 @@
-import { isAuthenticated } from "@/lib/AuthServer";
+import { AuthServer } from "@/lib/auth/server";
 import { redirect } from "next/navigation";
 
 type AuthGuardProps = {
@@ -6,7 +6,8 @@ type AuthGuardProps = {
 };
 
 export const AuthGuard = async ({ children }: AuthGuardProps) => {
-  if (!(await isAuthenticated())) {
+  const authServer = new AuthServer();
+  if (!(await authServer.isAuthenticated())) {
     redirect("/login");
   }
 
