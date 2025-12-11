@@ -32,7 +32,7 @@ export class AuthServer {
         ],
       }),
     ],
-    secret: process.env.AUTH_SECRET ?? "this-is-very-secret",
+    secret: process.env.AUTH_SECRET ?? "85182440605849447020734502505897",
   });
 
   public getAuthUser = async () => {
