@@ -5,6 +5,8 @@ import { headers } from "next/headers";
 import { cache } from "react";
 import { Pool } from "pg";
 
+const PROVIDER_ID = "zitadel";
+
 export const authServer = betterAuth({
   database: new Pool({
     connectionString: process.env.MUMBLE_DATABASE_URL,
@@ -14,7 +16,7 @@ export const authServer = betterAuth({
     genericOAuth({
       config: [
         {
-          providerId: "zitadel",
+          providerId: PROVIDER_ID,
           clientId: process.env.ZITADEL_CLIENT_ID ?? "",
           clientSecret: "", // PKCE without client secret
           discoveryUrl:
@@ -45,3 +47,12 @@ export const isAuthenticated = cache(async () => {
   const user = await getAuthUser();
   return !!user;
 });
+
+export const getAccessToken = async () => {
+  return await authServer.api.getAccessToken({
+    headers: await headers(),
+    body: {
+      providerId: PROVIDER_ID,
+    },
+  });
+};
