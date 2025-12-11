@@ -7,7 +7,7 @@ export class ApiClient {
   public readonly client: Client<paths, `${string}/${string}`>;
   private readonly authServer = new AuthServer();
 
-  constructor(baseUrl: string) {
+  constructor(baseUrl: string = "http://localhost:3000") {
     this.client = createClient<paths>({
       baseUrl,
     });

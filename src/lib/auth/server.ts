@@ -1,6 +1,6 @@
 import { betterAuth } from "better-auth";
 import { nextCookies } from "better-auth/next-js";
-import { genericOAuth } from "better-auth/plugins";
+import { customSession, genericOAuth } from "better-auth/plugins";
 import { headers } from "next/headers";
 import { Pool } from "pg";
 
@@ -8,9 +8,16 @@ const PROVIDER_ID = "zitadel";
 
 export class AuthServer {
   public readonly server = betterAuth({
-    database: new Pool({
-      connectionString: process.env.MUMBLE_DATABASE_URL,
-    }),
+    user: {
+      additionalFields: {
+        identifier: {
+          type: "string",
+          required: false,
+          defaultValue: "",
+          input: false,
+        },
+      },
+    },
     plugins: [
       nextCookies(),
       genericOAuth({
@@ -28,6 +35,12 @@ export class AuthServer {
               `urn:zitadel:iam:org:project:id:${process.env.ZITADEL_PROJECT_ID}:aud`,
             ],
             pkce: true,
+            mapProfileToUser: (profile) => {
+              return {
+                identifier: profile.sub,
+                email: profile.email,
+              };
+            },
           },
         ],
       }),

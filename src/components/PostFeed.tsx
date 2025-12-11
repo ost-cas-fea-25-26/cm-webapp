@@ -1,11 +1,13 @@
 "use client";
 
 import { components } from "@/lib/api/api";
-import { Post as PostComponent } from "@krrli/cm-designsystem";
+import { Paragraph, Post as PostComponent } from "@krrli/cm-designsystem";
 import { redirect } from "next/navigation";
 import { tv } from "tailwind-variants";
 import { decodeTime } from "ulid";
 import { Post } from "../lib/api/posts/post.types";
+import { useEffect, useState } from "react";
+import { getPostsAction } from "@/actions/post.action";
 
 const postFeedStyles = tv({
   slots: {
@@ -13,17 +15,29 @@ const postFeedStyles = tv({
   },
 });
 
-interface PostFeedProps {
-  posts: Post[];
-}
-
-const PostFeed = (props: PostFeedProps) => {
+const PostFeed = () => {
   const { base } = postFeedStyles();
   const goToProfilePage = () => redirect("/profile");
 
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadPosts = async () => {
+      const mumblePosts = await getPostsAction();
+      setPosts(mumblePosts);
+      setLoading(false);
+    };
+    loadPosts();
+  }, []);
+
+  if (loading) {
+    return <Paragraph size="lg">Loading posts...</Paragraph>;
+  }
+
   return (
     <div className={base()}>
-      {props.posts.map((post, index) => (
+      {posts.map((post, index) => (
         <PostComponent
           key={index}
           size="md"

@@ -1,8 +1,11 @@
+import { getUserAction } from "@/actions/user.action";
 import LogoutButton from "@/components/LogoutButton";
 import Navbar from "@/components/Navbar";
 import ProfileAvatar from "@/components/ProfileAvatar";
 import SettingsButton from "@/components/SettingsButton";
 import { AuthGuard } from "@/guards/AuthGuard";
+import { ApiClient } from "@/lib/api/client";
+import { AuthServer } from "@/lib/auth/server";
 import { Paragraph } from "@krrli/cm-designsystem";
 import { Suspense } from "react";
 import { tv } from "tailwind-variants";
