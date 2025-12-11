@@ -12,6 +12,9 @@ const navbarStyles = tv({
       "flex",
       "items-center",
       "justify-center",
+      "sticky",
+      "top-0",
+      "z-50",
     ],
     navigation: ["flex", "justify-between", "max-w-170", "w-170"],
     action: ["flex", "gap-4", "items-center"],
@@ -28,12 +31,12 @@ const Navbar = async (props: NavbarProps) => {
   const { base, navigation, action } = navbarStyles();
 
   return (
-    <div className={base()}>
+    <header className={base()}>
       <nav className={navigation()}>
         <LogoLink />
         <div className={action()}>{props.children}</div>
       </nav>
-    </div>
+    </header>
   );
 };
 
