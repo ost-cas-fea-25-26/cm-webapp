@@ -10,7 +10,6 @@ export const getAuthHeaders = async (): Promise<{
   Authorization: string;
 }> => {
   const result = await getAccessToken();
-  console.log(result);
   const headers = { Authorization: "" };
 
   if (result?.accessToken) {

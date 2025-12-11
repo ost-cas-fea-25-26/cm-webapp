@@ -26,6 +26,7 @@ export const authServer = betterAuth({
             "profile",
             "email",
             `urn:zitadel:iam:org:project:id:${process.env.ZITADEL_PROJECT_ID}:aud`,
+            "urn:zitadel:iam:org:project:id:348701753820117818:aud"
           ],
           pkce: true,
         },

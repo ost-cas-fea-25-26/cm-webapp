@@ -30,6 +30,8 @@ const PostFeed = (props: PostFeedProps) => {
           timestamp={new Date(decodeTime(post.id ?? ""))}
           text={post.text ?? ""}
           src={post.creator?.avatarUrl ?? ""}
+          imageSrc={post.mediaUrl ?? ""}
+          imageAlt=""
           onAvatarClick={goToProfilePage}
           onCommentClick={() => {}}
           onLikeClick={() => {}}
