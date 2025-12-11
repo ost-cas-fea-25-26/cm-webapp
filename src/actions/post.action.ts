@@ -7,11 +7,11 @@ import { Post } from "@/lib/api/posts/post.types";
 const apiClient = new ApiClient(process.env.NEXT_PUBLIC_MUMBLE_API_URL ?? "");
 const postApiClient = new PostApi(apiClient);
 
-export const getPosts = async (): Promise<Post[]> => {
+export const getPostsAction = async (): Promise<Post[]> => {
   return (await postApiClient.get()).data?.data ?? [];
 };
 
-export const createPost = async (
+export const createPostAction = async (
   text: string,
   file?: File
 ): Promise<Post | undefined> => {

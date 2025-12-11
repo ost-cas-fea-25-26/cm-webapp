@@ -1,9 +1,7 @@
+"use cache";
+
 import { tv, VariantProps } from "tailwind-variants";
-import LogoutButton from "./LogoutButton";
-import { Avatar, LogoLink } from "@krrli/cm-designsystem";
-import SettingsButton from "./SettingsButton";
-import { redirect } from "next/navigation";
-import ProfileAvatar from "./ProfileAvatar";
+import { LogoLink } from "@krrli/cm-designsystem";
 
 const navbarStyles = tv({
   slots: {
@@ -23,23 +21,17 @@ const navbarStyles = tv({
 type NavbarVariants = VariantProps<typeof navbarStyles>;
 
 interface NavbarProps extends NavbarVariants {
-  /** URL of the user's avatar image. */
-  src?: string;
+  children: React.ReactElement | React.ReactElement[];
 }
 
-const Navbar = (props: NavbarProps) => {
+const Navbar = async (props: NavbarProps) => {
   const { base, navigation, action } = navbarStyles();
+
   return (
     <div className={base()}>
       <nav className={navigation()}>
         <LogoLink />
-        <div className={action()}>
-          <ProfileAvatar />
-
-          <SettingsButton />
-
-          <LogoutButton />
-        </div>
+        <div className={action()}>{props.children}</div>
       </nav>
     </div>
   );

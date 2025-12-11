@@ -1,6 +1,6 @@
 "use client";
 
-import { createPost } from "@/actions/post.action";
+import { createPostAction } from "@/actions/post.action";
 import { PostCreator } from "@krrli/cm-designsystem";
 import { redirect } from "next/navigation";
 
@@ -12,7 +12,7 @@ const PostPublisher = () => {
       src={""}
       onAvatarClick={goToProfilePage}
       onSendClick={async (text, file) =>
-        await createPost(text, file ?? undefined)
+        await createPostAction(text, file ?? undefined)
       }
     ></PostCreator>
   );

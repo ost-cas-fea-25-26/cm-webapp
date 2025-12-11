@@ -1,5 +1,6 @@
 "use client";
 
+import { components } from "@/lib/api/api";
 import { Post as PostComponent } from "@krrli/cm-designsystem";
 import { redirect } from "next/navigation";
 import { tv } from "tailwind-variants";

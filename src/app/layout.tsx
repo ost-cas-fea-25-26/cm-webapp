@@ -2,6 +2,8 @@ import { AuthGuard } from "@/guards/AuthGuard";
 import "./globals.css";
 import type { Metadata } from "next";
 import { tv } from "tailwind-variants";
+import Navbar from "@/components/Navbar";
+import { AuthServer } from "@/lib/auth/server";
 
 export const metadata: Metadata = {
   title: "Mumble App",
@@ -10,7 +12,7 @@ export const metadata: Metadata = {
 
 const rootLayoutStyles = tv({
   slots: {
-    base: ["min-h-screen", "bg-slate-100"],
+    base: ["min-h-screen", "bg-slate-100", "flex", "flex-col", "items-center"],
   },
 });
 
@@ -23,9 +25,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={base()}>
-        <main>{children}</main>
-      </body>
+      <body className={base()}>{children}</body>
     </html>
   );
 }

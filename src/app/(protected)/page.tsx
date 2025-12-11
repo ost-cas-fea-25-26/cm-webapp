@@ -1,5 +1,6 @@
-import { getPosts } from "@/actions/post.action";
+import { getPostsAction } from "@/actions/post.action";
 import PostFeed from "@/components/PostFeed";
+import PostFeedLoader from "@/components/PostFeedLoader";
 import PostPublisher from "@/components/PostPublisher";
 import WelcomeSection from "@/components/WelcomeSection";
 import { Paragraph } from "@krrli/cm-designsystem";
@@ -22,7 +23,7 @@ export default async function TimelinePage() {
       <div className={timeline()}>
         <PostPublisher />
         <Suspense fallback={<Paragraph size="lg">Loading Posts...</Paragraph>}>
-          <PostFeed posts={await getPosts()} />
+          <PostFeedLoader />
         </Suspense>
       </div>
     </div>
