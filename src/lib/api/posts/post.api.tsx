@@ -1,0 +1,35 @@
+import { ApiClient } from "../client";
+import { ApiResponse } from "../client.types";
+import { PagedPosts, Post } from "./post.types";
+
+export class PostApi {
+  private apiClient: ApiClient;
+
+  constructor(client: ApiClient) {
+    this.apiClient = client;
+  }
+
+  public async get(): Promise<ApiResponse<PagedPosts>> {
+    const response = await this.apiClient.client.GET("/posts", {});
+    return this.apiClient.handleResponse(response);
+  }
+
+  public async create(text: string, file?: File): Promise<ApiResponse<Post>> {
+    const form = new FormData();
+    form.append("text", text);
+    form.append("media", file ?? "");
+    const response = await this.apiClient.client.POST("/posts", {
+      headers: await this.apiClient.getAuthHeaders(),
+      body: form as any,
+    });
+    return this.apiClient.handleResponse(response);
+  }
+
+  public async like(id: string): Promise<ApiResponse<void>> {
+    const response = await this.apiClient.client.PUT("/posts/{id}/likes", {
+      headers: await this.apiClient.getAuthHeaders(),
+      params: { path: { id } },
+    });
+    return this.apiClient.handleResponse(response);
+  }
+}
