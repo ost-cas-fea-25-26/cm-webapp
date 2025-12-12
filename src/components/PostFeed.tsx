@@ -7,7 +7,7 @@ import { tv } from "tailwind-variants";
 import { decodeTime } from "ulid";
 import { Post } from "../lib/api/posts/post.types";
 import { useEffect, useState } from "react";
-import { getPostsAction } from "@/actions/post.action";
+import { getPostsAction, likePostAction } from "@/actions/post.action";
 
 const postFeedStyles = tv({
   slots: {
@@ -50,7 +50,9 @@ const PostFeed = () => {
           imageAlt=""
           onAvatarClick={goToProfilePage}
           onCommentClick={() => {}}
-          onLikeClick={() => {}}
+          onLikeClick={async () => {
+            await likePostAction(post.id ?? "");
+          }}
           onShareClick={() => {}}
         ></PostComponent>
       ))}

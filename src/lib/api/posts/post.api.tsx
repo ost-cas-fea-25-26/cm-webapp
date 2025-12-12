@@ -3,7 +3,6 @@ import { ApiResponse } from "../client.types";
 import { PagedPosts, Post } from "./post.types";
 
 export class PostApi {
-  private resource: "/posts" = "/posts";
   private apiClient: ApiClient;
 
   constructor(client: ApiClient) {
@@ -11,7 +10,7 @@ export class PostApi {
   }
 
   public async get(): Promise<ApiResponse<PagedPosts>> {
-    const response = await this.apiClient.client.GET(this.resource, {});
+    const response = await this.apiClient.client.GET("/posts", {});
     return this.apiClient.handleResponse(response);
   }
 
@@ -22,6 +21,14 @@ export class PostApi {
     const response = await this.apiClient.client.POST("/posts", {
       headers: await this.apiClient.getAuthHeaders(),
       body: form as any,
+    });
+    return this.apiClient.handleResponse(response);
+  }
+
+  public async like(id: string): Promise<ApiResponse<void>> {
+    const response = await this.apiClient.client.PUT("/posts/{id}/likes", {
+      headers: await this.apiClient.getAuthHeaders(),
+      params: { path: { id } },
     });
     return this.apiClient.handleResponse(response);
   }

@@ -17,3 +17,7 @@ export const createPostAction = async (
 ): Promise<Post | undefined> => {
   return (await postApiClient.create(text, file)).data;
 };
+
+export const likePostAction = async (id: string) => {
+  return await postApiClient.like(id);
+};
