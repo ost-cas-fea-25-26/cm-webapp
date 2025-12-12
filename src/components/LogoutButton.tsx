@@ -1,6 +1,6 @@
 "use client";
 
-import { logout } from "@/lib/AuthClient";
+import { AuthClient } from "@/lib/auth/client";
 import { LogOut, NaviButton } from "@krrli/cm-designsystem";
 import { tv } from "tailwind-variants";
 
@@ -17,13 +17,15 @@ const logoutButtonStyles = tv({
 
 const LogoutButton = () => {
   const { base, icon } = logoutButtonStyles();
+  const authClient = new AuthClient();
+
   return (
     <NaviButton
       className={base()}
       icon={LogOut}
       iconClassName={icon()}
       intent="secondary"
-      onClick={logout}
+      onClick={() => authClient.logout()}
     >
       Log out
     </NaviButton>

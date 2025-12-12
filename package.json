@@ -12,16 +12,19 @@
     "typecheck": "npx tsc -b --noEmit",
     "prettier": "prettier . --write",
     "prettier:check": "prettier . --check",
-    "knip": "knip"
+    "knip": "knip",
+    "types:generate": "npx openapi-typescript https://mumble-api-prod-714602723919.europe-west6.run.app/swagger/v1/swagger.json -o src/types/api.d.ts"
   },
   "dependencies": {
     "@krrli/cm-designsystem": "1.32.3",
     "better-auth": "1.4.5",
+    "openapi-fetch": "^0.15.0",
     "next": "16.0.10",
     "pg": "8.16.3",
     "react": "19.2.1",
     "react-dom": "19.2.1",
-    "tailwind-variants": "3.2.2"
+    "tailwind-variants": "3.2.2",
+    "ulid": "^3.0.2"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "16.0.10",
@@ -35,6 +38,7 @@
     "eslint": "9.39.1",
     "eslint-config-next": "16.0.10",
     "eslint-config-prettier": "10.1.8",
+    "openapi-typescript": "^7.10.1",
     "knip": "5.73.3",
     "postcss": "8.5.6",
     "prettier": "3.7.4",

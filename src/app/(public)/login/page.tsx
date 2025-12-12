@@ -1,9 +1,18 @@
-import LoginButton from "@/components/LoginButton";
+import WelcomeSection from "@/components/WelcomeSection";
+import { tv } from "tailwind-variants";
 
-const LoginPage = () => (
-  <main>
-    <LoginButton />
-  </main>
-);
+const timelineStyles = tv({
+  slots: {
+    base: ["flex", "flex-col", "gap-8", "pt-8"],
+  },
+});
 
-export default LoginPage;
+export default async function LoginPage() {
+  const { base } = timelineStyles();
+
+  return (
+    <div className={base()}>
+      <WelcomeSection />
+    </div>
+  );
+}
