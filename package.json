@@ -19,7 +19,7 @@
     "@krrli/cm-designsystem": "1.32.3",
     "openapi-fetch": "^0.15.0",
     "better-auth": "1.4.6",
-    "next": "16.0.8",
+    "next": "16.0.10",
     "pg": "8.16.3",
     "react": "19.2.1",
     "react-dom": "19.2.1",
@@ -27,7 +27,7 @@
     "ulid": "^3.0.2"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "16.0.8",
+    "@next/eslint-plugin-next": "16.0.10",
     "@tailwindcss/postcss": "4",
     "@types/node": "24.10.3",
     "@types/pg": "8.16.0",
@@ -36,7 +36,7 @@
     "@typescript-eslint/eslint-plugin": "8.49.0",
     "@typescript-eslint/parser": "8.49.0",
     "eslint": "9.39.1",
-    "eslint-config-next": "16.0.8",
+    "eslint-config-next": "16.0.10",
     "eslint-config-prettier": "10.1.8",
     "openapi-typescript": "^7.10.1",
     "knip": "5.73.3",
