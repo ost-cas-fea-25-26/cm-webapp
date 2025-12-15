@@ -21,7 +21,7 @@ const PostPublisher = () => {
 
   return (
     <PostCreator
-      src={user?.avatarUrl ?? ""}
+      src={user?.avatarUrl}
       onAvatarClick={goToProfilePage}
       onSendClick={async (text, file) =>
         await createPostAction(text, file ?? undefined)

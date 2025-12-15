@@ -41,12 +41,12 @@ const PostFeed = () => {
         <PostComponent
           key={index}
           size="md"
-          displayName={post.creator?.displayName ?? ""}
-          userName={post.creator?.username ?? ""}
-          timestamp={new Date(decodeTime(post.id ?? ""))}
-          text={post.text ?? ""}
-          src={post.creator?.avatarUrl ?? ""}
-          imageSrc={post.mediaUrl ?? ""}
+          displayName={post.creator?.displayName}
+          userName={post.creator?.username}
+          timestamp={new Date(decodeTime(post.id))}
+          text={post.text}
+          src={post.creator?.avatarUrl}
+          imageSrc={post.mediaUrl}
           imageAlt=""
           onAvatarClick={goToProfilePage}
           onCommentClick={() => {}}

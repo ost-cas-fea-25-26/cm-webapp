@@ -23,7 +23,7 @@ const ProfileAvatar = () => {
     <Avatar
       alt="Avatar image of your account"
       size="sm"
-      src={user?.avatarUrl ?? ""}
+      src={user?.avatarUrl}
       onAvatarClick={() => redirect("/profile")}
     ></Avatar>
   );

@@ -17,7 +17,9 @@ export class PostApi {
   public async create(text: string, file?: File): Promise<ApiResponse<Post>> {
     const form = new FormData();
     form.append("text", text);
-    form.append("media", file ?? "");
+    if (!file) {
+      form.append("media", file!);
+    }
     const response = await this.apiClient.client.POST("/posts", {
       headers: await this.apiClient.getAuthHeaders(),
       body: form as any,
