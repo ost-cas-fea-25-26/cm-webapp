@@ -1,6 +1,7 @@
 "use server";
 
 import { ApiClient } from "@/lib/api/client";
+import { Post } from "@/lib/api/posts/post.types";
 import { UserApi } from "@/lib/api/users/user.api";
 import { User } from "@/lib/api/users/user.types";
 import { AuthServer } from "@/lib/auth/server";
