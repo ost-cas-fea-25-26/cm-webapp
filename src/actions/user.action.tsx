@@ -14,5 +14,6 @@ export const getUserAction = async (): Promise<User | undefined> => {
   const authUser = await authServer.getAuthUser();
   if (!authUser?.identifier) {
     throw new Error("Auth user identifier is missing.");
+  }
   return (await userApiClient.getById(authUser.identifier)).data;
 };
