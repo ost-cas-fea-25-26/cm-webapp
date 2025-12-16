@@ -13,7 +13,7 @@ export class PostApi {
     const response = await this.apiClient.client.GET("/posts", {
       headers: await this.apiClient.getAuthHeaders(),
       params: {
-        query: { limit: params.limit, olderThan: params.olderThan },
+        query: { ...params },
       },
     });
     return this.apiClient.handleResponse(response);

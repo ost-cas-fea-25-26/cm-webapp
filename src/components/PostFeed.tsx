@@ -16,7 +16,11 @@ const postFeedStyles = tv({
   },
 });
 
-const PostFeed = () => {
+export type PostFeedProps = {
+  params?: PostQueryParams;
+};
+
+const PostFeed = (props: PostFeedProps) => {
   const { base, more } = postFeedStyles();
 
   const [posts, setPosts] = useState<Post[]>([]);
@@ -29,7 +33,7 @@ const PostFeed = () => {
   };
 
   useEffect(() => {
-    loadPosts({ limit: 10 });
+    loadPosts({ limit: 10, ...props.params });
   }, []);
 
   return (
@@ -50,6 +54,7 @@ const PostFeed = () => {
               await loadPosts({
                 limit: 5,
                 olderThan: posts[posts.length - 1]?.id,
+                ...props.params,
               });
             }}
           />
