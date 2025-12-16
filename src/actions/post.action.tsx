@@ -4,7 +4,12 @@ import { ApiClient } from "@/lib/api/client";
 import { PostApi } from "@/lib/api/posts/post.api";
 import { Post, PostQueryParams } from "@/lib/api/posts/post.types";
 
-const apiClient = new ApiClient(process.env.NEXT_PUBLIC_MUMBLE_API_URL);
+const apiUrl = process.env.MUMBLE_API_URL;
+if (!apiUrl) {
+  throw new Error("MUMBLE_API_URL is not set");
+}
+
+const apiClient = new ApiClient(apiUrl);
 const postApiClient = new PostApi(apiClient);
 
 export const getPostsAction = async (
