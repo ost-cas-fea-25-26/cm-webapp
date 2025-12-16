@@ -2,6 +2,7 @@ import { betterAuth } from "better-auth";
 import { nextCookies } from "better-auth/next-js";
 import { genericOAuth } from "better-auth/plugins";
 import { headers } from "next/headers";
+import { AuthUser } from "./auth.types";
 
 const PROVIDER_ID = "zitadel";
 
@@ -53,12 +54,12 @@ export class AuthServer {
     secret: process.env.AUTH_SECRET!,
   });
 
-  public getAuthUser = async () => {
+  public getAuthUser = async (): Promise<AuthUser> => {
     return (
       await this.server.api.getSession({
         headers: await headers(),
       })
-    )?.user;
+    )?.user as AuthUser;
   };
 
   public isAuthenticated = async () => {
