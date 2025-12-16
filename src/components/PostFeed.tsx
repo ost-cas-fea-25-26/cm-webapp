@@ -51,6 +51,8 @@ const PostFeed = () => {
           src={post.creator?.avatarUrl ?? ""}
           imageSrc={post.mediaUrl ?? ""}
           imageAlt=""
+          nbrOfComments={0}
+          nbrOfLikes={0}
           onAvatarClick={goToProfilePage}
           onCommentClick={() => {}}
           onLikeClick={async () => {
