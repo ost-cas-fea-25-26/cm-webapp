@@ -6,7 +6,12 @@ import { UserApi } from "@/lib/api/users/user.api";
 import { User } from "@/lib/api/users/user.types";
 import { AuthServer } from "@/lib/auth/server";
 
-const apiClient = new ApiClient(process.env.MUMBLE_API_URL!);
+const apiUrl = process.env.MUMBLE_API_URL;
+if (!apiUrl) {
+  throw new Error("MUMBLE_API_URL is not set");
+}
+
+const apiClient = new ApiClient(apiUrl);
 const userApiClient = new UserApi(apiClient);
 
 export const getUserAction = async (): Promise<User | undefined> => {

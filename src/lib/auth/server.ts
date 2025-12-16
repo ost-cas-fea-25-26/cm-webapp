@@ -1,10 +1,14 @@
 import { betterAuth } from "better-auth";
 import { nextCookies } from "better-auth/next-js";
-import { customSession, genericOAuth } from "better-auth/plugins";
+import { genericOAuth } from "better-auth/plugins";
 import { headers } from "next/headers";
-import { Pool } from "pg";
 
 const PROVIDER_ID = "zitadel";
+
+const clientId = process.env.ZITADEL_CLIENT_ID;
+if (!clientId) {
+  throw new Error("ZITADEL_CLIENT_ID is not set");
+}
 
 export class AuthServer {
   public readonly server = betterAuth({
@@ -25,7 +29,7 @@ export class AuthServer {
         config: [
           {
             providerId: PROVIDER_ID,
-            clientId: process.env.ZITADEL_CLIENT_ID!,
+            clientId: clientId!,
             clientSecret: "", // PKCE without client secret
             discoveryUrl:
               "https://cas-fee-adv-ed1ide.zitadel.cloud/.well-known/openid-configuration",
