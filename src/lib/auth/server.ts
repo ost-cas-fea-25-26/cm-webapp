@@ -18,13 +18,14 @@ export class AuthServer {
         },
       },
     },
+    baseURL: process.env.BASE_URL,
     plugins: [
       nextCookies(),
       genericOAuth({
         config: [
           {
             providerId: PROVIDER_ID,
-            clientId: process.env.ZITADEL_CLIENT_ID ?? "",
+            clientId: process.env.ZITADEL_CLIENT_ID!,
             clientSecret: "", // PKCE without client secret
             discoveryUrl:
               "https://cas-fee-adv-ed1ide.zitadel.cloud/.well-known/openid-configuration",
@@ -32,7 +33,7 @@ export class AuthServer {
               "openid",
               "profile",
               "email",
-              `urn:zitadel:iam:org:project:id:${process.env.ZITADEL_PROJECT_ID}:aud`,
+              "urn:zitadel:iam:org:project:id:348701753820117818:aud",
             ],
             pkce: true,
             mapProfileToUser: (profile) => {
@@ -45,7 +46,7 @@ export class AuthServer {
         ],
       }),
     ],
-    secret: process.env.AUTH_SECRET ?? "85182440605849447020734502505897",
+    secret: process.env.AUTH_SECRET!,
   });
 
   public getAuthUser = async () => {
