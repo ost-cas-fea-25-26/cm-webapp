@@ -12,7 +12,11 @@ import { tv } from "tailwind-variants";
 import { decodeTime } from "ulid";
 import { Post, PostQueryParams } from "../lib/api/posts/post.types";
 import { useEffect, useState } from "react";
-import { getPostsAction, likePostAction } from "@/actions/post.action";
+import {
+  getPostsAction,
+  likePostAction,
+  unlikePostAction,
+} from "@/actions/post.action";
 
 const postFeedStyles = tv({
   slots: {
@@ -32,6 +36,7 @@ const PostFeed = () => {
     const mumblePosts = await getPostsAction(params);
     setPosts((prevPosts) => [...prevPosts, ...mumblePosts]);
     setLoading(false);
+    console.log(posts);
   };
 
   useEffect(() => {
@@ -56,7 +61,11 @@ const PostFeed = () => {
           onAvatarClick={goToProfilePage}
           onCommentClick={() => {}}
           onLikeClick={async () => {
-            await likePostAction(post.id ?? "");
+            if (post.likedBySelf) {
+              await unlikePostAction(post.id!);
+            } else {
+              await likePostAction(post.id!);
+            }
           }}
           onShareClick={() =>
             navigator.clipboard.writeText(

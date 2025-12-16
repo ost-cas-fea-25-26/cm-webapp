@@ -28,3 +28,7 @@ export const createPostAction = async (
 export const likePostAction = async (id: string) => {
   return await postApiClient.like(id);
 };
+
+export const unlikePostAction = async (id: string) => {
+  return await postApiClient.unlike(id);
+};
