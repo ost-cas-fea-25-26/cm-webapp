@@ -15,7 +15,6 @@ export class AuthClient {
     try {
       await this.authClient.signIn.oauth2({
         providerId: PROVIDER_ID,
-        callbackURL: "/",
       });
     } catch (error) {
       console.error("Login error:", error);

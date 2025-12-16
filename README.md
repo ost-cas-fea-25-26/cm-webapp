@@ -30,26 +30,6 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-## Authentication
-
-To run the authentication system locally, a PostgreSQL database is required.
-
-Start the database using the Docker Compose file provided in the project root:
-
-```bash
-docker-compose up -d
-```
-
-Initialize the database schema for Better Auth by running:
-
-```bash
-npx @better-auth/cli migrate
-```
-
-This will create all the necessary tables and structures that Better Auth needs to function correctly.
-
----
-
 ## EditorConfig & VS Code Settings
 
 This project uses a strict `.editorconfig` to ensure consistent code style across all editors and platforms. Most formatting rules (indentation, line endings, trailing whitespace, etc.) are enforced automatically if you have the [EditorConfig extension](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) installed in VS Code.
