@@ -51,12 +51,18 @@ const PostFeed = () => {
           src={post.creator?.avatarUrl}
           imageSrc={post.mediaUrl}
           imageAlt=""
+          nbrOfComments={post.replies ?? 0}
+          nbrOfLikes={post.likes ?? 0}
           onAvatarClick={goToProfilePage}
           onCommentClick={() => {}}
           onLikeClick={async () => {
             await likePostAction(post.id ?? "");
           }}
-          onShareClick={() => {}}
+          onShareClick={() =>
+            navigator.clipboard.writeText(
+              `${process.env.NEXT_PUBLIC_BASE_URL}/posts/${post.id}`
+            )
+          }
         ></PostComponent>
       ))}
 
