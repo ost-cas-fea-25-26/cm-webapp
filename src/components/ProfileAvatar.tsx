@@ -2,8 +2,6 @@
 
 import { getUserAction } from "@/actions/user.action";
 import { User } from "@/lib/api/users/user.types";
-import { AuthClient } from "@/lib/auth/client";
-import { AuthServer } from "@/lib/auth/server";
 import { Avatar } from "@krrli/cm-designsystem";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";

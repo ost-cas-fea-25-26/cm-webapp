@@ -1,22 +1,13 @@
 "use client";
 
-import { components } from "@/lib/api/api";
-import {
-  Paragraph,
-  Post as PostComponent,
-  Repost,
-  RoundButton,
-} from "@krrli/cm-designsystem";
+import { Paragraph, Repost, RoundButton } from "@krrli/cm-designsystem";
 import { redirect } from "next/navigation";
 import { tv } from "tailwind-variants";
-import { decodeTime } from "ulid";
 import { Post, PostQueryParams } from "../lib/api/posts/post.types";
 import { useEffect, useState } from "react";
-import {
-  getPostsAction,
-  likePostAction,
-  unlikePostAction,
-} from "@/actions/post.action";
+import { getPostsAction } from "@/actions/post.action";
+import MumblePost from "./MumblePost";
+import Loading from "./Loading";
 
 const postFeedStyles = tv({
   slots: {
@@ -27,7 +18,6 @@ const postFeedStyles = tv({
 
 const PostFeed = () => {
   const { base, more } = postFeedStyles();
-  const goToProfilePage = () => redirect("/profile");
 
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
@@ -36,7 +26,6 @@ const PostFeed = () => {
     const mumblePosts = await getPostsAction(params);
     setPosts((prevPosts) => [...prevPosts, ...mumblePosts]);
     setLoading(false);
-    console.log(posts);
   };
 
   useEffect(() => {
@@ -46,37 +35,11 @@ const PostFeed = () => {
   return (
     <div className={base()}>
       {posts.map((post, index) => (
-        <PostComponent
-          key={index}
-          size="md"
-          displayName={post.creator?.displayName ?? ""}
-          userName={post.creator?.username ?? ""}
-          timestamp={new Date(decodeTime(post.id ?? ""))}
-          text={post.text ?? ""}
-          src={post.creator?.avatarUrl ?? ""}
-          imageSrc={post.mediaUrl ?? ""}
-          imageAlt=""
-          nbrOfComments={post.replies ?? 0}
-          nbrOfLikes={post.likes ?? 0}
-          onAvatarClick={goToProfilePage}
-          onCommentClick={() => {}}
-          onLikeClick={async () => {
-            if (post.likedBySelf) {
-              await unlikePostAction(post.id!);
-            } else {
-              await likePostAction(post.id!);
-            }
-          }}
-          onShareClick={() =>
-            navigator.clipboard.writeText(
-              `${process.env.NEXT_PUBLIC_BASE_URL}/posts/${post.id}`
-            )
-          }
-        ></PostComponent>
+        <MumblePost key={index} post={post}></MumblePost>
       ))}
 
       {loading ? (
-        <Paragraph size="lg">Loading posts...</Paragraph>
+        <Loading />
       ) : (
         <div className={more()}>
           <RoundButton
