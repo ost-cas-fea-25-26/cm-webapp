@@ -1,3 +1,4 @@
+import Loading from "@/components/Loading";
 import PostFeed from "@/components/PostFeed";
 import PostPublisher from "@/components/PostPublisher";
 import WelcomeSection from "@/components/WelcomeSection";
@@ -20,7 +21,7 @@ export default async function TimelinePage() {
       <WelcomeSection />
       <div className={timeline()}>
         <PostPublisher />
-        <Suspense fallback={<Paragraph size="lg">Loading Posts...</Paragraph>}>
+        <Suspense fallback={<Loading />}>
           <PostFeed />
         </Suspense>
       </div>

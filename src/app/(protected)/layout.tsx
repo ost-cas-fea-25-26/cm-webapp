@@ -1,3 +1,4 @@
+import Loading from "@/components/Loading";
 import LogoutButton from "@/components/LogoutButton";
 import Navbar from "@/components/Navbar";
 import ProfileAvatar from "@/components/ProfileAvatar";
@@ -27,7 +28,7 @@ export default async function ProtectedLayout({
         <SettingsButton />
         <LogoutButton />
       </Navbar>
-      <Suspense fallback={<Paragraph size="lg">Loading...</Paragraph>}>
+      <Suspense fallback={<Loading />}>
         <AuthGuard>
           <main className={base()}>{children}</main>
         </AuthGuard>
