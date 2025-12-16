@@ -1,6 +1,6 @@
 import { ApiClient } from "../client";
 import { ApiResponse } from "../client.types";
-import { PagedPosts, Post } from "./post.types";
+import { PagedPosts, Post, PostQueryParams } from "./post.types";
 
 export class PostApi {
   private apiClient: ApiClient;
@@ -9,8 +9,12 @@ export class PostApi {
     this.apiClient = client;
   }
 
-  public async get(): Promise<ApiResponse<PagedPosts>> {
-    const response = await this.apiClient.client.GET("/posts", {});
+  public async get(params: PostQueryParams): Promise<ApiResponse<PagedPosts>> {
+    const response = await this.apiClient.client.GET("/posts", {
+      params: {
+        query: { limit: params.limit, olderThan: params.olderThan },
+      },
+    });
     return this.apiClient.handleResponse(response);
   }
 

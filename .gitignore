@@ -53,3 +53,5 @@ sqlite.db
 *.njsproj
 *.sln
 *.sw?
+
+certificates
