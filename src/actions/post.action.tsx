@@ -2,13 +2,15 @@
 
 import { ApiClient } from "@/lib/api/client";
 import { PostApi } from "@/lib/api/posts/post.api";
-import { Post } from "@/lib/api/posts/post.types";
+import { Post, PostQueryParams } from "@/lib/api/posts/post.types";
 
 const apiClient = new ApiClient(process.env.NEXT_PUBLIC_MUMBLE_API_URL);
 const postApiClient = new PostApi(apiClient);
 
-export const getPostsAction = async (): Promise<Post[]> => {
-  return (await postApiClient.get()).data?.data ?? [];
+export const getPostsAction = async (
+  params: PostQueryParams = {}
+): Promise<Post[]> => {
+  return (await postApiClient.get(params)).data?.data ?? [];
 };
 
 export const createPostAction = async (

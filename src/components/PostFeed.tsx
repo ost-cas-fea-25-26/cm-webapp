@@ -1,39 +1,42 @@
 "use client";
 
 import { components } from "@/lib/api/api";
-import { Paragraph, Post as PostComponent } from "@krrli/cm-designsystem";
+import {
+  Paragraph,
+  Post as PostComponent,
+  Repost,
+  RoundButton,
+} from "@krrli/cm-designsystem";
 import { redirect } from "next/navigation";
 import { tv } from "tailwind-variants";
 import { decodeTime } from "ulid";
-import { Post } from "../lib/api/posts/post.types";
+import { Post, PostQueryParams } from "../lib/api/posts/post.types";
 import { useEffect, useState } from "react";
 import { getPostsAction, likePostAction } from "@/actions/post.action";
 
 const postFeedStyles = tv({
   slots: {
     base: ["flex", "flex-col", "gap-4"],
+    more: ["flex", "justify-center", "pb-4"],
   },
 });
 
 const PostFeed = () => {
-  const { base } = postFeedStyles();
+  const { base, more } = postFeedStyles();
   const goToProfilePage = () => redirect("/profile");
 
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const loadPosts = async (params: PostQueryParams = {}) => {
+    setLoading(true);
+    const mumblePosts = await getPostsAction(params);
+    setPosts((prevPosts) => [...prevPosts, ...mumblePosts]);
+    setLoading(false);
+  };
 
   useEffect(() => {
-    const loadPosts = async () => {
-      const mumblePosts = await getPostsAction();
-      setPosts(mumblePosts);
-      setLoading(false);
-    };
-    loadPosts();
+    loadPosts({ limit: 10 });
   }, []);
-
-  if (loading) {
-    return <Paragraph size="lg">Loading posts...</Paragraph>;
-  }
 
   return (
     <div className={base()}>
@@ -56,6 +59,24 @@ const PostFeed = () => {
           onShareClick={() => {}}
         ></PostComponent>
       ))}
+
+      {loading ? (
+        <Paragraph size="lg">Loading posts...</Paragraph>
+      ) : (
+        <div className={more()}>
+          <RoundButton
+            ariaLabel="Load more posts"
+            icon={Repost}
+            intent="primary"
+            onClick={async () => {
+              await loadPosts({
+                limit: 5,
+                olderThan: posts[posts.length - 1]?.id,
+              });
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 };
