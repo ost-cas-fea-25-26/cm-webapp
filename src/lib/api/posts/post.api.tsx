@@ -11,6 +11,7 @@ export class PostApi {
 
   public async get(params: PostQueryParams): Promise<ApiResponse<PagedPosts>> {
     const response = await this.apiClient.client.GET("/posts", {
+      headers: await this.apiClient.getAuthHeaders(),
       params: {
         query: { limit: params.limit, olderThan: params.olderThan },
       },
@@ -31,6 +32,14 @@ export class PostApi {
 
   public async like(id: string): Promise<ApiResponse<void>> {
     const response = await this.apiClient.client.PUT("/posts/{id}/likes", {
+      headers: await this.apiClient.getAuthHeaders(),
+      params: { path: { id } },
+    });
+    return this.apiClient.handleResponse(response);
+  }
+
+  public async unlike(id: string): Promise<ApiResponse<void>> {
+    const response = await this.apiClient.client.DELETE("/posts/{id}/likes", {
       headers: await this.apiClient.getAuthHeaders(),
       params: { path: { id } },
     });
