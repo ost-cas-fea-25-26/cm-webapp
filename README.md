@@ -47,3 +47,11 @@ Additionally, the repository includes a `.vscode/settings.json` file to avoid co
 
 - No further VS Code settings are required—just make sure the EditorConfig extension is enabled.
 - These settings ensure that formatting is always consistent, regardless of individual developer/editor preferences.
+
+## OpenAPI schema to TypeScript
+
+Transform an OpenAPI schema to TypeScript with the `openapi-typescript` CLI.
+
+```bash
+npx openapi-typescript https://mumble-api-prod-714602723919.europe-west6.run.app/swagger/v1/swagger.json -o ./src/lib/api/api.d.ts
+```
