@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 
 const ProfileAvatar = () => {
   const [user, setUser] = useState<User | undefined>(undefined);
+  const profilePageUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/profile/${user?.id}`;
 
   useEffect(() => {
     const loadUser = async () => {
@@ -22,7 +23,7 @@ const ProfileAvatar = () => {
       alt="Avatar image of your account"
       size="sm"
       src={user?.avatarUrl}
-      onAvatarClick={() => redirect("/profile")}
+      onAvatarClick={() => redirect(profilePageUrl)}
     ></Avatar>
   );
 };

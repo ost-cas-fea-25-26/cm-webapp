@@ -12,7 +12,7 @@ export type MumbleProps = {
 
 const MumblePost = (props: MumbleProps) => {
   const postDetailPageUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/posts/${props.post.id}`;
-  const profilePageUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/profile`;
+  const profilePageUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/profile/${props.post.creator?.id}`;
   const goToProfilePage = () => redirect(profilePageUrl);
   const goToPostDetailPage = () => redirect(postDetailPageUrl);
   const copyLinkToClipboard = () =>

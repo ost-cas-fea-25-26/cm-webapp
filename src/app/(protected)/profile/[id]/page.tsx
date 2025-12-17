@@ -10,18 +10,23 @@ const profileStyles = tv({
   },
 });
 
-export default async function ProfilePage() {
+type ProfilePageProps = {
+  params: { id: string };
+};
+
+export default async function ProfilePage({ params }: ProfilePageProps) {
+  const userId = (await params).id;
   const { base, tabs } = profileStyles();
-  const user = await getUserAction();
+  const user = await getUserAction(userId);
   return (
     <div className={base()}>
       <MumbleProfileBanner
         user={user!}
         isCurrentUser={false}
       ></MumbleProfileBanner>
-
+      {userId}
       <div className={tabs()}>
-        <MumbleTabs></MumbleTabs>
+        <MumbleTabs userId={userId}></MumbleTabs>
       </div>
     </div>
   );

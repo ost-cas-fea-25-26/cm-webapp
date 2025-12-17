@@ -10,21 +10,25 @@ const mumbleTabsStyles = tv({
   },
 });
 
-const MumbleTabs = () => {
+export type MumbleTabsProps = {
+  userId: string;
+};
+
+const MumbleTabs = (props: MumbleTabsProps) => {
   const { feed } = mumbleTabsStyles();
   return (
-    <Tabs value="2">
+    <Tabs value="1">
       <TabItem label="My Mumbles" value="1">
         <div className={feed()}>
           <PostFeed
-            params={{ creators: ["346664680862801750"] } as PostQueryParams}
+            params={{ creators: [props.userId] } as PostQueryParams}
           ></PostFeed>
         </div>
       </TabItem>
       <TabItem label="My Likes" value="2">
         <div className={feed()}>
           <PostFeed
-            params={{ likedBy: ["346664680862801750"] } as PostQueryParams}
+            params={{ likedBy: [props.userId] } as PostQueryParams}
           ></PostFeed>
         </div>
       </TabItem>

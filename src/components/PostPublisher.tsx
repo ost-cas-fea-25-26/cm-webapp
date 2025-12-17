@@ -1,19 +1,16 @@
 "use client";
 
-import { createPostAction, likePostAction } from "@/actions/post.action";
+import { createPostAction } from "@/actions/post.action";
 import { getUserAction } from "@/actions/user.action";
 import { Post } from "@/lib/api/posts/post.types";
 import { User } from "@/lib/api/users/user.types";
-import { Paragraph, PostCreator } from "@krrli/cm-designsystem";
+import { PostCreator } from "@krrli/cm-designsystem";
 import { redirect } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Post as PostComponent } from "@krrli/cm-designsystem";
-import { decodeTime } from "ulid";
 import MumblePost from "./MumblePost";
 import Loading from "./Loading";
 
 const PostPublisher = () => {
-  const goToProfilePage = () => redirect("/profile");
   const [user, setUser] = useState<User | undefined>(undefined);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -44,7 +41,9 @@ const PostPublisher = () => {
       ) : (
         <PostCreator
           src={user?.avatarUrl}
-          onAvatarClick={goToProfilePage}
+          onAvatarClick={() =>
+            redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/profile/${user?.id}`)
+          }
           onSendClick={async (text, file) => await createPost(text, file)}
         ></PostCreator>
       )}

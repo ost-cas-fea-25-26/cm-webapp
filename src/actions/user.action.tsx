@@ -13,8 +13,11 @@ if (!apiUrl) {
 const apiClient = new ApiClient(apiUrl);
 const userApiClient = new UserApi(apiClient);
 
-export const getUserAction = async (): Promise<User | undefined> => {
+export const getUserAction = async (id?: string): Promise<User | undefined> => {
   const authServer = new AuthServer();
+  if (id) {
+    return (await userApiClient.getById(id)).data;
+  }
   const authUser = await authServer.getAuthUser();
   if (!authUser?.identifier) {
     throw new Error("Auth user identifier is missing.");
