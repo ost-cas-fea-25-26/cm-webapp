@@ -19,7 +19,10 @@ export class PostApi {
     return this.apiClient.handleResponse(response);
   }
 
-  public async create(text: string, file?: File): Promise<ApiResponse<Post>> {
+  public async create(
+    text: string,
+    file?: File | null
+  ): Promise<ApiResponse<Post>> {
     const form = new FormData();
     form.append("text", text);
     form.append("media", file ?? "");

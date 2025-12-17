@@ -25,7 +25,7 @@ const PostPublisher = () => {
 
   const createPost = async (text: string, file: File | null) => {
     setLoading(true);
-    const response = await createPostAction(text, file ?? undefined);
+    const response = await createPostAction(text, file);
     if (response) {
       setPosts((prevPosts) => [response, ...prevPosts]);
     }
@@ -43,7 +43,7 @@ const PostPublisher = () => {
         <Loading />
       ) : (
         <PostCreator
-          src={user?.avatarUrl ?? undefined}
+          src={user?.avatarUrl}
           onAvatarClick={goToProfilePage}
           onSendClick={async (text, file) => await createPost(text, file)}
         ></PostCreator>

@@ -20,7 +20,7 @@ export const getPostsAction = async (
 
 export const createPostAction = async (
   text: string,
-  file?: File
+  file?: File | null
 ): Promise<Post | undefined> => {
   return (await postApiClient.create(text, file)).data;
 };

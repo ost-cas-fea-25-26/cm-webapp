@@ -28,14 +28,15 @@ const MumblePost = (props: MumbleProps) => {
   return (
     <PostComponent
       size="md"
-      displayName={props.post.creator?.displayName ?? undefined}
-      userName={props.post.creator?.username ?? undefined}
+      displayName={props.post.creator?.displayName}
+      userName={props.post.creator?.username}
       timestamp={postTimeStamp}
-      text={props.post.text ?? undefined}
-      src={props.post.creator?.avatarUrl ?? undefined}
-      imageSrc={props.post.mediaUrl ?? undefined}
-      nbrOfComments={props.post.replies ?? 0}
-      nbrOfLikes={props.post.likes ?? 0}
+      text={props.post.text}
+      avatarSrc={props.post.creator?.avatarUrl}
+      imageSrc={props.post.mediaUrl}
+      nbrOfComments={props.post.replies}
+      nbrOfLikes={props.post.likes}
+      likedBySelf={props.post.likedBySelf}
       onAvatarClick={goToProfilePage}
       onCommentClick={goToPostDetailPage}
       onLikeClick={onLikeButtonClick}
