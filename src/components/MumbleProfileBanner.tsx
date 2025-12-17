@@ -1,3 +1,6 @@
+"use client";
+
+import { updateAvatarAction } from "@/actions/user.action";
 import { User } from "@/lib/api/users/user.types";
 import { ProfileBanner } from "@krrli/cm-designsystem";
 
@@ -17,6 +20,10 @@ const MumbleProfileBanner = (props: MumbleProfileBannerProps) => {
       location="Location"
       userName={props.user.username}
       isCurrentUser={props.isCurrentUser}
+      onAvatarImageChange={async (file) => {
+        await updateAvatarAction(file);
+        window.location.reload();
+      }}
     />
   );
 };

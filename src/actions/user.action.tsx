@@ -30,3 +30,9 @@ export const isCurrentUserAction = async (id: string): Promise<boolean> => {
   const authUser = await authServer.getAuthUser();
   return authUser?.identifier === id;
 };
+
+export const updateAvatarAction = async (
+  file: File | null
+): Promise<string | undefined> => {
+  return (await userApiClient.updateAvatar(file)).data;
+};
