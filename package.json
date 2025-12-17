@@ -39,7 +39,7 @@
     "eslint": "9.39.2",
     "eslint-config-next": "16.0.10",
     "eslint-config-prettier": "10.1.8",
-    "knip": "5.74.0",
+    "knip": "5.75.1",
     "openapi-typescript": "^7.10.1",
     "postcss": "8.5.6",
     "prettier": "3.7.4",
