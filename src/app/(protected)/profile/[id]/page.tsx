@@ -1,4 +1,4 @@
-import { getUserAction } from "@/actions/user.action";
+import { getUserAction, isCurrentUserAction } from "@/actions/user.action";
 import MumbleProfileBanner from "@/components/MumbleProfileBanner";
 import MumbleTabs from "@/components/MumbleTabs";
 import { tv } from "tailwind-variants";
@@ -18,13 +18,13 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
   const userId = (await params).id;
   const { base, tabs } = profileStyles();
   const user = await getUserAction(userId);
+  const isCurrentUser = await isCurrentUserAction(userId);
   return (
     <div className={base()}>
       <MumbleProfileBanner
         user={user!}
-        isCurrentUser={false}
+        isCurrentUser={isCurrentUser}
       ></MumbleProfileBanner>
-      {userId}
       <div className={tabs()}>
         <MumbleTabs userId={userId}></MumbleTabs>
       </div>
