@@ -32,7 +32,7 @@ const MumblePost = (props: MumbleProps) => {
       userName={props.post.creator?.username ?? undefined}
       timestamp={postTimeStamp}
       text={props.post.text ?? undefined}
-      src={props.post.creator?.avatarUrl ?? undefined}
+      avatarSrc={props.post.creator?.avatarUrl ?? undefined}
       imageSrc={props.post.mediaUrl ?? undefined}
       nbrOfComments={props.post.replies ?? 0}
       nbrOfLikes={props.post.likes ?? 0}
