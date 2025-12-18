@@ -3,6 +3,7 @@ import { nextCookies } from "better-auth/next-js";
 import { genericOAuth } from "better-auth/plugins";
 import { headers } from "next/headers";
 import { AuthUser } from "./auth.types";
+import { cache } from "react";
 
 const PROVIDER_ID = "zitadel";
 
@@ -67,12 +68,25 @@ export class AuthServer {
     return !!user;
   };
 
-  public getAccessToken = async () => {
-    return await this.server.api.getAccessToken({
-      headers: await headers(),
+  public getAccessToken = cache(async () => {
+    const reqHeaders = await headers();
+    const session = await this.server.api.getSession({ headers: reqHeaders });
+
+    if (!session?.user) {
+      return null;
+    }
+
+    const token = await this.server.api.getAccessToken({
+      headers: reqHeaders,
       body: {
         providerId: PROVIDER_ID,
       },
     });
-  };
+
+    if (!token?.accessToken) {
+      return null;
+    }
+
+    return token;
+  });
 }

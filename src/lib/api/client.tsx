@@ -16,35 +16,10 @@ export class ApiClient {
   public getAuthHeaders = async (): Promise<{
     Authorization: string;
   }> => {
-    try {
-      // Try to get the OAuth access token
-      const tokenResult = await this.authServer.getAccessToken();
-      const headers = { Authorization: "" };
-
-      if (tokenResult?.accessToken) {
-        headers.Authorization = `Bearer ${tokenResult.accessToken}`;
-      } else {
-        // Fallback: use the user's identifier if access token is not available
-        const user = await this.authServer.getAuthUser();
-        if (user?.identifier) {
-          headers.Authorization = `Bearer ${user.identifier}`;
-        }
-      }
-
-      return headers;
-    } catch (error) {
-      console.error("Failed to get auth headers:", error);
-      // Last resort fallback: try to use user identifier
-      try {
-        const user = await this.authServer.getAuthUser();
-        if (user?.identifier) {
-          return { Authorization: `Bearer ${user.identifier}` };
-        }
-      } catch (e) {
-        console.error("Failed to get user:", e);
-      }
-      return { Authorization: "" };
-    }
+    const token = await this.authServer.getAccessToken();
+    return token
+      ? { Authorization: `Bearer ${token?.accessToken}` }
+      : ({} as any);
   };
 
   public handleResponse<
