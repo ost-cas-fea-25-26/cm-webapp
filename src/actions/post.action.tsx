@@ -18,6 +18,18 @@ export const getPostsAction = async (
   return (await postApiClient.get(params)).data?.data ?? [];
 };
 
+export const getPostByIdAction = async (
+  id: string
+): Promise<Post | undefined> => {
+  const response = await postApiClient.getById(id);
+
+  if (response.hasError) {
+    throw new Error(`Failed to fetch post: ${response.error}`);
+  }
+
+  return response.data;
+};
+
 export const createPostAction = async (
   text: string,
   file?: File | null
