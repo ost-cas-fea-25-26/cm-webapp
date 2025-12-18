@@ -2,7 +2,6 @@ import { getUserAction, isCurrentUserAction } from "@/actions/user.action";
 import MumbleProfileBanner from "@/components/MumbleProfileBanner";
 import MumbleTabs from "@/components/MumbleTabs";
 import PostFeed from "@/components/PostFeed";
-import { PostQueryParams } from "@/lib/api/posts/post.types";
 import { tv } from "tailwind-variants";
 
 const profileStyles = tv({

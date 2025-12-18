@@ -1,6 +1,5 @@
 import { TabItem, Tabs } from "@krrli/cm-designsystem";
 import PostFeed from "./PostFeed";
-import { PostQueryParams } from "@/lib/api/posts/post.types";
 import { tv } from "tailwind-variants";
 
 const mumbleTabsStyles = tv({
