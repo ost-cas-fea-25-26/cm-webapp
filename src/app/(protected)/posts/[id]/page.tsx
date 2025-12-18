@@ -10,12 +10,13 @@ const postDetailStyles = tv({
   base: [
     "mx-auto",
     "max-w-3xl",
-    "mt-12",
+    "my-12",
     "bg-white",
     "flex",
     "flex-col",
     "gap-1",
     "rounded-lg",
+    
   ],
 });
 

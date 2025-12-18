@@ -8,7 +8,17 @@ import Loading from "./Loading";
 import { tv } from "tailwind-variants";
 
 const postReplyStyles = tv({
-  base: ["flex", "flex-col", "gap-4"],
+  base: [
+    "flex",
+    "flex-col",
+    "gap-1",
+    "[&>*:not(:last-child):not(:hover)]:border-b",
+    "[&>*:not(:last-child):not(:hover)]:border-slate-100",
+    "[&>*:not(:last-child):not(:hover)]:rounded-b-none",
+    "[&>*:not(:first-child):not(:hover)]:rounded-t-none",
+    "[&>*:has(+_:hover)]:!border-b-0",
+    "[&>*:has(+_:hover)]:rounded-b",
+  ],
 });
 
 type PostRepliesProps = {
