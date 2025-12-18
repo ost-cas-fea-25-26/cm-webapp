@@ -43,7 +43,7 @@ export default async function PostDetailPage({ params }: PostDetailPageProps) {
           postId={post.id}
         />
       )}
-      {/* {post.id && <PostReplies postId={post.id} />} */}
+      {post.id && <PostReplies postId={post.id} />}
     </div>
   );
 }
