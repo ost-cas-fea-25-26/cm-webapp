@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Eye, TabItem, Tabs } from "@krrli/cm-designsystem";
+import { TabItem, Tabs } from "@krrli/cm-designsystem";
 import PostFeed from "./PostFeed";
 import { tv } from "tailwind-variants";
 import { useState } from "react";

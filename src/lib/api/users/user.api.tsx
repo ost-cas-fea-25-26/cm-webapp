@@ -16,9 +16,9 @@ export class UserApi {
     return this.apiClient.handleResponse(response);
   }
 
-  public async updateAvatar(file?: File | null): Promise<ApiResponse<string>> {
+  public async updateAvatar(file: File): Promise<ApiResponse<string>> {
     const form = new FormData();
-    form.append("media", file ?? "");
+    form.append("media", file);
 
     // API response with just a string not json, thats why apiclient could not be used.
     const res = await fetch(`${process.env.MUMBLE_API_URL}/users/avatar`, {
@@ -29,5 +29,12 @@ export class UserApi {
 
     const url = await res.text();
     return { hasError: false, data: url } as ApiResponse<string>;
+  }
+
+  public async deleteAvatar(): Promise<ApiResponse<void>> {
+    const response = await this.apiClient.client.DELETE("/users/avatar", {
+      headers: await this.apiClient.getAuthHeaders(),
+    });
+    return this.apiClient.handleResponse(response);
   }
 }

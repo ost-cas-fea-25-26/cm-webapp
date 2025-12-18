@@ -34,5 +34,8 @@ export const isCurrentUserAction = async (id: string): Promise<boolean> => {
 export const updateAvatarAction = async (
   file: File | null
 ): Promise<string | undefined> => {
-  return (await userApiClient.updateAvatar(file)).data;
+  if (file) {
+    return (await userApiClient.updateAvatar(file)).data;
+  }
+  await userApiClient.deleteAvatar();
 };
