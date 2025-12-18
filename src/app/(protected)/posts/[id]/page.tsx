@@ -16,7 +16,6 @@ const postDetailStyles = tv({
     "flex-col",
     "gap-1",
     "rounded-lg",
-    
   ],
 });
 

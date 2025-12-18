@@ -2,6 +2,7 @@
 
 import { createReplyAction } from "@/actions/post.action";
 import { ResponseCreator } from "@krrli/cm-designsystem";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type PostResponseCreatorProps = {
@@ -17,7 +18,8 @@ const PostResponseCreator = ({
   avatarSrc,
   postId,
 }: PostResponseCreatorProps) => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [_isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
   const handleAvatarClick = () => {
     console.log("Avatar clicked");
@@ -28,7 +30,7 @@ const PostResponseCreator = ({
     try {
       const result = await createReplyAction(postId, text, file ?? undefined);
       console.log("Reply created:", result);
-      // TODO: Refresh replies or show success message
+      router.refresh(); // Refresh the page to show the new reply
     } catch (error) {
       console.error("Failed to create reply:", error);
       alert("Failed to create reply. Please try again.");
