@@ -1,29 +1,22 @@
-import { Post as PostComponent } from "@krrli/cm-designsystem";
+import { getPostByIdAction } from "@/actions/post.action";
+import MumblePost from "@/components/MumblePost";
+import { notFound } from "next/navigation";
 
 type PostDetailPageProps = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 export default async function PostDetailPage({ params }: PostDetailPageProps) {
-  const postId = params.id;
+  const { id } = await params;
+  const post = await getPostByIdAction(id);
+
+  if (!post) {
+    notFound();
+  }
 
   return (
-    <p> post detail of post {postId}</p>
-    // <PostComponent
-    //   size="md"
-    //   displayName={props.post.creator?.displayName ?? undefined}
-    //   userName={props.post.creator?.username ?? undefined}
-    //   timestamp={postTimeStamp}
-    //   text={props.post.text ?? undefined}
-    //   avatarSrc={props.post.creator?.avatarUrl ?? undefined}
-    //   imageSrc={props.post.mediaUrl ?? undefined}
-    //   nbrOfComments={props.post.replies ?? 0}
-    //   nbrOfLikes={props.post.likes ?? 0}
-    //   onAvatarClick={goToProfilePage}
-    //   onCommentClick={goToPostDetailPage}
-    //   onLikeClick={onLikeButtonClick}
-    //   onShareClick={copyLinkToClipboard}
-    //   detailLink={postDetailPageUrl}
-    // ></PostComponent>
+    <div className="mx-auto max-w-3xl pt-12">
+      <MumblePost post={post} />
+    </div>
   );
 }
