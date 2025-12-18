@@ -4,7 +4,6 @@ import Navbar from "@/components/Navbar";
 import ProfileAvatar from "@/components/ProfileAvatar";
 import SettingsButton from "@/components/SettingsButton";
 import { AuthGuard } from "@/guards/AuthGuard";
-import { Paragraph } from "@krrli/cm-designsystem";
 import { Suspense } from "react";
 import { tv } from "tailwind-variants";
 
