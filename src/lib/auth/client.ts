@@ -26,7 +26,14 @@ export class AuthClient {
     onSuccess?: (context: SuccessContext<any>) => Promise<void>
   ) => {
     try {
-      await this.authClient.signOut({});
+      await this.authClient.signOut({
+        fetchOptions: {
+          onSuccess: async () => {
+            // Redirect to login page after successful logout
+            window.location.href = "/login";
+          },
+        },
+      });
     } catch (error) {
       console.error("Logout error:", error);
       throw error;
