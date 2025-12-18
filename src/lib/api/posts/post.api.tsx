@@ -13,7 +13,17 @@ export class PostApi {
     const response = await this.apiClient.client.GET("/posts", {
       headers: await this.apiClient.getAuthHeaders(),
       params: {
-        query: { ...params },
+        query: { limit: params.limit, olderThan: params.olderThan },
+      },
+    });
+    return this.apiClient.handleResponse(response);
+  }
+
+  public async getById(id: string): Promise<ApiResponse<Post>> {
+    const response = await this.apiClient.client.GET("/posts/{id}", {
+      headers: await this.apiClient.getAuthHeaders(),
+      params: {
+        path: { id },
       },
     });
     return this.apiClient.handleResponse(response);
