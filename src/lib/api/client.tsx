@@ -16,9 +16,9 @@ export class ApiClient {
   public getAuthHeaders = async (): Promise<{
     Authorization: string;
   }> => {
-    const accessToken = await this.authServer.getAccessToken();
-    return accessToken
-      ? { Authorization: `Bearer ${accessToken}` }
+    const token = await this.authServer.getAccessToken();
+    return token
+      ? { Authorization: `Bearer ${token?.accessToken}` }
       : ({} as any);
   };
 
