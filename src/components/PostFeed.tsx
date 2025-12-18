@@ -1,13 +1,12 @@
 "use client";
 
-import { Paragraph, Repost, RoundButton } from "@krrli/cm-designsystem";
-import { redirect } from "next/navigation";
+import { getPostsAction } from "@/actions/post.action";
+import { Repost, RoundButton } from "@krrli/cm-designsystem";
+import { useEffect, useState } from "react";
 import { tv } from "tailwind-variants";
 import { Post, PostQueryParams } from "../lib/api/posts/post.types";
-import { useEffect, useState } from "react";
-import { getPostsAction } from "@/actions/post.action";
-import MumblePost from "./MumblePost";
 import Loading from "./Loading";
+import MumblePost from "./MumblePost";
 
 const postFeedStyles = tv({
   slots: {

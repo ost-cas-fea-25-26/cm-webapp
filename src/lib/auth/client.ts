@@ -1,7 +1,7 @@
 "use client";
 
-import { createAuthClient, SuccessContext } from "better-auth/react";
 import { genericOAuthClient } from "better-auth/client/plugins";
+import { createAuthClient } from "better-auth/react";
 
 const PROVIDER_ID = "zitadel";
 
@@ -22,11 +22,16 @@ export class AuthClient {
     }
   };
 
-  public logout = async (
-    onSuccess?: (context: SuccessContext<any>) => Promise<void>
-  ) => {
+  public logout = async () => {
     try {
-      await this.authClient.signOut({});
+      await this.authClient.signOut({
+        fetchOptions: {
+          onSuccess: async () => {
+            // Redirect to login page after successful logout
+            window.location.href = "/login";
+          },
+        },
+      });
     } catch (error) {
       console.error("Logout error:", error);
       throw error;

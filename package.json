@@ -18,7 +18,7 @@
     "types:generate": "npx openapi-typescript https://mumble-api-prod-714602723919.europe-west6.run.app/swagger/v1/swagger.json -o src/types/api.d.ts"
   },
   "dependencies": {
-    "@krrli/cm-designsystem": "1.34.2",
+    "@krrli/cm-designsystem": "1.34.4",
     "better-auth": "1.4.5",
     "next": "16.0.10",
     "openapi-fetch": "0.15.0",

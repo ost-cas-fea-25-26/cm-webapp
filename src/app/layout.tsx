@@ -1,9 +1,6 @@
-import { AuthGuard } from "@/guards/AuthGuard";
-import "./globals.css";
 import type { Metadata } from "next";
 import { tv } from "tailwind-variants";
-import Navbar from "@/components/Navbar";
-import { AuthServer } from "@/lib/auth/server";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Mumble App",

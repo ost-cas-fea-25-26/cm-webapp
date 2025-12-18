@@ -6,8 +6,8 @@ import { Post } from "@/lib/api/posts/post.types";
 import { User } from "@/lib/api/users/user.types";
 import { PostCreator } from "@krrli/cm-designsystem";
 import { redirect } from "next/navigation";
-import { useState, useEffect } from "react";
 import MumblePost from "./MumblePost";
+import { useEffect, useState } from "react";
 import Loading from "./Loading";
 
 const PostPublisher = () => {
