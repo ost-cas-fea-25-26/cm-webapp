@@ -51,7 +51,6 @@ export class UserApi {
       headers: await this.apiClient.getAuthHeaders(),
       params: { path: { id } },
     });
-    console.log(response);
     return this.apiClient.handleResponse(response);
   }
 
@@ -63,7 +62,6 @@ export class UserApi {
         params: { path: { id } },
       }
     );
-    console.log(response);
     return this.apiClient.handleResponse(response);
   }
 }

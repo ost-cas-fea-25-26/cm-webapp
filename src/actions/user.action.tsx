@@ -45,7 +45,6 @@ export const isFollowing = async (strangerUserId: string): Promise<boolean> => {
   const authUser = await authServer.getAuthUser();
   const result = await userApiClient.getFollowers(strangerUserId);
   if (!result.hasError && result.data) {
-    console.log("FOLLOOWWSER:", result.data, authUser.id, authUser.identifier);
     var stranger = result.data.data!.find((x) => x.id === authUser.identifier);
     return !!stranger;
   }
@@ -54,11 +53,9 @@ export const isFollowing = async (strangerUserId: string): Promise<boolean> => {
 };
 
 export const followUser = async (strangerUserId: string): Promise<void> => {
-  console.log("FOLOW");
   await userApiClient.followUser(strangerUserId);
 };
 
 export const unfollowUser = async (strangerUserId: string): Promise<void> => {
-  console.log("UNFOLOW");
   await userApiClient.unfollowUser(strangerUserId);
 };
