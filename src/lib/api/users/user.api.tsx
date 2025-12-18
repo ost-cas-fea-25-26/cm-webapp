@@ -1,6 +1,6 @@
 import { ApiClient } from "../client";
 import { ApiResponse } from "../client.types";
-import { User } from "./user.types";
+import { PagedUsers, User } from "./user.types";
 
 export class UserApi {
   private apiClient: ApiClient;
@@ -35,6 +35,35 @@ export class UserApi {
     const response = await this.apiClient.client.DELETE("/users/avatar", {
       headers: await this.apiClient.getAuthHeaders(),
     });
+    return this.apiClient.handleResponse(response);
+  }
+
+  public async getFollowers(id: string): Promise<ApiResponse<PagedUsers>> {
+    const response = await this.apiClient.client.GET("/users/{id}/followers", {
+      headers: await this.apiClient.getAuthHeaders(),
+      params: { path: { id } },
+    });
+    return this.apiClient.handleResponse(response);
+  }
+
+  public async followUser(id: string): Promise<ApiResponse<void>> {
+    const response = await this.apiClient.client.PUT("/users/{id}/followers", {
+      headers: await this.apiClient.getAuthHeaders(),
+      params: { path: { id } },
+    });
+    console.log(response);
+    return this.apiClient.handleResponse(response);
+  }
+
+  public async unfollowUser(id: string): Promise<ApiResponse<void>> {
+    const response = await this.apiClient.client.DELETE(
+      "/users/{id}/followers",
+      {
+        headers: await this.apiClient.getAuthHeaders(),
+        params: { path: { id } },
+      }
+    );
+    console.log(response);
     return this.apiClient.handleResponse(response);
   }
 }
