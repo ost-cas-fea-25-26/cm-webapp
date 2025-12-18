@@ -13,13 +13,16 @@ export class PostApi {
     const response = await this.apiClient.client.GET("/posts", {
       headers: await this.apiClient.getAuthHeaders(),
       params: {
-        query: { limit: params.limit, olderThan: params.olderThan },
+        query: { ...params },
       },
     });
     return this.apiClient.handleResponse(response);
   }
 
-  public async create(text: string, file?: File): Promise<ApiResponse<Post>> {
+  public async create(
+    text: string,
+    file?: File | null
+  ): Promise<ApiResponse<Post>> {
     const form = new FormData();
     form.append("text", text);
     form.append("media", file ?? "");

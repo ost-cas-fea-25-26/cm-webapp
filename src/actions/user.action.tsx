@@ -13,11 +13,29 @@ if (!apiUrl) {
 const apiClient = new ApiClient(apiUrl);
 const userApiClient = new UserApi(apiClient);
 
-export const getUserAction = async (): Promise<User | undefined> => {
+export const getUserAction = async (id?: string): Promise<User | undefined> => {
+  if (id) {
+    return (await userApiClient.getById(id)).data;
+  }
   const authServer = new AuthServer();
   const authUser = await authServer.getAuthUser();
   if (!authUser?.identifier) {
     throw new Error("Auth user identifier is missing.");
   }
   return (await userApiClient.getById(authUser.identifier)).data;
+};
+
+export const isCurrentUserAction = async (id: string): Promise<boolean> => {
+  const authServer = new AuthServer();
+  const authUser = await authServer.getAuthUser();
+  return authUser?.identifier === id;
+};
+
+export const updateAvatarAction = async (
+  file: File | null
+): Promise<string | undefined> => {
+  if (file) {
+    return (await userApiClient.updateAvatar(file)).data;
+  }
+  await userApiClient.deleteAvatar();
 };
