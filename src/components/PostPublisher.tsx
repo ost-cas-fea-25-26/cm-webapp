@@ -6,12 +6,11 @@ import { Post } from "@/lib/api/posts/post.types";
 import { User } from "@/lib/api/users/user.types";
 import { PostCreator } from "@krrli/cm-designsystem";
 import { redirect } from "next/navigation";
+import MumblePost from "./MumblePost";
 import { useEffect, useState } from "react";
 import Loading from "./Loading";
-import MumblePost from "./MumblePost";
 
 const PostPublisher = () => {
-  const goToProfilePage = () => redirect("/profile");
   const [user, setUser] = useState<User | undefined>(undefined);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -23,7 +22,7 @@ const PostPublisher = () => {
 
   const createPost = async (text: string, file: File | null) => {
     setLoading(true);
-    const response = await createPostAction(text, file ?? undefined);
+    const response = await createPostAction(text, file);
     if (response) {
       setPosts((prevPosts) => [response, ...prevPosts]);
     }
@@ -41,8 +40,10 @@ const PostPublisher = () => {
         <Loading />
       ) : (
         <PostCreator
-          src={user?.avatarUrl ?? undefined}
-          onAvatarClick={goToProfilePage}
+          src={user?.avatarUrl}
+          onAvatarClick={() =>
+            redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/profile/${user?.id}`)
+          }
           onSendClick={async (text, file) => await createPost(text, file)}
         ></PostCreator>
       )}
