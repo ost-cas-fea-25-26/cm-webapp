@@ -1,7 +1,7 @@
 import { getUserAction, isCurrentUserAction } from "@/actions/user.action";
 import MumbleProfileBanner from "@/components/MumbleProfileBanner";
-import MumbleTabs from "@/components/MumbleTabs";
-import PostFeed from "@/components/PostFeed";
+import ProfileContent from "@/components/ProfileContent";
+import ProfileStrangerContent from "@/components/ProfileStrangerContent";
 import { tv } from "tailwind-variants";
 
 const profileStyles = tv({
@@ -26,13 +26,13 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
         isCurrentUser={isCurrentUser}
       ></MumbleProfileBanner>
       {isCurrentUser ? (
-        <MumbleTabs userId={userId}></MumbleTabs>
+        <ProfileContent userId={userId} />
       ) : (
-        <PostFeed
-          params={{
-            creators: [userId],
-          }}
-        ></PostFeed>
+        <ProfileStrangerContent
+          userId={userId}
+          isFollowing={false}
+          displayName={user?.displayName!}
+        />
       )}
     </div>
   );

@@ -1,6 +1,9 @@
-import { TabItem, Tabs } from "@krrli/cm-designsystem";
+"use client";
+
+import { Button, Eye, TabItem, Tabs } from "@krrli/cm-designsystem";
 import PostFeed from "./PostFeed";
 import { tv } from "tailwind-variants";
+import { useState } from "react";
 
 const mumbleTabsStyles = tv({
   slots: {
@@ -14,8 +17,9 @@ export type MumbleTabsProps = {
 
 const MumbleTabs = (props: MumbleTabsProps) => {
   const { feed } = mumbleTabsStyles();
+  const [tabIndex, setTabIndex] = useState<string>("1");
   return (
-    <Tabs value="1">
+    <Tabs value={tabIndex} onChange={setTabIndex}>
       <TabItem label="My Mumbles" value="1">
         <div className={feed()}>
           <PostFeed
