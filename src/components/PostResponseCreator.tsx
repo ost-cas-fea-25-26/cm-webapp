@@ -26,10 +26,12 @@ const PostResponseCreator = ({
   const handleSendClick = async (text: string, file: File | null) => {
     setIsSubmitting(true);
     try {
-      await createReplyAction(postId, text, file ?? undefined);
+      const result = await createReplyAction(postId, text, file ?? undefined);
+      console.log("Reply created:", result);
       // TODO: Refresh replies or show success message
     } catch (error) {
       console.error("Failed to create reply:", error);
+      alert("Failed to create reply. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
