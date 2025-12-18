@@ -2,7 +2,7 @@
 
 import { ApiClient } from "@/lib/api/client";
 import { PostApi } from "@/lib/api/posts/post.api";
-import { Post, PostQueryParams } from "@/lib/api/posts/post.types";
+import { Post, PostQueryParams, Reply } from "@/lib/api/posts/post.types";
 
 const apiUrl = process.env.MUMBLE_API_URL;
 if (!apiUrl) {
@@ -30,11 +30,27 @@ export const getPostByIdAction = async (
   return response.data;
 };
 
+export const getRepliesAction = async (
+  postId: string,
+  params: { limit?: number; offset?: number } = {}
+): Promise<Reply[]> => {
+  const response = await postApiClient.getReplies(postId, params);
+  return response.data?.data ?? [];
+};
+
 export const createPostAction = async (
   text: string,
   file?: File | null
 ): Promise<Post | undefined> => {
   return (await postApiClient.create(text, file)).data;
+};
+
+export const createReplyAction = async (
+  postId: string,
+  text: string,
+  file?: File
+): Promise<Post | undefined> => {
+  return (await postApiClient.createReply(postId, text, file)).data;
 };
 
 export const likePostAction = async (id: string) => {
