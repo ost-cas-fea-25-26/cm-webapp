@@ -5,6 +5,7 @@ import { tv } from "tailwind-variants";
 import PostFeed from "./PostFeed";
 import { followUser, isFollowing, unfollowUser } from "@/actions/user.action";
 import { useEffect, useState } from "react";
+import Loading from "./Loading";
 
 const profileStrangerContentStyles = tv({
   slots: {
@@ -21,14 +22,16 @@ export type ProfileStrangerContentProps = {
 
 const ProfileStrangerContent = (props: ProfileStrangerContentProps) => {
   const { base, follow, button } = profileStrangerContentStyles();
-  const [following, setFollowing] = useState<boolean>(false);
+  const [following, setFollowing] = useState<boolean | undefined>(undefined);
+
+  const checkIsFollowing = async () => {
+    setFollowing(await isFollowing(props.userId));
+  };
 
   useEffect(() => {
-    const checkIsFollowing = async () => {
-      setFollowing(await isFollowing(props.userId));
-    };
     checkIsFollowing();
   }, []);
+  if (following === undefined) return <Loading />;
   return (
     <div className={base()}>
       {following ? (
@@ -39,7 +42,10 @@ const ProfileStrangerContent = (props: ProfileStrangerContentProps) => {
             intent="primary"
             icon={Cancel}
             className={button()}
-            onClick={async () => await unfollowUser(props.userId)}
+            onClick={async () => {
+              await unfollowUser(props.userId);
+              setFollowing(false);
+            }}
           >
             Unfollow
           </Button>
@@ -54,7 +60,10 @@ const ProfileStrangerContent = (props: ProfileStrangerContentProps) => {
             intent="primary"
             icon={Eye}
             className={button()}
-            onClick={async () => await followUser(props.userId)}
+            onClick={async () => {
+              await followUser(props.userId);
+              setFollowing(true);
+            }}
           >
             Follow
           </Button>
