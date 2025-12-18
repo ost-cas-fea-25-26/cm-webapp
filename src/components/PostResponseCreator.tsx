@@ -28,9 +28,9 @@ const PostResponseCreator = ({
   const handleSendClick = async (text: string, file: File | null) => {
     setIsSubmitting(true);
     try {
-      const result = await createReplyAction(postId, text, file ?? undefined);
-      console.log("Reply created:", result);
-      router.refresh(); // Refresh the page to show the new reply
+      await createReplyAction(postId, text, file ?? undefined);
+      console.log("Router:", router);
+      window.location.href = `/posts/${postId}`;
     } catch (error) {
       console.error("Failed to create reply:", error);
       alert("Failed to create reply. Please try again.");
