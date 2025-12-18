@@ -1,16 +1,14 @@
 "use client";
 
-import { createPostAction, likePostAction } from "@/actions/post.action";
+import { createPostAction } from "@/actions/post.action";
 import { getUserAction } from "@/actions/user.action";
 import { Post } from "@/lib/api/posts/post.types";
 import { User } from "@/lib/api/users/user.types";
-import { Paragraph, PostCreator } from "@krrli/cm-designsystem";
+import { PostCreator } from "@krrli/cm-designsystem";
 import { redirect } from "next/navigation";
-import { useState, useEffect } from "react";
-import { Post as PostComponent } from "@krrli/cm-designsystem";
-import { decodeTime } from "ulid";
-import MumblePost from "./MumblePost";
+import { useEffect, useState } from "react";
 import Loading from "./Loading";
+import MumblePost from "./MumblePost";
 
 const PostPublisher = () => {
   const goToProfilePage = () => redirect("/profile");

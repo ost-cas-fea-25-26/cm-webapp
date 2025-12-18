@@ -2,7 +2,6 @@ import Loading from "@/components/Loading";
 import PostFeed from "@/components/PostFeed";
 import PostPublisher from "@/components/PostPublisher";
 import WelcomeSection from "@/components/WelcomeSection";
-import { Paragraph } from "@krrli/cm-designsystem";
 import { Suspense } from "react";
 import { tv } from "tailwind-variants";
 
