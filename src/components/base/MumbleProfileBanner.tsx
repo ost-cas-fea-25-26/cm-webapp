@@ -15,7 +15,7 @@ const MumbleProfileBanner = (props: MumbleProfileBannerProps) => {
   return (
     <ProfileBanner
       avatarAlt="Avatar image"
-      avatarSrc={props.user.avatarUrl}
+      avatarSrc={props.user.avatarUrl ? props.user.avatarUrl : "data:,"}
       displayName={props.user.displayName}
       imageAlt="Profile banner image"
       joinedTimestamp={new Date()}

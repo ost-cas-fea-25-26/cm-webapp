@@ -4,6 +4,7 @@ import { ApiClient } from "@/lib/api/client";
 import { UserApi } from "@/lib/api/users/user.api";
 import { User } from "@/lib/api/users/user.types";
 import { AuthServer } from "@/lib/auth/server";
+import { redirect } from "next/navigation";
 import { connection } from "next/server";
 
 const apiUrl = process.env.MUMBLE_API_URL;
@@ -21,7 +22,8 @@ export const getUserAction = async (id?: string): Promise<User | undefined> => {
   }
   const authUser = await new AuthServer().getAuthUser();
   if (!authUser?.identifier) {
-    throw new Error("Auth user identifier is missing.");
+    console.warn("Auth user identifier is missing.");
+    redirect("/login");
   }
   return (await userApiClient.getById(authUser.identifier)).data;
 };
