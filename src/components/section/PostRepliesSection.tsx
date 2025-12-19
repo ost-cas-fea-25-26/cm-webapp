@@ -4,8 +4,8 @@ import { getRepliesAction } from "@/actions/post.action";
 import { Reply } from "@/lib/api/posts/post.types";
 import { useEffect, useState } from "react";
 import { tv } from "tailwind-variants";
-import Loading from "./Loading";
-import PostReply from "./PostReply";
+import MumblePostReply from "../base/MumblePostReply";
+import MumbleLoading from "../base/MumbleLoading";
 
 const postReplyStyles = tv({
   base: [
@@ -16,7 +16,7 @@ const postReplyStyles = tv({
     "[&>*:not(:last-child):not(:hover)]:border-slate-100",
     "[&>*:not(:last-child):not(:hover)]:rounded-b-none",
     "[&>*:not(:first-child):not(:hover)]:rounded-t-none",
-    "[&>*:has(+_:hover)]:!border-b-0",
+    "[&>*:has(+_:hover)]:border-b-0!",
     "[&>*:has(+_:hover)]:rounded-b",
   ],
 });
@@ -52,7 +52,7 @@ const PostReplies = ({ postId }: PostRepliesProps) => {
   }, [loading, replies]);
 
   if (loading) {
-    return <Loading />;
+    return <MumbleLoading />;
   }
 
   if (replies.length === 0) {
@@ -63,7 +63,7 @@ const PostReplies = ({ postId }: PostRepliesProps) => {
     <div className={postReplyStyles()}>
       {replies.map((reply) => (
         <div key={reply.id} id={`reply-${reply.id}`}>
-          <PostReply key={reply.id} reply={reply} />
+          <MumblePostReply key={reply.id} reply={reply} />
         </div>
       ))}
     </div>

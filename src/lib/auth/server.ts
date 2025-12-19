@@ -55,13 +55,13 @@ export class AuthServer {
     secret: process.env.AUTH_SECRET!,
   });
 
-  public getAuthUser = async (): Promise<AuthUser> => {
-    return (
-      await this.server.api.getSession({
-        headers: await headers(),
-      })
-    )?.user as AuthUser;
-  };
+  public getAuthUser = cache(async (): Promise<AuthUser> => {
+    const requestHeaders = await headers();
+    const response = await this.server.api.getSession({
+      headers: requestHeaders,
+    });
+    return response?.user as AuthUser;
+  });
 
   public isAuthenticated = async () => {
     const user = await this.getAuthUser();

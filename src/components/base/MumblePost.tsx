@@ -3,7 +3,7 @@
 import { Post as PostComponent } from "@krrli/cm-designsystem";
 import { redirect } from "next/navigation";
 import { decodeTime } from "ulid";
-import { Post } from "../lib/api/posts/post.types";
+import { Post } from "../../lib/api/posts/post.types";
 import { likePostAction, unlikePostAction } from "@/actions/post.action";
 
 export type MumbleProps = {

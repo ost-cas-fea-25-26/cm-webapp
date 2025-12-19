@@ -1,3 +1,4 @@
+import { updateTag } from "next/cache";
 import { ApiClient } from "../client";
 import { ApiResponse } from "../client.types";
 import { PagedPosts, PagedReplies, Post, PostQueryParams } from "./post.types";
@@ -15,6 +16,7 @@ export class PostApi {
       params: {
         query: { ...params },
       },
+      next: { tags: ["posts"], revalidate: 60 },
     });
     return this.apiClient.handleResponse(response);
   }
@@ -54,6 +56,7 @@ export class PostApi {
       headers: await this.apiClient.getAuthHeaders(),
       body: form as any,
     });
+    updateTag("posts");
     return this.apiClient.handleResponse(response);
   }
 
@@ -78,6 +81,7 @@ export class PostApi {
       headers: await this.apiClient.getAuthHeaders(),
       params: { path: { id } },
     });
+    updateTag("posts");
     return this.apiClient.handleResponse(response);
   }
 
@@ -86,6 +90,7 @@ export class PostApi {
       headers: await this.apiClient.getAuthHeaders(),
       params: { path: { id } },
     });
+    updateTag("posts");
     return this.apiClient.handleResponse(response);
   }
 }

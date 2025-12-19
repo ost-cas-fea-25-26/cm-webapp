@@ -5,19 +5,19 @@ import { ResponseCreator } from "@krrli/cm-designsystem";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-type PostResponseCreatorProps = {
+type MumblePostResponseCreatorProps = {
   displayName: string;
   userName: string;
   avatarSrc?: string;
   postId: string;
 };
 
-const PostResponseCreator = ({
+const MumblePostResponseCreator = ({
   displayName,
   userName,
   avatarSrc,
   postId,
-}: PostResponseCreatorProps) => {
+}: MumblePostResponseCreatorProps) => {
   const [_isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
@@ -50,4 +50,4 @@ const PostResponseCreator = ({
   );
 };
 
-export default PostResponseCreator;
+export default MumblePostResponseCreator;

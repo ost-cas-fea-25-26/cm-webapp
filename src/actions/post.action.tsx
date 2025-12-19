@@ -42,7 +42,8 @@ export const createPostAction = async (
   text: string,
   file?: File | null
 ): Promise<Post | undefined> => {
-  return (await postApiClient.create(text, file)).data;
+  const response = await postApiClient.create(text, file);
+  return response.data;
 };
 
 export const createReplyAction = async (

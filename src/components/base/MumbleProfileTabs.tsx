@@ -1,45 +1,45 @@
 "use client";
 
 import { TabItem, Tabs } from "@krrli/cm-designsystem";
-import PostFeed from "./PostFeed";
+import PostFeedSection from "../section/PostFeedSection";
 import { tv } from "tailwind-variants";
 import { useState } from "react";
 
-const mumbleTabsStyles = tv({
+const mumbleProfileTabsStyles = tv({
   slots: {
     feed: ["pt-4"],
   },
 });
 
-export type MumbleTabsProps = {
+export type MumbleProfileTabsProps = {
   userId: string;
 };
 
-const MumbleTabs = (props: MumbleTabsProps) => {
-  const { feed } = mumbleTabsStyles();
+const MumbleProfileTabs = (props: MumbleProfileTabsProps) => {
+  const { feed } = mumbleProfileTabsStyles();
   const [tabIndex, setTabIndex] = useState<string>("1");
   return (
     <Tabs value={tabIndex} onChange={setTabIndex}>
       <TabItem label="My Mumbles" value="1">
         <div className={feed()}>
-          <PostFeed
+          <PostFeedSection
             params={{
               creators: [props.userId],
             }}
-          ></PostFeed>
+          ></PostFeedSection>
         </div>
       </TabItem>
       <TabItem label="My Likes" value="2">
         <div className={feed()}>
-          <PostFeed
+          <PostFeedSection
             params={{
               likedBy: [props.userId],
             }}
-          ></PostFeed>
+          ></PostFeedSection>
         </div>
       </TabItem>
     </Tabs>
   );
 };
 
-export default MumbleTabs;
+export default MumbleProfileTabs;

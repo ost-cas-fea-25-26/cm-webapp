@@ -1,4 +1,4 @@
-import WelcomeSection from "@/components/WelcomeSection";
+import WelcomeSection from "@/components/section/WelcomeSection";
 import { tv } from "tailwind-variants";
 
 const timelineStyles = tv({

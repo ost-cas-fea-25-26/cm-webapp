@@ -1,8 +1,7 @@
-import Loading from "@/components/Loading";
-import PostFeed from "@/components/PostFeed";
-import PostPublisher from "@/components/PostPublisher";
-import WelcomeSection from "@/components/WelcomeSection";
-import { Suspense } from "react";
+import { getUserAction } from "@/actions/user.action";
+import MumblePostCreator from "@/components/base/MumblePostCreator";
+import PostFeedSection from "@/components/section/PostFeedSection";
+import WelcomeSection from "@/components/section/WelcomeSection";
 import { tv } from "tailwind-variants";
 
 const timelineStyles = tv({
@@ -14,15 +13,14 @@ const timelineStyles = tv({
 
 export default async function TimelinePage() {
   const { base, timeline } = timelineStyles();
+  const mumbleUser = await getUserAction();
 
   return (
     <div className={base()}>
       <WelcomeSection />
       <div className={timeline()}>
-        <PostPublisher />
-        <Suspense fallback={<Loading />}>
-          <PostFeed />
-        </Suspense>
+        <MumblePostCreator user={mumbleUser!}></MumblePostCreator>
+        <PostFeedSection />
       </div>
     </div>
   );

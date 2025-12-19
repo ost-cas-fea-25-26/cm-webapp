@@ -6,11 +6,11 @@ import { Response } from "@krrli/cm-designsystem";
 import { redirect } from "next/navigation";
 import { decodeTime } from "ulid";
 
-type PostReplyProps = {
+type MumblePostReplyProps = {
   reply: Reply;
 };
 
-const PostReply = ({ reply }: PostReplyProps) => {
+const MumblePostReply = ({ reply }: MumblePostReplyProps) => {
   const replyDetailPageUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/posts/${reply.parentId}#reply-${reply.id}`;
   const profilePageUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/profile/${reply.creator?.id}`;
   const goToProfilePage = () => redirect(profilePageUrl);
@@ -49,4 +49,4 @@ const PostReply = ({ reply }: PostReplyProps) => {
   );
 };
 
-export default PostReply;
+export default MumblePostReply;
