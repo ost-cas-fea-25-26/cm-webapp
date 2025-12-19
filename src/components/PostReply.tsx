@@ -21,7 +21,6 @@ const PostReply = ({ reply }: PostReplyProps) => {
   const copyLinkToClipboard = () =>
     navigator.clipboard.writeText(replyDetailPageUrl);
 
-  // todo: can reply be liekd?
   const onLikeButtonClick = async () =>
     reply.likedBySelf
       ? await unlikePostAction(reply.id!)
@@ -33,6 +32,8 @@ const PostReply = ({ reply }: PostReplyProps) => {
     <Response
       key={reply.id}
       avatarSrc={reply.creator?.avatarUrl ?? ""}
+      imageSrc={reply.mediaUrl ?? ""}
+      imageAlt="Image that was attached to Reply"
       displayName={reply.creator?.displayName ?? "Anonymous"}
       nbrOfComments={0}
       nbrOfLikes={reply.likes}
