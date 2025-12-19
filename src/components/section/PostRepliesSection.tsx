@@ -4,8 +4,8 @@ import { getRepliesAction } from "@/actions/post.action";
 import { Reply } from "@/lib/api/posts/post.types";
 import { useEffect, useState } from "react";
 import { tv } from "tailwind-variants";
-import Loading from "./Loading";
 import MumblePostReply from "../base/MumblePostReply";
+import MumbleLoading from "../base/MumbleLoading";
 
 const postReplyStyles = tv({
   base: [
@@ -52,7 +52,7 @@ const PostReplies = ({ postId }: PostRepliesProps) => {
   }, [loading, replies]);
 
   if (loading) {
-    return <Loading />;
+    return <MumbleLoading />;
   }
 
   if (replies.length === 0) {

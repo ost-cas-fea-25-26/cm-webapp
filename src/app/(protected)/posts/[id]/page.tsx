@@ -1,10 +1,10 @@
 import { getPostByIdAction } from "@/actions/post.action";
 import { getUserAction } from "@/actions/user.action";
-import MumblePost from "@/components/MumblePost";
 import PostReplies from "@/components/section/PostRepliesSection";
 import MumblePostResponseCreator from "@/components/base/MumblePostResponseCreator";
 import { notFound } from "next/navigation";
 import { tv } from "tailwind-variants";
+import MumblePost from "@/components/base/MumblePost";
 
 const postDetailStyles = tv({
   base: [
