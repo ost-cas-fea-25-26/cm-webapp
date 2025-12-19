@@ -41,6 +41,7 @@ const MumblePost = (props: MumbleProps) => {
       onCommentClick={goToPostDetailPage}
       onLikeClick={onLikeButtonClick}
       onShareClick={copyLinkToClipboard}
+      detailLink={postDetailPageUrl}
     ></PostComponent>
   );
 };
