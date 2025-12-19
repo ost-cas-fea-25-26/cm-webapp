@@ -48,7 +48,7 @@ export const isFollowing = async (strangerUserId: string): Promise<boolean> => {
   const authUser = await authServer.getAuthUser();
   const result = await userApiClient.getFollowers(strangerUserId);
   if (!result.hasError && result.data) {
-    var stranger = result.data.data!.find((x) => x.id === authUser.identifier);
+    var stranger = result.data.data!.find((x) => x.id === authUser?.identifier);
     return !!stranger;
   }
 
