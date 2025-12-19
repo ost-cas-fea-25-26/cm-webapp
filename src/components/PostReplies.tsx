@@ -40,6 +40,17 @@ const PostReplies = ({ postId }: PostRepliesProps) => {
     loadReplies();
   }, [postId]);
 
+  useEffect(() => {
+    if (!loading && replies.length > 0 && window.location.hash) {
+      const element = document.querySelector(window.location.hash);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 50);
+      }
+    }
+  }, [loading, replies]);
+
   if (loading) {
     return <Loading />;
   }
@@ -51,7 +62,9 @@ const PostReplies = ({ postId }: PostRepliesProps) => {
   return (
     <div className={postReplyStyles()}>
       {replies.map((reply) => (
-        <PostReply key={reply.id} reply={reply} />
+        <div key={reply.id} id={`reply-${reply.id}`}>
+          <PostReply key={reply.id} reply={reply} />
+        </div>
       ))}
     </div>
   );
