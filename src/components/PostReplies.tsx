@@ -2,11 +2,10 @@
 
 import { getRepliesAction } from "@/actions/post.action";
 import { Reply } from "@/lib/api/posts/post.types";
-import { Response } from "@krrli/cm-designsystem";
 import { useEffect, useState } from "react";
 import { tv } from "tailwind-variants";
-import { decodeTime } from "ulid";
 import Loading from "./Loading";
+import PostReply from "./PostReply";
 
 const postReplyStyles = tv({
   base: [
@@ -49,36 +48,10 @@ const PostReplies = ({ postId }: PostRepliesProps) => {
     return null;
   }
 
-  const getTimestamp = (id: string | undefined) => {
-    return id ? new Date(decodeTime(id)) : undefined;
-  };
-
   return (
     <div className={postReplyStyles()}>
       {replies.map((reply) => (
-        // <MumblePost key={reply.id} post={reply} />
-        <Response
-          key={reply.id}
-          avatarSrc={reply.creator?.avatarUrl ?? ""}
-          displayName={reply.creator?.displayName ?? "Anonymous"}
-          nbrOfComments={0}
-          nbrOfLikes={0}
-          onAvatarClick={() => {
-            console.log("Avatar clicked");
-          }}
-          onCommentClick={() => {
-            console.log("Comment clicked");
-          }}
-          onLikeClick={() => {
-            console.log("Like clicked");
-          }}
-          onShareClick={() => {
-            console.log("Share clicked");
-          }}
-          text={reply.text}
-          timestamp={getTimestamp(reply.id)}
-          userName={reply.creator?.username ?? "anonymous"}
-        />
+        <PostReply key={reply.id} reply={reply} />
       ))}
     </div>
   );
