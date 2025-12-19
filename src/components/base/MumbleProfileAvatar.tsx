@@ -16,7 +16,7 @@ const MumbleProfileAvatar = (props: MumbleProfileAvatarProps) => {
     <Avatar
       alt="Avatar image of your account"
       size="sm"
-      src={props.src}
+      src={props.src ? props.src : "data:,"}
       onAvatarClick={goToProfile}
     ></Avatar>
   );
