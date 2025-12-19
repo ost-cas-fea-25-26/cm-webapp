@@ -11,8 +11,6 @@ type PostReplyProps = {
 };
 
 const PostReply = ({ reply }: PostReplyProps) => {
-  console.log("Rendering reply:", reply);
-
   const replyDetailPageUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/posts/${reply.parentId}#reply-${reply.id}`;
   const profilePageUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/profile/${reply.creator?.id}`;
   const goToProfilePage = () => redirect(profilePageUrl);
