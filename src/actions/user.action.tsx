@@ -4,7 +4,6 @@ import { ApiClient } from "@/lib/api/client";
 import { UserApi } from "@/lib/api/users/user.api";
 import { User } from "@/lib/api/users/user.types";
 import { AuthServer } from "@/lib/auth/server";
-import { updateTag } from "next/cache";
 import { connection } from "next/server";
 
 const apiUrl = process.env.MUMBLE_API_URL;

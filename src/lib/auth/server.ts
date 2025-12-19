@@ -4,7 +4,6 @@ import { genericOAuth } from "better-auth/plugins";
 import { headers } from "next/headers";
 import { AuthUser } from "./auth.types";
 import { cache } from "react";
-import { connection } from "next/server";
 
 const PROVIDER_ID = "zitadel";
 

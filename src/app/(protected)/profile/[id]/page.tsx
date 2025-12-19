@@ -1,7 +1,6 @@
 import { getUserAction, isCurrentUserAction } from "@/actions/user.action";
 import MumbleLoading from "@/components/base/MumbleLoading";
 import MumbleProfileBanner from "@/components/base/MumbleProfileBanner";
-import MumbleProfileTabs from "@/components/base/MumbleProfileTabs";
 import ProfileSection from "@/components/section/ProfileSection";
 import { Suspense } from "react";
 import { tv } from "tailwind-variants";
