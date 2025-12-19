@@ -1,8 +1,8 @@
 import { getPostByIdAction } from "@/actions/post.action";
 import { getUserAction } from "@/actions/user.action";
 import MumblePost from "@/components/MumblePost";
-import PostReplies from "@/components/PostReplies";
-import PostResponseCreator from "@/components/PostResponseCreator";
+import PostReplies from "@/components/section/PostRepliesSection";
+import MumblePostResponseCreator from "@/components/base/MumblePostResponseCreator";
 import { notFound } from "next/navigation";
 import { tv } from "tailwind-variants";
 
@@ -38,7 +38,7 @@ export default async function PostDetailPage({ params }: PostDetailPageProps) {
       <MumblePost post={post} />
 
       {currentUser && post.id && (
-        <PostResponseCreator
+        <MumblePostResponseCreator
           displayName={currentUser?.displayName ?? "Anonymous"}
           userName={currentUser?.username ?? "Anonymous"}
           avatarSrc={currentUser?.avatarUrl ?? undefined}
