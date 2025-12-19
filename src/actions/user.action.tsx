@@ -4,6 +4,8 @@ import { ApiClient } from "@/lib/api/client";
 import { UserApi } from "@/lib/api/users/user.api";
 import { User } from "@/lib/api/users/user.types";
 import { AuthServer } from "@/lib/auth/server";
+import { updateTag } from "next/cache";
+import { connection } from "next/server";
 
 const apiUrl = process.env.MUMBLE_API_URL;
 if (!apiUrl) {
@@ -14,11 +16,11 @@ const apiClient = new ApiClient(apiUrl);
 const userApiClient = new UserApi(apiClient);
 
 export const getUserAction = async (id?: string): Promise<User | undefined> => {
+  await connection();
   if (id) {
     return (await userApiClient.getById(id)).data;
   }
-  const authServer = new AuthServer();
-  const authUser = await authServer.getAuthUser();
+  const authUser = await new AuthServer().getAuthUser();
   if (!authUser?.identifier) {
     throw new Error("Auth user identifier is missing.");
   }
@@ -26,18 +28,18 @@ export const getUserAction = async (id?: string): Promise<User | undefined> => {
 };
 
 export const isCurrentUserAction = async (id: string): Promise<boolean> => {
-  const authServer = new AuthServer();
-  const authUser = await authServer.getAuthUser();
+  const authUser = await new AuthServer().getAuthUser();
   return authUser?.identifier === id;
 };
 
 export const updateAvatarAction = async (
+  userId: string,
   file: File | null
 ): Promise<string | undefined> => {
   if (file) {
-    return (await userApiClient.updateAvatar(file)).data;
+    return (await userApiClient.updateAvatar(userId, file)).data;
   }
-  await userApiClient.deleteAvatar();
+  await userApiClient.deleteAvatar(userId);
 };
 
 export const isFollowing = async (strangerUserId: string): Promise<boolean> => {

@@ -3,6 +3,7 @@
 import { updateAvatarAction } from "@/actions/user.action";
 import { User } from "@/lib/api/users/user.types";
 import { ProfileBanner } from "@krrli/cm-designsystem";
+import { useRouter } from "next/navigation";
 
 export type MumbleProfileBannerProps = {
   user: User;
@@ -10,6 +11,7 @@ export type MumbleProfileBannerProps = {
 };
 
 const MumbleProfileBanner = (props: MumbleProfileBannerProps) => {
+  const router = useRouter();
   return (
     <ProfileBanner
       avatarAlt="Avatar image"
@@ -21,8 +23,8 @@ const MumbleProfileBanner = (props: MumbleProfileBannerProps) => {
       userName={props.user.username}
       isCurrentUser={props.isCurrentUser}
       onAvatarImageChange={async (file) => {
-        await updateAvatarAction(file);
-        window.location.reload();
+        await updateAvatarAction(props.user.id!, file);
+        router.refresh();
       }}
     />
   );

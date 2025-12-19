@@ -1,6 +1,6 @@
 import "../../globals.css";
-import Navbar from "@/components/Navbar";
-import LoginButton from "@/components/LoginButton";
+import MumbleNavbar from "@/components/base/MumbleNavbar";
+import MumbleLoginButton from "@/components/base/MumbleLoginButton";
 import { tv } from "tailwind-variants";
 
 const loginLayoutStyles = tv({
@@ -18,9 +18,9 @@ export default async function LoginLayout({
 
   return (
     <>
-      <Navbar>
-        <LoginButton />
-      </Navbar>
+      <MumbleNavbar>
+        <MumbleLoginButton />
+      </MumbleNavbar>
       <main className={base()}>{children}</main>
     </>
   );

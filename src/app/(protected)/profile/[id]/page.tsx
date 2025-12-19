@@ -1,7 +1,9 @@
 import { getUserAction, isCurrentUserAction } from "@/actions/user.action";
-import MumbleProfileBanner from "@/components/MumbleProfileBanner";
-import ProfileContent from "@/components/ProfileContent";
-import ProfileStrangerContent from "@/components/ProfileStrangerContent";
+import MumbleLoading from "@/components/base/MumbleLoading";
+import MumbleProfileBanner from "@/components/base/MumbleProfileBanner";
+import MumbleProfileTabs from "@/components/base/MumbleProfileTabs";
+import ProfileSection from "@/components/section/ProfileSection";
+import { Suspense } from "react";
 import { tv } from "tailwind-variants";
 
 const profileStyles = tv({
@@ -25,14 +27,9 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
         user={user!}
         isCurrentUser={isCurrentUser}
       ></MumbleProfileBanner>
-      {isCurrentUser ? (
-        <ProfileContent userId={userId} />
-      ) : (
-        <ProfileStrangerContent
-          userId={userId}
-          displayName={user?.displayName!}
-        />
-      )}
+      <Suspense fallback={<MumbleLoading />}>
+        <ProfileSection userId={userId} displayName={user?.displayName!} />
+      </Suspense>
     </div>
   );
 }

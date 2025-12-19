@@ -1,7 +1,7 @@
 import { Paragraph } from "@krrli/cm-designsystem";
 
-const Loading = () => {
+const MumbleLoading = () => {
   return <Paragraph size="lg">Loading...</Paragraph>;
 };
 
-export default Loading;
+export default MumbleLoading;

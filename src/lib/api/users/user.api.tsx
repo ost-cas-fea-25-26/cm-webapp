@@ -1,3 +1,4 @@
+import { updateTag } from "next/cache";
 import { ApiClient } from "../client";
 import { ApiResponse } from "../client.types";
 import { PagedUsers, User } from "./user.types";
@@ -12,11 +13,15 @@ export class UserApi {
   public async getById(id: string): Promise<ApiResponse<User>> {
     const response = await this.apiClient.client.GET("/users/{id}", {
       params: { path: { id } },
+      next: { tags: [`user:${id}`], revalidate: 300 },
     });
     return this.apiClient.handleResponse(response);
   }
 
-  public async updateAvatar(file: File): Promise<ApiResponse<string>> {
+  public async updateAvatar(
+    userId: string,
+    file: File
+  ): Promise<ApiResponse<string>> {
     const form = new FormData();
     form.append("media", file);
 
@@ -26,15 +31,17 @@ export class UserApi {
       body: form,
       headers: await this.apiClient.getAuthHeaders(),
     });
+    updateTag(`user:${userId}`);
 
     const url = await res.text();
     return { hasError: false, data: url } as ApiResponse<string>;
   }
 
-  public async deleteAvatar(): Promise<ApiResponse<void>> {
+  public async deleteAvatar(userId: string): Promise<ApiResponse<void>> {
     const response = await this.apiClient.client.DELETE("/users/avatar", {
       headers: await this.apiClient.getAuthHeaders(),
     });
+    updateTag(`user:${userId}`);
     return this.apiClient.handleResponse(response);
   }
 

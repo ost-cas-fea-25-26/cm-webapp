@@ -10,7 +10,7 @@ const loginButtonStyles = tv({
   },
 });
 
-const SettingsButton = () => {
+const MumbleSettingsButton = () => {
   const { base, icon } = loginButtonStyles();
   return (
     <NaviButton
@@ -24,4 +24,4 @@ const SettingsButton = () => {
   );
 };
 
-export default SettingsButton;
+export default MumbleSettingsButton;

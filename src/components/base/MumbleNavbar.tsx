@@ -3,7 +3,7 @@
 import { tv, VariantProps } from "tailwind-variants";
 import { LogoLink } from "@krrli/cm-designsystem";
 
-const navbarStyles = tv({
+const mumbleNavbarStyles = tv({
   slots: {
     base: [
       "bg-violet-600",
@@ -22,14 +22,14 @@ const navbarStyles = tv({
   },
 });
 
-type NavbarVariants = VariantProps<typeof navbarStyles>;
+type NavbarVariants = VariantProps<typeof mumbleNavbarStyles>;
 
 interface NavbarProps extends NavbarVariants {
   children: React.ReactElement | React.ReactElement[];
 }
 
-const Navbar = async (props: NavbarProps) => {
-  const { base, navigation, action } = navbarStyles();
+const MumbleNavbar = async (props: NavbarProps) => {
+  const { base, navigation, action } = mumbleNavbarStyles();
 
   return (
     <header className={base()}>
@@ -41,4 +41,4 @@ const Navbar = async (props: NavbarProps) => {
   );
 };
 
-export default Navbar;
+export default MumbleNavbar;
