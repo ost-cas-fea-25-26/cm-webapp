@@ -5,7 +5,7 @@ import { tv } from "tailwind-variants";
 
 const loginLayoutStyles = tv({
   slots: {
-    base: ["w-170"],
+    base: ["w-full", "max-w-5xl", "mx-auto", "px-4"],
   },
 });
 

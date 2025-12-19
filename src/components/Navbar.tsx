@@ -15,9 +15,10 @@ const navbarStyles = tv({
       "sticky",
       "top-0",
       "z-50",
+      "px-4",
     ],
-    navigation: ["flex", "justify-between", "max-w-170", "w-170"],
-    action: ["flex", "gap-4", "items-center"],
+    navigation: ["flex", "justify-between", "w-full", "max-w-5xl"],
+    action: ["flex", "gap-1", "sm:gap-4", "items-center"],
   },
 });
 
