@@ -30,7 +30,6 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
       ) : (
         <ProfileStrangerContent
           userId={userId}
-          isFollowing={false}
           displayName={user?.displayName!}
         />
       )}

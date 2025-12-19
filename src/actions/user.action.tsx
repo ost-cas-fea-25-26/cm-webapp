@@ -39,3 +39,23 @@ export const updateAvatarAction = async (
   }
   await userApiClient.deleteAvatar();
 };
+
+export const isFollowing = async (strangerUserId: string): Promise<boolean> => {
+  const authServer = new AuthServer();
+  const authUser = await authServer.getAuthUser();
+  const result = await userApiClient.getFollowers(strangerUserId);
+  if (!result.hasError && result.data) {
+    var stranger = result.data.data!.find((x) => x.id === authUser.identifier);
+    return !!stranger;
+  }
+
+  return false;
+};
+
+export const followUser = async (strangerUserId: string): Promise<void> => {
+  await userApiClient.followUser(strangerUserId);
+};
+
+export const unfollowUser = async (strangerUserId: string): Promise<void> => {
+  await userApiClient.unfollowUser(strangerUserId);
+};
