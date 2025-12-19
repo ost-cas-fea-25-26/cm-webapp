@@ -9,8 +9,10 @@ import { tv } from "tailwind-variants";
 const postDetailStyles = tv({
   base: [
     "mx-auto",
-    "max-w-3xl",
-    "my-12",
+    "w-full",
+    "max-w-5xl",
+    "my-4",
+    "sm:my-12",
     "bg-white",
     "flex",
     "flex-col",
