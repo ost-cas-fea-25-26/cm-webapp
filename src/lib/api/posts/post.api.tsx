@@ -73,6 +73,7 @@ export class PostApi {
       params: { path: { id: postId } },
       body: form as any,
     });
+    updateTag("posts");
     return this.apiClient.handleResponse(response);
   }
 
