@@ -1,7 +1,6 @@
-"use cache";
-
 import { tv, VariantProps } from "tailwind-variants";
 import { LogoLink } from "@krrli/cm-designsystem";
+import MobileNav from "../MobileNav";
 
 const mumbleNavbarStyles = tv({
   slots: {
@@ -18,7 +17,7 @@ const mumbleNavbarStyles = tv({
       "px-4",
     ],
     navigation: ["flex", "justify-between", "w-full", "max-w-5xl"],
-    action: ["flex", "gap-1", "sm:gap-4", "items-center"],
+    action: ["hidden", "md:flex", "gap-1", "sm:gap-4", "items-center"],
   },
 });
 
@@ -28,7 +27,7 @@ interface NavbarProps extends NavbarVariants {
   children: React.ReactElement | React.ReactElement[];
 }
 
-const MumbleNavbar = async (props: NavbarProps) => {
+const MumbleNavbar = (props: NavbarProps) => {
   const { base, navigation, action } = mumbleNavbarStyles();
 
   return (
@@ -36,6 +35,7 @@ const MumbleNavbar = async (props: NavbarProps) => {
       <nav className={navigation()}>
         <LogoLink />
         <div className={action()}>{props.children}</div>
+        <MobileNav>{props.children}</MobileNav>
       </nav>
     </header>
   );
