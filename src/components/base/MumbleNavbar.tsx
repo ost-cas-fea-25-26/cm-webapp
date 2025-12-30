@@ -17,7 +17,8 @@ const mumbleNavbarStyles = tv({
       "px-4",
     ],
     navigation: ["flex", "justify-between", "w-full", "max-w-5xl"],
-    action: ["hidden", "md:flex", "gap-1", "sm:gap-4", "items-center"],
+    desktopAction: ["hidden", "md:flex", "gap-4", "items-center"],
+    mobileNav: ["flex", "md:hidden"],
   },
 });
 
@@ -28,14 +29,16 @@ interface NavbarProps extends NavbarVariants {
 }
 
 const MumbleNavbar = (props: NavbarProps) => {
-  const { base, navigation, action } = mumbleNavbarStyles();
+  const { base, navigation, desktopAction, mobileNav } = mumbleNavbarStyles();
 
   return (
     <header className={base()}>
       <nav className={navigation()}>
         <LogoLink />
-        <div className={action()}>{props.children}</div>
-        <MobileNav>{props.children}</MobileNav>
+        <div className={desktopAction()}>{props.children}</div>
+        <div className={mobileNav()}>
+          <MobileNav>{props.children}</MobileNav>
+        </div>
       </nav>
     </header>
   );

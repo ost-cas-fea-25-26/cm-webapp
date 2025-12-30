@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import { tv } from "tailwind-variants";
+import { Poppins } from "next/font/google";
 import "./globals.css";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-poppins",
+});
 
 export const metadata: Metadata = {
   title: "Mumble App",
@@ -21,7 +28,7 @@ export default async function RootLayout({
   const { base } = rootLayoutStyles();
 
   return (
-    <html lang="en">
+    <html lang="en" className={poppins.variable}>
       <body className={base()}>{children}</body>
     </html>
   );

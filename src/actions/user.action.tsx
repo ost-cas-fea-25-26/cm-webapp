@@ -62,3 +62,23 @@ export const followUser = async (strangerUserId: string): Promise<void> => {
 export const unfollowUser = async (strangerUserId: string): Promise<void> => {
   await userApiClient.unfollowUser(strangerUserId);
 };
+
+export const updateUserAction = async (
+  userId: string,
+  data: {
+    username?: string | null;
+    firstname?: string | null;
+    lastname?: string | null;
+  }
+): Promise<{ success: boolean; error?: string }> => {
+  try {
+    const result = await userApiClient.updateUser(userId, data);
+    if (result.hasError) {
+      return { success: false, error: result.error || "Failed to update user" };
+    }
+    return { success: true };
+  } catch (error) {
+    console.error("Error updating user:", error);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+};
