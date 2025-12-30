@@ -13,6 +13,7 @@ import {
 import { useState } from "react";
 import { tv } from "tailwind-variants";
 import SettingsForm from "../SettingsForm";
+import { getUserAction } from "@/actions/user.action";
 
 const loginButtonStyles = tv({
   slots: {
@@ -29,7 +30,11 @@ const MumbleSettingsButton = (props: MumbleSettingsButtonProps) => {
   const { base, icon } = loginButtonStyles();
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
 
+  // todo: load user (firstname, lastname, username)
+  const user = await getUserAction(props.userId);
+
   return (
+    user ?
     <>
       <NaviButton
         className={base()}
@@ -43,14 +48,20 @@ const MumbleSettingsButton = (props: MumbleSettingsButtonProps) => {
         Settings
       </NaviButton>
       <Modal
-        onOpenChange={() => {
-          setSettingsModalOpen(!settingsModalOpen);
-        }}
-        title="Einstellungen"
         open={settingsModalOpen}
+        onOpenChange={setSettingsModalOpen}
+        title="Einstellungen"
       >
         <ModalBody>
-          <SettingsForm />
+          <SettingsForm
+            userId={props.userId}
+            defaultValues={{
+              username: user.username ?? "",
+              firstname: user.firstname ?? "",
+              lastname: user.lastname ?? "",
+            }}
+            onSuccess={() => setSettingsModalOpen(false)}
+          />
         </ModalBody>
         <ModalActions>
           <Button
@@ -63,7 +74,7 @@ const MumbleSettingsButton = (props: MumbleSettingsButtonProps) => {
           >
             Cancel
           </Button>
-          <Button
+          {/* <Button
             icon={Checkmark}
             intent="secondary"
             onClick={() => {
@@ -72,7 +83,7 @@ const MumbleSettingsButton = (props: MumbleSettingsButtonProps) => {
             size="md"
           >
             Save
-          </Button>
+          </Button> */}
         </ModalActions>
       </Modal>
     </>

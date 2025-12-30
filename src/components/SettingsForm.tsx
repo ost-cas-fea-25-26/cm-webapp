@@ -9,15 +9,21 @@ import { Button, Form, Input } from "@krrli/cm-designsystem";
 //   },
 // });
 
-export type SettingsFormProps = {
+type SettingsFormProps = {
   userId: string;
+  defaultValues: {
+    username: string;
+    firstname: string;
+    lastname: string;
+  };
+  onSuccess: () => void;
 };
 
-// const SettingsForm = (props: SettingsFormProps) => {
-const SettingsForm = () => {
-  // const { base, icon } = loginButtonStyles();
-  // const [settingsModalOpen, setSettingsModalOpen] = useState(false);
-
+const SettingsForm = ({
+  userId,
+  defaultValues,
+  onSuccess,
+}: SettingsFormProps) => {
   return (
     <Form>
       <Form.Fields>
@@ -30,12 +36,20 @@ const SettingsForm = () => {
           label="Username"
         />
         <Input
-          name="Email"
-          placeholder="Email"
+          name="Firstname"
+          placeholder="Firstname"
           onChange={() => {
             console.log("changed");
           }}
-          label="Input"
+          label="Firstname"
+        />
+        <Input
+          name="Lastname"
+          placeholder="Lastname"
+          onChange={() => {
+            console.log("changed");
+          }}
+          label="Lastname"
         />
       </Form.Fields>
       <Form.Action>
