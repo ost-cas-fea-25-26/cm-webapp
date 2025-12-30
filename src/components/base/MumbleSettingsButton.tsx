@@ -20,6 +20,7 @@ export type MumbleSettingsButtonProps = {
 };
 
 const MumbleSettingsButton = (props: MumbleSettingsButtonProps) => {
+  console.log("----- ", props.user, "-----");
   const { base, icon } = loginButtonStyles();
   const router = useRouter();
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);

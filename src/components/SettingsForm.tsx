@@ -45,7 +45,7 @@ const SettingsForm = ({
             onChange={onUsernameChange}
             // disabled={isSubmitting}
           />
-          <Input
+          {/* <Input
             name="firstname"
             label="Vorname"
             placeholder="Vornamen eingeben"
@@ -60,7 +60,7 @@ const SettingsForm = ({
             value={lastname}
             onChange={onLastnameChange}
             // disabled={isSubmitting}
-          />
+          /> */}
         </>
       }
       action={
