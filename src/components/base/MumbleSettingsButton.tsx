@@ -13,7 +13,7 @@ import {
 import { useState } from "react";
 import { tv } from "tailwind-variants";
 import SettingsForm from "../SettingsForm";
-import { getUserAction } from "@/actions/user.action";
+import { User } from "@/lib/api/users/user.types";
 
 const loginButtonStyles = tv({
   slots: {
@@ -23,18 +23,14 @@ const loginButtonStyles = tv({
 });
 
 export type MumbleSettingsButtonProps = {
-  userId: string;
+  user: User;
 };
 
 const MumbleSettingsButton = (props: MumbleSettingsButtonProps) => {
   const { base, icon } = loginButtonStyles();
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
 
-  // todo: load user (firstname, lastname, username)
-  const user = await getUserAction(props.userId);
-
   return (
-    user ?
     <>
       <NaviButton
         className={base()}
@@ -54,12 +50,7 @@ const MumbleSettingsButton = (props: MumbleSettingsButtonProps) => {
       >
         <ModalBody>
           <SettingsForm
-            userId={props.userId}
-            defaultValues={{
-              username: user.username ?? "",
-              firstname: user.firstname ?? "",
-              lastname: user.lastname ?? "",
-            }}
+            user={props.user}
             onSuccess={() => setSettingsModalOpen(false)}
           />
         </ModalBody>
@@ -74,16 +65,6 @@ const MumbleSettingsButton = (props: MumbleSettingsButtonProps) => {
           >
             Cancel
           </Button>
-          {/* <Button
-            icon={Checkmark}
-            intent="secondary"
-            onClick={() => {
-              console.log("Save clicked");
-            }}
-            size="md"
-          >
-            Save
-          </Button> */}
         </ModalActions>
       </Modal>
     </>

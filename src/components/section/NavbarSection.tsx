@@ -15,7 +15,7 @@ const NavbarSection = async () => {
             userId={mumbleUser.id!}
             src={mumbleUser!.avatarUrl!}
           />
-          <MumbleSettingsButton userId={mumbleUser.id!} />
+          <MumbleSettingsButton user={mumbleUser} />
         </>
       ) : (
         <></>
