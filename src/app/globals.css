@@ -1,2 +1,29 @@
-@import "@krrli/cm-designsystem/dist/cm-designsystem.css";
 @import "tailwindcss";
+@import "@krrli/cm-designsystem/styles.css";
+
+/* Navbar responsive styles - explicit to ensure generation */
+.hidden {
+  display: none;
+}
+
+.flex {
+  display: flex;
+}
+
+.md\:flex {
+  display: none;
+}
+
+.md\:hidden {
+  display: flex;
+}
+
+@media (min-width: 768px) {
+  .md\:flex {
+    display: flex;
+  }
+
+  .md\:hidden {
+    display: none;
+  }
+}
