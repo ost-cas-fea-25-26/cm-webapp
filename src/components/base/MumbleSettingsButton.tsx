@@ -12,6 +12,7 @@ import {
 } from "@krrli/cm-designsystem";
 import { useState } from "react";
 import { tv } from "tailwind-variants";
+import SettingsForm from "../SettingsForm";
 
 const loginButtonStyles = tv({
   slots: {
@@ -20,9 +21,14 @@ const loginButtonStyles = tv({
   },
 });
 
-const MumbleSettingsButton = () => {
+export type MumbleSettingsButtonProps = {
+  userId: string;
+};
+
+const MumbleSettingsButton = (props: MumbleSettingsButtonProps) => {
   const { base, icon } = loginButtonStyles();
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
+
   return (
     <>
       <NaviButton
@@ -40,10 +46,12 @@ const MumbleSettingsButton = () => {
         onOpenChange={() => {
           setSettingsModalOpen(!settingsModalOpen);
         }}
-        title="Modal"
+        title="Einstellungen"
         open={settingsModalOpen}
       >
-        <ModalBody>Hello, this is a Modal!!!</ModalBody>
+        <ModalBody>
+          <SettingsForm />
+        </ModalBody>
         <ModalActions>
           <Button
             icon={Cancel}

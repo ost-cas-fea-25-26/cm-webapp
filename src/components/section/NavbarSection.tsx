@@ -10,14 +10,17 @@ const NavbarSection = async () => {
   return (
     <MumbleNavbar>
       {mumbleUser ? (
-        <MumbleProfileAvatar
-          userId={mumbleUser.id!}
-          src={mumbleUser!.avatarUrl!}
-        />
+        <>
+          <MumbleProfileAvatar
+            userId={mumbleUser.id!}
+            src={mumbleUser!.avatarUrl!}
+          />
+          <MumbleSettingsButton userId={mumbleUser.id!} />
+        </>
       ) : (
         <></>
       )}
-      <MumbleSettingsButton />
+
       <MumbleLogoutButton />
     </MumbleNavbar>
   );
