@@ -71,4 +71,20 @@ export class UserApi {
     );
     return this.apiClient.handleResponse(response);
   }
+
+  public async updateUser(
+    userId: string,
+    data: {
+      username?: string | null;
+      firstname?: string | null;
+      lastname?: string | null;
+    }
+  ): Promise<ApiResponse<void>> {
+    const response = await this.apiClient.client.PATCH("/users", {
+      headers: await this.apiClient.getAuthHeaders(),
+      body: data,
+    });
+    updateTag(`user:${userId}`);
+    return this.apiClient.handleResponse(response);
+  }
 }

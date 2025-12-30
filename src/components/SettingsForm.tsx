@@ -2,52 +2,64 @@
 
 import { User } from "@/lib/api/users/user.types";
 import { Button, Cancel, Checkmark, Form, Input } from "@krrli/cm-designsystem";
-import { useState } from "react";
 
 type SettingsFormProps = {
   user: User;
-  onSuccess: () => void;
+  username: string;
+  firstname: string;
+  lastname: string;
+  isSubmitting: boolean;
+  error: string | null;
+  onUsernameChange: (value: string) => void;
+  onFirstnameChange: (value: string) => void;
+  onLastnameChange: (value: string) => void;
+  onSubmit: () => void;
   onCancel: () => void;
 };
 
-const SettingsForm = ({ user, onSuccess, onCancel }: SettingsFormProps) => {
-  const [username, setUsername] = useState(user.username ?? "öper");
-  const [firstname, setFirstname] = useState(user.firstname ?? "");
-  const [lastname, setLastname] = useState(user.lastname ?? "");
-
-  console.log("username: ", username);
-
-  const handleSubmit = async (data: Record<string, any>) => {
-    console.log("change setting for user: ", user);
-    console.log("Submitted data:", { data });
-
-    onSuccess();
-  };
-
+const SettingsForm = ({
+  // user,
+  username,
+  firstname,
+  lastname,
+  isSubmitting,
+  error,
+  onUsernameChange,
+  onFirstnameChange,
+  onLastnameChange,
+  onSubmit,
+  onCancel,
+}: SettingsFormProps) => {
   return (
     <Form
       fields={
         <>
+          {error && (
+            <div style={{ color: "red", marginBottom: "1rem" }}>{error}</div>
+          )}
           <Input
             name="username"
             label="Username"
             placeholder="Enter username"
             value={username}
-            onChange={setUsername}
+            onChange={onUsernameChange}
+            // disabled={isSubmitting}
           />
           <Input
             name="firstname"
             label="Vorname"
             placeholder="Vornamen eingeben"
             value={firstname}
-            onChange={setFirstname}
+            onChange={onFirstnameChange}
+            // disabled={isSubmitting}
           />
           <Input
             name="lastname"
             label="Nachname"
             placeholder="Nachnamen eingeben"
             value={lastname}
-            onChange={setLastname}
+            onChange={onLastnameChange}
+            // disabled={isSubmitting}
           />
         </>
       }
@@ -55,15 +67,27 @@ const SettingsForm = ({ user, onSuccess, onCancel }: SettingsFormProps) => {
         <div
           style={{ display: "flex", gap: "1rem", justifyContent: "flex-end" }}
         >
-          <Button intent="primary" size="md" onClick={onCancel} icon={Cancel}>
+          <Button
+            intent="primary"
+            size="md"
+            onClick={onCancel}
+            icon={Cancel}
+            // disabled={isSubmitting}
+          >
             Abbrechen
           </Button>
-          <Button type="submit" intent="secondary" size="md" icon={Checkmark}>
-            Speichern
+          <Button
+            type="submit"
+            intent="secondary"
+            size="md"
+            icon={Checkmark}
+            // disabled={isSubmitting}
+          >
+            {isSubmitting ? "Speichert..." : "Speichern"}
           </Button>
         </div>
       }
-      onSubmit={handleSubmit}
+      onSubmit={onSubmit}
     />
   );
 };

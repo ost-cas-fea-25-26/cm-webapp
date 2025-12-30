@@ -1,7 +1,9 @@
 "use client";
 
+import { updateUserAction } from "@/actions/user.action";
 import { User } from "@/lib/api/users/user.types";
 import { Modal, ModalBody, NaviButton, Settings } from "@krrli/cm-designsystem";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { tv } from "tailwind-variants";
 import SettingsForm from "../SettingsForm";
@@ -19,7 +21,44 @@ export type MumbleSettingsButtonProps = {
 
 const MumbleSettingsButton = (props: MumbleSettingsButtonProps) => {
   const { base, icon } = loginButtonStyles();
+  const router = useRouter();
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
+  const [username, setUsername] = useState(props.user.username ?? "");
+  const [firstname, setFirstname] = useState(props.user.firstname ?? "");
+  const [lastname, setLastname] = useState(props.user.lastname ?? "");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async () => {
+    if (!props.user.id) return;
+
+    setIsSubmitting(true);
+    setError(null);
+
+    const result = await updateUserAction(props.user.id, {
+      username: username || null,
+      firstname: firstname || null,
+      lastname: lastname || null,
+    });
+
+    setIsSubmitting(false);
+
+    if (result.success) {
+      setSettingsModalOpen(false);
+      router.refresh(); // Refresh to get updated user data
+    } else {
+      setError(result.error || "Failed to update profile");
+    }
+  };
+
+  const handleCancel = () => {
+    setSettingsModalOpen(false);
+    setError(null);
+    // Reset to original values
+    setUsername(props.user.username ?? "");
+    setFirstname(props.user.firstname ?? "");
+    setLastname(props.user.lastname ?? "");
+  };
 
   return (
     <>
@@ -29,6 +68,11 @@ const MumbleSettingsButton = (props: MumbleSettingsButtonProps) => {
         iconClassName={icon()}
         intent="secondary"
         onClick={() => {
+          // Load fresh data when opening modal
+          setUsername(props.user.username ?? "");
+          setFirstname(props.user.firstname ?? "");
+          setLastname(props.user.lastname ?? "");
+          setError(null);
           setSettingsModalOpen(true);
         }}
       >
@@ -42,8 +86,16 @@ const MumbleSettingsButton = (props: MumbleSettingsButtonProps) => {
         <ModalBody>
           <SettingsForm
             user={props.user}
-            onSuccess={() => setSettingsModalOpen(false)}
-            onCancel={() => setSettingsModalOpen(false)}
+            username={username}
+            firstname={firstname}
+            lastname={lastname}
+            isSubmitting={isSubmitting}
+            error={error}
+            onUsernameChange={setUsername}
+            onFirstnameChange={setFirstname}
+            onLastnameChange={setLastname}
+            onSubmit={handleSubmit}
+            onCancel={handleCancel}
           />
         </ModalBody>
       </Modal>
