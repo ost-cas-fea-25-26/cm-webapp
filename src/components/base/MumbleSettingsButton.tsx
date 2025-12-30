@@ -62,10 +62,7 @@ const MumbleSettingsButton = (props: MumbleSettingsButtonProps) => {
         iconClassName={icon()}
         intent="secondary"
         onClick={() => {
-          // Load fresh data when opening modal
           setUsername(props.user.username ?? "");
-          setFirstname(props.user.firstname ?? "");
-          setLastname(props.user.lastname ?? "");
           setError(null);
           setSettingsModalOpen(true);
         }}
