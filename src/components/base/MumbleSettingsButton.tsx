@@ -1,19 +1,10 @@
 "use client";
 
-import {
-  Button,
-  Cancel,
-  Checkmark,
-  Modal,
-  ModalActions,
-  ModalBody,
-  NaviButton,
-  Settings,
-} from "@krrli/cm-designsystem";
+import { User } from "@/lib/api/users/user.types";
+import { Modal, ModalBody, NaviButton, Settings } from "@krrli/cm-designsystem";
 import { useState } from "react";
 import { tv } from "tailwind-variants";
 import SettingsForm from "../SettingsForm";
-import { User } from "@/lib/api/users/user.types";
 
 const loginButtonStyles = tv({
   slots: {
@@ -52,20 +43,9 @@ const MumbleSettingsButton = (props: MumbleSettingsButtonProps) => {
           <SettingsForm
             user={props.user}
             onSuccess={() => setSettingsModalOpen(false)}
+            onCancel={() => setSettingsModalOpen(false)}
           />
         </ModalBody>
-        <ModalActions>
-          <Button
-            icon={Cancel}
-            intent="primary"
-            onClick={() => {
-              setSettingsModalOpen(false);
-            }}
-            size="md"
-          >
-            Cancel
-          </Button>
-        </ModalActions>
       </Modal>
     </>
   );

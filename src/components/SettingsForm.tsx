@@ -1,27 +1,26 @@
 "use client";
 
 import { User } from "@/lib/api/users/user.types";
-import { Button, Form, Input } from "@krrli/cm-designsystem";
-
-// const loginButtonStyles = tv({
-//   slots: {
-//     base: ["group"],
-//     icon: ["transition", "group-hover:rotate-90", "duration-350"],
-//   },
-// });
+import { Button, Cancel, Checkmark, Form, Input } from "@krrli/cm-designsystem";
+import { useState } from "react";
 
 type SettingsFormProps = {
   user: User;
   onSuccess: () => void;
+  onCancel: () => void;
 };
 
-const SettingsForm = ({ user, onSuccess }: SettingsFormProps) => {
+const SettingsForm = ({ user, onSuccess, onCancel }: SettingsFormProps) => {
+  const [username, setUsername] = useState(user.username ?? "öper");
+  const [firstname, setFirstname] = useState(user.firstname ?? "");
+  const [lastname, setLastname] = useState(user.lastname ?? "");
+
+  console.log("username: ", username);
+
   const handleSubmit = async (data: Record<string, any>) => {
     console.log("change setting for user: ", user);
-    console.log("Submitted data:", data);
-    // Here you would typically send the data to your backend API
-    // For example:
-    // await updateUserSettingsAction(user.id, data);
+    console.log("Submitted data:", { data });
+
     onSuccess();
   };
 
@@ -32,59 +31,40 @@ const SettingsForm = ({ user, onSuccess }: SettingsFormProps) => {
           <Input
             name="username"
             label="Username"
-            placeholder={""}
-            onChange={function (value: string): void {
-              console.log("value", value);
-            }} // defaultValue={defaultValues.username}
+            placeholder="Enter username"
+            value={username}
+            onChange={setUsername}
           />
           <Input
-            name="email"
-            label="Email"
-            placeholder={""}
-            onChange={function (value: string): void {
-              console.log("value", value);
-            }} // defaultValue={defaultValues.username}faultValue={defaultValues.email}
+            name="firstname"
+            label="Vorname"
+            placeholder="Vornamen eingeben"
+            value={firstname}
+            onChange={setFirstname}
+          />
+          <Input
+            name="lastname"
+            label="Nachname"
+            placeholder="Nachnamen eingeben"
+            value={lastname}
+            onChange={setLastname}
           />
         </>
       }
       action={
-        <Button type="submit" intent={"secondary"} size={"md"}>
-          Save
-          {/* {isSaving ? "Saving…" : "Save"} */}
-        </Button>
+        <div
+          style={{ display: "flex", gap: "1rem", justifyContent: "flex-end" }}
+        >
+          <Button intent="primary" size="md" onClick={onCancel} icon={Cancel}>
+            Abbrechen
+          </Button>
+          <Button type="submit" intent="secondary" size="md" icon={Checkmark}>
+            Speichern
+          </Button>
+        </div>
       }
       onSubmit={handleSubmit}
     />
-
-    // <Form fields={undefined} action={onSuccess}>
-    //   <Input
-    //     name="Username"
-    //     placeholder="Username"
-    //     onChange={() => {
-    //       console.log("changed");
-    //     }}
-    //     label="Username"
-    //   />
-    //   <Input
-    //     name="Firstname"
-    //     placeholder="Firstname"
-    //     onChange={() => {
-    //       console.log("changed");
-    //     }}
-    //     label="Firstname"
-    //   />
-    //   <Input
-    //     name="Lastname"
-    //     placeholder="Lastname"
-    //     onChange={() => {
-    //       console.log("changed");
-    //     }}
-    //     label="Lastname"
-    //   />
-    //   <Button type="submit" intent="primary" size="md" onClick={onSuccess}>
-    //     Submit
-    //   </Button>
-    // </Form>
   );
 };
 
