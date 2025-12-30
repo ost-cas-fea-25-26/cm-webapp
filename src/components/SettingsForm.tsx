@@ -6,27 +6,18 @@ import { Button, Cancel, Checkmark, Form, Input } from "@krrli/cm-designsystem";
 type SettingsFormProps = {
   user: User;
   username: string;
-  firstname: string;
-  lastname: string;
   isSubmitting: boolean;
   error: string | null;
   onUsernameChange: (value: string) => void;
-  onFirstnameChange: (value: string) => void;
-  onLastnameChange: (value: string) => void;
   onSubmit: () => void;
   onCancel: () => void;
 };
 
 const SettingsForm = ({
-  // user,
   username,
-  firstname,
-  lastname,
   isSubmitting,
   error,
   onUsernameChange,
-  onFirstnameChange,
-  onLastnameChange,
   onSubmit,
   onCancel,
 }: SettingsFormProps) => {
@@ -43,24 +34,7 @@ const SettingsForm = ({
             placeholder="Enter username"
             value={username}
             onChange={onUsernameChange}
-            // disabled={isSubmitting}
           />
-          {/* <Input
-            name="firstname"
-            label="Vorname"
-            placeholder="Vornamen eingeben"
-            value={firstname}
-            onChange={onFirstnameChange}
-            // disabled={isSubmitting}
-          />
-          <Input
-            name="lastname"
-            label="Nachname"
-            placeholder="Nachnamen eingeben"
-            value={lastname}
-            onChange={onLastnameChange}
-            // disabled={isSubmitting}
-          /> */}
         </>
       }
       action={

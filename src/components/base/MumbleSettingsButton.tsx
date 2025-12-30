@@ -24,8 +24,6 @@ const MumbleSettingsButton = (props: MumbleSettingsButtonProps) => {
   const router = useRouter();
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
   const [username, setUsername] = useState(props.user.username ?? "");
-  const [firstname, setFirstname] = useState(props.user.firstname ?? "");
-  const [lastname, setLastname] = useState(props.user.lastname ?? "");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -37,8 +35,6 @@ const MumbleSettingsButton = (props: MumbleSettingsButtonProps) => {
 
     const result = await updateUserAction(props.user.id, {
       username: username || null,
-      firstname: firstname || null,
-      lastname: lastname || null,
     });
 
     setIsSubmitting(false);
@@ -56,8 +52,6 @@ const MumbleSettingsButton = (props: MumbleSettingsButtonProps) => {
     setError(null);
     // Reset to original values
     setUsername(props.user.username ?? "");
-    setFirstname(props.user.firstname ?? "");
-    setLastname(props.user.lastname ?? "");
   };
 
   return (
@@ -87,13 +81,9 @@ const MumbleSettingsButton = (props: MumbleSettingsButtonProps) => {
           <SettingsForm
             user={props.user}
             username={username}
-            firstname={firstname}
-            lastname={lastname}
             isSubmitting={isSubmitting}
             error={error}
             onUsernameChange={setUsername}
-            onFirstnameChange={setFirstname}
-            onLastnameChange={setLastname}
             onSubmit={handleSubmit}
             onCancel={handleCancel}
           />
