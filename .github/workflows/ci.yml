@@ -86,6 +86,10 @@ jobs:
     needs: build
     env:
       ZITADEL_CLIENT_ID: test-client-id
+      ZITADEL_PROJECT_ID: test-project-id
+      AUTH_SECRET: test-auth-secret-min-32-chars-long-for-security
+      MUMBLE_API_URL: https://mumble-api-prod-714602723919.europe-west6.run.app
+      BASE_URL: http://localhost:3000
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
