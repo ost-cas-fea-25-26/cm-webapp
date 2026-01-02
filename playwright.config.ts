@@ -1,6 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
 
-const BASE_URL = process.env.TEST_BASE_URL || "http://localhost:6006";
+const BASE_URL = process.env.TEST_BASE_URL || "http://localhost:3000";
 
 /**
  * See https://playwright.dev/docs/test-configuration.
