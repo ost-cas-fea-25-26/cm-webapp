@@ -1,12 +1,12 @@
 import type { FetchResponse } from "openapi-fetch";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ApiClient } from "./client";
 
 describe("ApiClient - handleResponse", () => {
   let apiClient: ApiClient;
 
   beforeEach(() => {
-    apiClient = new ApiClient("https://api.example.com");
+    apiClient = new ApiClient("https://api.mumble.com");
   });
 
   it("success case", () => {
@@ -51,5 +51,50 @@ describe("ApiClient - handleResponse", () => {
 
     expect(result.hasError).toBe(true);
     expect(result.error).toBe("HTTP Response Status: 500");
+  });
+});
+
+describe("ApiClient - getAuthHeaders", () => {
+  let apiClient: ApiClient;
+
+  beforeEach(() => {
+    apiClient = new ApiClient("https://api.mumble.com");
+  });
+
+  it("success case - token exists", async () => {
+    const mockedAccessToken: {
+      accessToken: string;
+      accessTokenExpiresAt: Date | undefined;
+      scopes: string[];
+      idToken: string | undefined;
+    } | null = {
+      accessToken: "test-token-123",
+      accessTokenExpiresAt: undefined,
+      scopes: [],
+      idToken: undefined,
+    };
+    const spy = vi
+      .spyOn(apiClient["authServer"], "getAccessToken")
+      .mockResolvedValue(mockedAccessToken);
+    expect(spy).not.toHaveBeenCalled();
+
+    const result = await apiClient.getAuthHeaders();
+    expect(result).toEqual({ Authorization: "Bearer test-token-123" });
+  });
+
+  it("failure case - no token", async () => {
+    const mockedAccessToken: {
+      accessToken: string;
+      accessTokenExpiresAt: Date | undefined;
+      scopes: string[];
+      idToken: string | undefined;
+    } | null = null;
+    const spy = vi
+      .spyOn(apiClient["authServer"], "getAccessToken")
+      .mockResolvedValue(mockedAccessToken);
+    expect(spy).not.toHaveBeenCalled();
+
+    const result = await apiClient.getAuthHeaders();
+    expect(result).toEqual({});
   });
 });
