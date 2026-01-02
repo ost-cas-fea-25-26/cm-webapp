@@ -1,7 +1,15 @@
 import { updateTag } from "next/cache";
 import { ApiClient } from "../client";
 import { ApiResponse } from "../client.types";
-import { PagedPosts, PagedReplies, Post, PostQueryParams } from "./post.types";
+import {
+  PagedPosts,
+  PagedReplies,
+  Post,
+  PostQueryParams,
+  PostSchema,
+  PagedPostsSchema,
+  PagedRepliesSchema,
+} from "./post.types";
 
 export class PostApi {
   private apiClient: ApiClient;
@@ -18,7 +26,9 @@ export class PostApi {
       },
       next: { tags: ["posts"], revalidate: 60 },
     });
-    return this.apiClient.handleResponse(response);
+    return this.apiClient.handleResponse(response, {
+      schema: PagedPostsSchema,
+    });
   }
 
   public async getById(id: string): Promise<ApiResponse<Post>> {
@@ -28,7 +38,7 @@ export class PostApi {
         path: { id },
       },
     });
-    return this.apiClient.handleResponse(response);
+    return this.apiClient.handleResponse(response, { schema: PostSchema });
   }
 
   public async getReplies(
@@ -42,7 +52,9 @@ export class PostApi {
         query: { limit: params.limit, offset: params.offset },
       },
     });
-    return this.apiClient.handleResponse(response);
+    return this.apiClient.handleResponse(response, {
+      schema: PagedRepliesSchema,
+    });
   }
 
   public async create(
@@ -57,7 +69,7 @@ export class PostApi {
       body: form as any,
     });
     updateTag("posts");
-    return this.apiClient.handleResponse(response);
+    return this.apiClient.handleResponse(response, { schema: PostSchema });
   }
 
   public async createReply(
@@ -74,7 +86,7 @@ export class PostApi {
       body: form as any,
     });
     updateTag("posts");
-    return this.apiClient.handleResponse(response);
+    return this.apiClient.handleResponse(response, { schema: PostSchema });
   }
 
   public async like(id: string): Promise<ApiResponse<void>> {

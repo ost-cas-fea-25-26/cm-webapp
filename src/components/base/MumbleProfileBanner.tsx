@@ -23,7 +23,7 @@ const MumbleProfileBanner = (props: MumbleProfileBannerProps) => {
       userName={props.user.username}
       isCurrentUser={props.isCurrentUser}
       onAvatarImageChange={async (file) => {
-        await updateAvatarAction(props.user.id!, file);
+        await updateAvatarAction(props.user.id, file);
         router.refresh();
       }}
     />

@@ -19,8 +19,8 @@ const MumblePost = (props: MumbleProps) => {
     navigator.clipboard.writeText(postDetailPageUrl);
   const onLikeButtonClick = async () =>
     props.post.likedBySelf
-      ? await unlikePostAction(props.post.id!)
-      : await likePostAction(props.post.id!);
+      ? await unlikePostAction(props.post.id)
+      : await likePostAction(props.post.id);
   const postTimeStamp = props.post.id
     ? new Date(decodeTime(props.post.id))
     : undefined;
