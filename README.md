@@ -19,7 +19,8 @@ A modern social media platform built with Next.js 16, featuring a robust testing
 ## Getting Started
 
 ### Prerequisites
-- Node.js 18+ 
+
+- Node.js 18+
 - npm or yarn
 
 ### Installation & Development
@@ -55,6 +56,7 @@ This project enforces consistent code style using EditorConfig:
 - `.vscode/settings.json` provides additional VS Code-specific settings
 
 **Key Commands:**
+
 ```bash
 npm run lint          # Run ESLint
 npm run prettier      # Format code
@@ -73,39 +75,45 @@ Multi-layered testing approach with clear priorities and guidelines.
 
 ### Test Types
 
-| Type | Framework | Location | Files | Priority |
-|------|-----------|----------|-------|----------|
-| **Unit** | Vitest + RTL | Colocated | `*.test.ts` | 🔴 High |
-| **Component** | Vitest + RTL | Colocated | `*.test.tsx` | 🟡 Medium |
-| **E2E** | Playwright | `tests/e2e/` | `*.spec.ts` | 🔴 High |
+| Type          | Framework    | Location     | Files        | Priority  |
+| ------------- | ------------ | ------------ | ------------ | --------- |
+| **Unit**      | Vitest + RTL | Colocated    | `*.test.ts`  | 🔴 High   |
+| **Component** | Vitest + RTL | Colocated    | `*.test.tsx` | 🟡 Medium |
+| **E2E**       | Playwright   | `tests/e2e/` | `*.spec.ts`  | 🔴 High   |
 
 #### Unit Tests (`*.test.ts`)
+
 - **Purpose:** Services, Utils, API Client, Validators, Server-only Logic
 - **Why:** Isolated layers, easy to test, foundation for everything else
 
 #### Component Tests (`*.test.tsx`)
+
 - **Purpose:** React Client Components in isolation
 - **Why:** Simple to test, good coverage for interactive UI
 - **⚠️ Note:** Async Server Components cannot be tested with Vitest/RTL
 
 #### E2E Tests (`*.spec.ts`)
+
 - **Purpose:** Complete user flows and critical paths
 - **Why:** Validates real user experience end-to-end
 
 ### Testing Philosophy
 
 **Priority Order:**
+
 1. API Layer → Foundation
 2. Server Actions → Business logic
 3. Interactive Components → UI features
 4. E2E Happy Paths → User journeys
 
 **When to Test:**
+
 - 🔄 Before refactoring (test-first approach)
 - 👁️ User-facing features (write E2E tests)
 - 🐛 Bug fixes (failing test first, then fix)
 
 **What NOT to Test:**
+
 - Framework code (Next.js, React)
 - External libraries
 - Auto-generated types
