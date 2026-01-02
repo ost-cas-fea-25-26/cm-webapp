@@ -84,6 +84,8 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     needs: build
+    env:
+      ZITADEL_CLIENT_ID: test-client-id
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
