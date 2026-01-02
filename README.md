@@ -48,6 +48,28 @@ Additionally, the repository includes a `.vscode/settings.json` file to avoid co
 - No further VS Code settings are required—just make sure the EditorConfig extension is enabled.
 - These settings ensure that formatting is always consistent, regardless of individual developer/editor preferences.
 
+## Testing Strategy
+
+This project uses a multi-layered testing approach:
+
+### Unit Tests
+- **Framework:** Vitest + React Testing Library
+- **Location:** Colocated with the unit being tested (`*.test.ts`)
+- **Purpose:** Services, Utils, Fetcher, Validators, Server-only Logic
+- **Run:** `npm run test`
+
+### Component Tests
+- **Framework:** Vitest + React Testing Library
+- **Location:** Colocated with the component (`*.test.tsx`)
+- **Purpose:** Testing React components in isolation
+- **Run:** `npm run test`
+
+### E2E Tests
+- **Framework:** Playwright
+- **Location:** `tests/e2e/` directory (`*.spec.ts`)
+- **Purpose:** Testing complete user flows and critical paths
+- **Run:** `npx playwright test`, bzw. `npx playwright test --ui`
+
 ## OpenAPI schema to TypeScript
 
 Transform an OpenAPI schema to TypeScript with the `openapi-typescript` CLI.
