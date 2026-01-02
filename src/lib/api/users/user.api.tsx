@@ -1,7 +1,7 @@
 import { updateTag } from "next/cache";
 import { ApiClient } from "../client";
 import { ApiResponse } from "../client.types";
-import { PagedUsers, User } from "./user.types";
+import { PagedUsers, User, UserSchema, PagedUsersSchema } from "./user.types";
 
 export class UserApi {
   private apiClient: ApiClient;
@@ -15,7 +15,7 @@ export class UserApi {
       params: { path: { id } },
       next: { tags: [`user:${id}`], revalidate: 300 },
     });
-    return this.apiClient.handleResponse(response);
+    return this.apiClient.handleResponse(response, { schema: UserSchema });
   }
 
   public async updateAvatar(
@@ -50,7 +50,9 @@ export class UserApi {
       headers: await this.apiClient.getAuthHeaders(),
       params: { path: { id } },
     });
-    return this.apiClient.handleResponse(response);
+    return this.apiClient.handleResponse(response, {
+      schema: PagedUsersSchema,
+    });
   }
 
   public async followUser(id: string): Promise<ApiResponse<void>> {

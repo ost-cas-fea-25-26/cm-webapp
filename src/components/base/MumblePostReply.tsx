@@ -23,8 +23,8 @@ const MumblePostReply = ({ reply }: MumblePostReplyProps) => {
 
   const onLikeButtonClick = async () =>
     reply.likedBySelf
-      ? await unlikePostAction(reply.id!)
-      : await likePostAction(reply.id!);
+      ? await unlikePostAction(reply.id)
+      : await likePostAction(reply.id);
 
   const replyTimeStamp = reply.id ? new Date(decodeTime(reply.id)) : undefined;
 

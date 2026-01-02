@@ -19,7 +19,9 @@ export default async function TimelinePage() {
     <div className={base()}>
       <WelcomeSection />
       <div className={timeline()}>
-        <MumblePostCreator user={mumbleUser!}></MumblePostCreator>
+        {mumbleUser && (
+          <MumblePostCreator user={mumbleUser}></MumblePostCreator>
+        )}
         <PostFeedSection />
       </div>
     </div>

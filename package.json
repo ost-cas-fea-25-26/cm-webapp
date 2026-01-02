@@ -18,14 +18,15 @@
     "types:generate": "npx openapi-typescript https://mumble-api-prod-714602723919.europe-west6.run.app/swagger/v1/swagger.json -o src/types/api.d.ts"
   },
   "dependencies": {
-    "better-auth": "1.4.10",
     "@krrli/cm-designsystem": "1.35.1",
+    "better-auth": "1.4.10",
     "next": "16.1.1",
     "openapi-fetch": "0.15.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "tailwind-variants": "3.2.2",
-    "ulid": "^3.0.2"
+    "ulid": "^3.0.2",
+    "zod": "^4.3.4"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "16.1.1",

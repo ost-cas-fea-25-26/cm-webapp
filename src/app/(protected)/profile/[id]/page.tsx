@@ -20,14 +20,22 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
   const { base } = profileStyles();
   const user = await getUserAction(userId);
   const isCurrentUser = await isCurrentUserAction(userId);
+
+  if (!user) {
+    return <div>User not found</div>;
+  }
+
   return (
     <div className={base()}>
       <MumbleProfileBanner
-        user={user!}
+        user={user}
         isCurrentUser={isCurrentUser}
       ></MumbleProfileBanner>
       <Suspense fallback={<MumbleLoading />}>
-        <ProfileSection userId={userId} displayName={user?.displayName!} />
+        <ProfileSection
+          userId={userId}
+          displayName={user.displayName ?? "Unknown"}
+        />
       </Suspense>
     </div>
   );
