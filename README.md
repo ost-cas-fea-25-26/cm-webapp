@@ -1,57 +1,142 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mumble - CAS Frontend Engineering Advanced
+
+A modern social media platform built with Next.js 16, featuring a robust testing strategy and clean architecture.
+
+## Table of Contents
+
+- [Getting Started](#getting-started)
+- [Development](#development)
+  - [API Schema Generation](#api-schema-generation)
+  - [Code Quality](#code-quality)
+- [Testing Strategy](#testing-strategy)
+  - [Test Types](#test-types)
+  - [Testing Philosophy](#testing-philosophy)
+  - [Running Tests](#running-tests)
+- [Resources](#resources)
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- npm or yarn
+
+### Installation & Development
 
 ```bash
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Development
 
-## Learn More
+### API Schema Generation
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-## EditorConfig & VS Code Settings
-
-This project uses a strict `.editorconfig` to ensure consistent code style across all editors and platforms. Most formatting rules (indentation, line endings, trailing whitespace, etc.) are enforced automatically if you have the [EditorConfig extension](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) installed in VS Code.
-
-Additionally, the repository includes a `.vscode/settings.json` file to avoid conflicts between VS Code's built-in formatting and EditorConfig:
-
-```json
-{
-  "editor.formatOnSave": true,
-  "files.trimTrailingWhitespace": false,
-  "files.insertFinalNewline": false,
-  "files.eol": "\n"
-}
-```
-
-- No further VS Code settings are required—just make sure the EditorConfig extension is enabled.
-- These settings ensure that formatting is always consistent, regardless of individual developer/editor preferences.
-
-## OpenAPI schema to TypeScript
-
-Transform an OpenAPI schema to TypeScript with the `openapi-typescript` CLI.
+Generate TypeScript types from the OpenAPI schema:
 
 ```bash
 npx openapi-typescript https://mumble-api-prod-714602723919.europe-west6.run.app/swagger/v1/swagger.json -o ./src/lib/api/api.d.ts
 ```
+
+### Code Quality
+
+This project enforces consistent code style using EditorConfig:
+
+- Install the [EditorConfig extension](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) for VS Code
+- `.editorconfig` handles indentation, line endings, and trailing whitespace
+- `.vscode/settings.json` provides additional VS Code-specific settings
+
+**Key Commands:**
+
+```bash
+npm run lint          # Run ESLint
+npm run prettier      # Format code
+npm run typecheck     # Check TypeScript
+npm run build         # Build for production
+npm run preflight     # Run all checks
+```
+
+---
+
+---
+
+## Testing Strategy
+
+Multi-layered testing approach with clear priorities and guidelines.
+
+### Test Types
+
+| Type          | Framework    | Location     | Files        | Priority  |
+| ------------- | ------------ | ------------ | ------------ | --------- |
+| **Unit**      | Vitest + RTL | Colocated    | `*.test.ts`  | 🔴 High   |
+| **Component** | Vitest + RTL | Colocated    | `*.test.tsx` | 🟡 Medium |
+| **E2E**       | Playwright   | `tests/e2e/` | `*.spec.ts`  | 🔴 High   |
+
+#### Unit Tests (`*.test.ts`)
+
+- **Purpose:** Services, Utils, API Client, Validators, Server-only Logic
+- **Why:** Isolated layers, easy to test, foundation for everything else
+
+#### Component Tests (`*.test.tsx`)
+
+- **Purpose:** React Client Components in isolation
+- **Why:** Simple to test, good coverage for interactive UI
+- **⚠️ Note:** Async Server Components cannot be tested with Vitest/RTL
+
+#### E2E Tests (`*.spec.ts`)
+
+- **Purpose:** Complete user flows and critical paths
+- **Why:** Validates real user experience end-to-end
+
+### Testing Philosophy
+
+**Priority Order:**
+
+1. API Layer → Foundation
+2. Server Actions → Business logic
+3. Interactive Components → UI features
+4. E2E Happy Paths → User journeys
+
+**When to Test:**
+
+- 🔄 Before refactoring (test-first approach)
+- 👁️ User-facing features (write E2E tests)
+- 🐛 Bug fixes (failing test first, then fix)
+
+**What NOT to Test:**
+
+- Framework code (Next.js, React)
+- External libraries
+- Auto-generated types
+- Simple pass-through components
+
+### Running Tests
+
+```bash
+# Unit & Component Tests
+npm run test
+
+# E2E Tests (headless)
+npx playwright test
+
+# E2E Tests (interactive UI)
+npx playwright test --ui
+```
+
+---
+
+## Resources
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Playwright Documentation](https://playwright.dev)
+- [Vitest Documentation](https://vitest.dev)
+- [Testing Library](https://testing-library.com/react)

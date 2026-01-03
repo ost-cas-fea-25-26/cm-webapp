@@ -15,11 +15,12 @@
     "prettier": "prettier . --write",
     "prettier:check": "prettier . --check",
     "knip": "knip",
-    "types:generate": "npx openapi-typescript https://mumble-api-prod-714602723919.europe-west6.run.app/swagger/v1/swagger.json -o src/types/api.d.ts"
+    "types:generate": "npx openapi-typescript https://mumble-api-prod-714602723919.europe-west6.run.app/swagger/v1/swagger.json -o src/types/api.d.ts",
+    "test": "vitest"
   },
   "dependencies": {
-    "better-auth": "1.4.10",
     "@krrli/cm-designsystem": "1.35.1",
+    "better-auth": "1.4.10",
     "next": "16.1.1",
     "openapi-fetch": "0.15.0",
     "react": "19.2.3",
@@ -29,16 +30,21 @@
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "16.1.1",
+    "@playwright/test": "^1.57.0",
     "@tailwindcss/postcss": "4",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/react": "^16.3.1",
     "@types/node": "24.10.4",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
     "@typescript-eslint/eslint-plugin": "8.51.0",
     "@typescript-eslint/parser": "8.51.0",
+    "@vitejs/plugin-react": "^5.1.2",
     "dotenv-cli": "^11.0.0",
     "eslint": "9.39.2",
     "eslint-config-next": "16.1.1",
     "eslint-config-prettier": "10.1.8",
+    "jsdom": "^27.4.0",
     "knip": "5.79.0",
     "openapi-typescript": "^7.10.1",
     "postcss": "8.5.6",
@@ -46,6 +52,8 @@
     "prettier-plugin-tailwindcss": "0.7.2",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "4",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "vite-tsconfig-paths": "^6.0.3",
+    "vitest": "^4.0.16"
   }
 }
