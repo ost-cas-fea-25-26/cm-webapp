@@ -10,6 +10,7 @@ vi.mock("@/lib/auth/server", () => ({
 
 import { UserApi } from "@/lib/api/users/user.api";
 import { AuthServer } from "@/lib/auth/server";
+import { redirect } from "next/navigation";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { getUserAction } from "./user.action";
 
@@ -39,7 +40,18 @@ describe("User Action Tests", () => {
         hasError: false,
       });
 
-      // Mock AuthServer instance (arrow function property, not on prototype)
+      /**
+       * Mock AuthServer instance:
+       * - vi.mocked(AuthServer) gets mocked class constructor
+       * - .mockImplementation(function (this: any) { ... }) defines what happens wen new AuthServer() is called
+       * - must be a function, does not work with arrow function
+       * (because usage of "this" - this does not exist on arrow functions)
+       * remember: this only exists with new keyword
+       * - this.getAuthUser = mockGetAuthUser sets property to new instance
+       *
+       * ==> redefine what constructor does 🙈🙈🙈
+       */
+
       const mockGetAuthUser = vi.fn().mockResolvedValue({
         identifier: "current-user-123",
       });
@@ -56,12 +68,35 @@ describe("User Action Tests", () => {
       );
       expect(mockGetAuthUser).toHaveBeenCalled();
     });
-    it("getUserAction with ID: success", () => {
-      /**
-       * call getUserAction
-       */
+    it("returns current user when id is provided", async () => {
+      const testUser = createMockUser({
+        id: "user-123",
+        username: "specificuser",
+      });
+
+      vi.spyOn(UserApi.prototype, "getById").mockResolvedValue({
+        data: testUser,
+        hasError: false,
+      });
+
+      const result = await getUserAction("user-123");
+
+      expect(result).toEqual(testUser);
+      expect(UserApi.prototype.getById).toHaveBeenCalledWith("user-123");
     });
 
-    it("getUserAction error", () => {});
+    it("redirects to login when no auth user identifier", async () => {
+      const mockGetAuthUser = vi.fn().mockResolvedValue({
+        identifier: undefined,
+      });
+
+      vi.mocked(AuthServer).mockImplementation(function (this: any) {
+        this.getAuthUser = mockGetAuthUser;
+      } as any);
+
+      await getUserAction();
+
+      expect(redirect).toHaveBeenCalledWith("/login");
+    });
   });
 });
