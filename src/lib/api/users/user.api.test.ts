@@ -85,4 +85,34 @@ describe("User API", () => {
       expect(mockFetch).toHaveBeenCalledOnce();
     });
   });
+
+  describe("updateUser", () => {
+    it("updates user with correct body", async () => {
+      const mockResponse = createMockFetchResponse(undefined);
+
+      const spy = vi
+        .spyOn(apiClient.client, "PATCH")
+        .mockResolvedValue(mockResponse as any);
+
+      vi.spyOn(apiClient, "getAuthHeaders").mockResolvedValue({
+        Authorization: "Bearer test-token",
+      });
+
+      const updateData = {
+        username: "new-username",
+        firstname: "New",
+        lastname: undefined,
+      };
+
+      const result = await userApi.updateUser("user-123", updateData);
+
+      expect(spy).toHaveBeenCalledWith("/users", {
+        headers: { Authorization: "Bearer test-token" },
+        body: updateData,
+      });
+
+      expect(result.hasError).toBe(false);
+      expect(result.data).toBeUndefined();
+    });
+  });
 });
