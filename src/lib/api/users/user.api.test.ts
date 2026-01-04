@@ -100,7 +100,7 @@ describe("User API", () => {
 
       const updateData = {
         username: "new-username",
-        firstname: "New",
+        firstname: undefined,
         lastname: undefined,
       };
 
@@ -110,6 +110,85 @@ describe("User API", () => {
         headers: { Authorization: "Bearer test-token" },
         body: updateData,
       });
+
+      expect(result.hasError).toBe(false);
+      expect(result.data).toBeUndefined();
+    });
+  });
+
+  describe("deleteAvatar", () => {
+    it("deletes avatar successfully", async () => {
+      const mockResponse = createMockFetchResponse(undefined);
+
+      vi.spyOn(apiClient.client, "DELETE").mockResolvedValue(
+        mockResponse as any
+      );
+
+      vi.spyOn(apiClient, "getAuthHeaders").mockResolvedValue({
+        Authorization: "Bearer test-token",
+      });
+
+      const result = await userApi.deleteAvatar("user-123");
+
+      expect(result.hasError).toBe(false);
+      expect(result.data).toBeUndefined();
+    });
+  });
+
+  describe("getFollowers", () => {
+    it("returns followers list", async () => {
+      const mockFollowers = {
+        count: 2,
+        data: [
+          createMockUser({ id: "follower-1" }),
+          createMockUser({ id: "follower-2" }),
+        ],
+      };
+      const mockResponse = createMockFetchResponse(mockFollowers);
+
+      vi.spyOn(apiClient.client, "GET").mockResolvedValue(mockResponse as any);
+
+      vi.spyOn(apiClient, "getAuthHeaders").mockResolvedValue({
+        Authorization: "Bearer test-token",
+      });
+
+      const result = await userApi.getFollowers("user-123");
+
+      expect(result.hasError).toBe(false);
+      expect(result.data).toEqual(mockFollowers);
+    });
+  });
+
+  describe("followUser", () => {
+    it("follows user successfully", async () => {
+      const mockResponse = createMockFetchResponse(undefined);
+
+      vi.spyOn(apiClient.client, "PUT").mockResolvedValue(mockResponse as any);
+
+      vi.spyOn(apiClient, "getAuthHeaders").mockResolvedValue({
+        Authorization: "Bearer test-token",
+      });
+
+      const result = await userApi.followUser("user-to-follow");
+
+      expect(result.hasError).toBe(false);
+      expect(result.data).toBeUndefined();
+    });
+  });
+
+  describe("unfollowUser", () => {
+    it("unfollows user successfully", async () => {
+      const mockResponse = createMockFetchResponse(undefined);
+
+      vi.spyOn(apiClient.client, "DELETE").mockResolvedValue(
+        mockResponse as any
+      );
+
+      vi.spyOn(apiClient, "getAuthHeaders").mockResolvedValue({
+        Authorization: "Bearer test-token",
+      });
+
+      const result = await userApi.unfollowUser("user-to-unfollow");
 
       expect(result.hasError).toBe(false);
       expect(result.data).toBeUndefined();
