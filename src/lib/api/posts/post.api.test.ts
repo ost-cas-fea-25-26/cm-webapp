@@ -90,19 +90,169 @@ describe("Post API", () => {
   });
 
   describe("get Replies", () => {
-    it("returns replies for a post", async () => {});
+    it("returns replies for a post", async () => {
+      const mockReplies = {
+        count: 2,
+        data: [
+          createMockPost({
+            id: "reply-1",
+            text: "Great post!",
+          }),
+          createMockPost({
+            id: "reply-2",
+            text: "I totally agree with this.",
+          }),
+        ],
+      };
+
+      const mockResponse = createMockFetchResponse(mockReplies);
+
+      vi.spyOn(apiClient.client, "GET").mockResolvedValue(mockResponse as any);
+
+      vi.spyOn(apiClient, "getAuthHeaders").mockResolvedValue({
+        Authorization: "Bearer test-token",
+      });
+
+      const result = await postApi.getReplies("test-post-id", { limit: 10 });
+
+      expect(result.hasError).toBe(false);
+      expect(result.data).toEqual(mockReplies);
+      expect(result.data?.count).toBe(2);
+      expect(result.data?.data).toHaveLength(2);
+    });
   });
 
   describe("create Post", () => {
-    it("returns freshly created post", async () => {});
+    it("returns freshly created post", async () => {
+      const newPost = createMockPost({
+        id: "new-post-id",
+        text: "This is my brand new post!",
+      });
+
+      const mockResponse = createMockFetchResponse(newPost);
+
+      vi.spyOn(apiClient.client, "POST").mockResolvedValue(mockResponse as any);
+
+      vi.spyOn(apiClient, "getAuthHeaders").mockResolvedValue({
+        Authorization: "Bearer test-token",
+      });
+
+      const result = await postApi.create("This is my brand new post!");
+
+      expect(result.hasError).toBe(false);
+      expect(result.data).toEqual(newPost);
+      expect(apiClient.client.POST).toHaveBeenCalledWith(
+        "/posts",
+        expect.objectContaining({
+          headers: { Authorization: "Bearer test-token" },
+          body: expect.any(FormData),
+        })
+      );
+    });
+
+    it("creates post with media file", async () => {
+      const newPost = createMockPost({
+        id: "new-post-with-media",
+        text: "Check out this image!",
+        mediaUrl: "https://cdn.mumble.com/images/new-image.jpg",
+        mediaType: "image/jpeg",
+      });
+
+      const mockResponse = createMockFetchResponse(newPost);
+
+      vi.spyOn(apiClient.client, "POST").mockResolvedValue(mockResponse as any);
+
+      vi.spyOn(apiClient, "getAuthHeaders").mockResolvedValue({
+        Authorization: "Bearer test-token",
+      });
+
+      const mockFile = new File(["image content"], "test-image.jpg", {
+        type: "image/jpeg",
+      });
+
+      const result = await postApi.create("Check out this image!", mockFile);
+
+      expect(result.hasError).toBe(false);
+      expect(result.data).toEqual(newPost);
+    });
   });
 
   describe("create Reply", () => {
-    it("returns freshly created reply", async () => {});
+    it("returns freshly created reply", async () => {
+      const newReply = createMockPost({
+        id: "new-reply-id",
+        text: "This is my reply!",
+      });
+
+      const mockResponse = createMockFetchResponse(newReply);
+
+      vi.spyOn(apiClient.client, "POST").mockResolvedValue(mockResponse as any);
+
+      vi.spyOn(apiClient, "getAuthHeaders").mockResolvedValue({
+        Authorization: "Bearer test-token",
+      });
+
+      const result = await postApi.createReply(
+        "parent-post-id",
+        "This is my reply!"
+      );
+
+      expect(result.hasError).toBe(false);
+      expect(result.data).toEqual(newReply);
+      expect(apiClient.client.POST).toHaveBeenCalledWith(
+        "/posts/{id}/replies",
+        expect.objectContaining({
+          headers: { Authorization: "Bearer test-token" },
+          params: { path: { id: "parent-post-id" } },
+          body: expect.any(FormData),
+        })
+      );
+    });
   });
 
   describe("like and unlike specific post", () => {
-    it("like post", async () => {});
-    it("unlike post", async () => {});
+    it("like post", async () => {
+      const mockResponse = createMockFetchResponse(undefined);
+
+      vi.spyOn(apiClient.client, "PUT").mockResolvedValue(mockResponse as any);
+
+      vi.spyOn(apiClient, "getAuthHeaders").mockResolvedValue({
+        Authorization: "Bearer test-token",
+      });
+
+      const result = await postApi.like("post-to-like");
+
+      expect(result.hasError).toBe(false);
+      expect(apiClient.client.PUT).toHaveBeenCalledWith(
+        "/posts/{id}/likes",
+        expect.objectContaining({
+          headers: { Authorization: "Bearer test-token" },
+          params: { path: { id: "post-to-like" } },
+        })
+      );
+    });
+
+    it("unlike post", async () => {
+      const mockResponse = createMockFetchResponse(undefined);
+
+      vi.spyOn(apiClient.client, "DELETE").mockResolvedValue(
+        mockResponse as any
+      );
+
+      vi.spyOn(apiClient, "getAuthHeaders").mockResolvedValue({
+        Authorization: "Bearer test-token",
+      });
+
+      const result = await postApi.unlike("post-to-unlike");
+
+      expect(result.hasError).toBe(false);
+      expect(apiClient.client.DELETE).toHaveBeenCalledWith(
+        "/posts/{id}/likes",
+        expect.objectContaining({
+          headers: { Authorization: "Bearer test-token" },
+          params: { path: { id: "post-to-unlike" } },
+        })
+      );
+    });
   });
 });
