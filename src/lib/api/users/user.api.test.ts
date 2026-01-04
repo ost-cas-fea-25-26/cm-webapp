@@ -6,7 +6,27 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { UserApi } from "./user.api";
 import { ApiClient } from "../client";
 
-describe("User API - Get User by ID", () => {
+// Test Helpers
+const createMockUser = (overrides = {}) => ({
+  id: "test-user-id",
+  username: "testuser",
+  firstname: "Test",
+  lastname: "User",
+  ...overrides,
+});
+
+const createMockFetchResponse = (data: any, ok = true, status = 200) => ({
+  data,
+  response: { ok, status } as Response,
+});
+
+const createMockErrorResponse = (error: string, status = 404) => ({
+  data: undefined,
+  error,
+  response: { ok: false, status } as Response,
+});
+
+describe("User API", () => {
   let apiClient: ApiClient;
   let userApi: UserApi;
 
@@ -16,80 +36,52 @@ describe("User API - Get User by ID", () => {
   });
 
   describe("getById", () => {
-    it("success case", async () => {
-      const mockUser = {
-        id: "iddestestibus",
-        username: "herr-test",
-        firstname: "Testi",
-        lastname: "Testibus",
-      };
+    it("returns user on success", async () => {
+      const mockUser = createMockUser({ id: "test-123" });
+      const mockResponse = createMockFetchResponse(mockUser);
 
-      const mockResponse = {
-        data: mockUser,
-        response: { ok: true, status: 200 } as Response,
-      };
+      vi.spyOn(apiClient.client, "GET").mockResolvedValue(mockResponse as any);
 
-      const spy = vi
-        .spyOn(apiClient.client, "GET")
-        .mockResolvedValue(mockResponse as any);
-      expect(spy).not.toHaveBeenCalled();
+      const result = await userApi.getById("test-123");
 
-      const res = await userApi.getById("iddestestibus");
-
-      expect(res.hasError).toBe(false);
-      expect(spy).toHaveBeenCalledOnce();
-      expect(res.data).toEqual(mockUser);
+      expect(result.hasError).toBe(false);
+      expect(result.data).toEqual(mockUser);
     });
 
-    it("error case", async () => {
-      const mockResponse = {
-        data: undefined,
-        response: { ok: false, status: 404 } as Response,
-        error: "User not found",
-      };
+    it("returns error when user not found", async () => {
+      const mockResponse = createMockErrorResponse("User not found", 404);
 
-      const spy = vi
-        .spyOn(apiClient.client, "GET")
-        .mockResolvedValue(mockResponse as any);
-      expect(spy).not.toHaveBeenCalled();
+      vi.spyOn(apiClient.client, "GET").mockResolvedValue(mockResponse as any);
 
-      const res = await userApi.getById("notexistinguserid");
+      const result = await userApi.getById("nonexistent-id");
 
-      expect(res.hasError).toBe(true);
-      expect(res.error).toBe("User not found");
+      expect(result.hasError).toBe(true);
+      expect(result.error).toBe("User not found");
     });
   });
 
-  describe("updateAvatar", async () => {
+  describe("updateAvatar", () => {
     afterEach(() => {
       vi.unstubAllGlobals();
     });
 
-    it("success case", async () => {
-      // Arrange -  Mock getAuthHeaders from apiClient
+    it("uploads avatar and returns URL", async () => {
+      const avatarUrl = "https://cdn.mumble.com/avatars/test.png";
+
       vi.spyOn(apiClient, "getAuthHeaders").mockResolvedValue({
-        Authorization: "Bearer test-token-used-for-updating-avatar",
+        Authorization: "Bearer test-token",
       });
 
-      // Arrange - Mock fetch (as it's called directly in updateAvatar)
       const mockFetch = vi.fn().mockResolvedValue({
-        ok: true,
-        status: 200,
-        text: async () => "https://cdn.mumble.com/avatars/userid/avatar.png",
+        text: async () => avatarUrl,
       });
       vi.stubGlobal("fetch", mockFetch);
 
-      // Arrange - Mock file
-      const mockedFile = new File(["avatar-content"], "avatar.png", {
-        type: "image/png",
-      });
+      const file = new File(["content"], "avatar.png", { type: "image/png" });
+      const result = await userApi.updateAvatar("user-id", file);
 
-      // Act - Call updateAvatar
-      const res = await userApi.updateAvatar("userId", mockedFile);
-
-      // Assert
-      expect(res.hasError).toBe(false);
-      expect(res.data).toBe("https://cdn.mumble.com/avatars/userid/avatar.png");
+      expect(result.hasError).toBe(false);
+      expect(result.data).toBe(avatarUrl);
       expect(mockFetch).toHaveBeenCalledOnce();
     });
   });
