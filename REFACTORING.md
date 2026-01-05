@@ -52,7 +52,52 @@ This file tracks technical debt and refactoring tasks identified during developm
 
 ## Medium Priority
 
-### 3. Post Actions: Error Handling
+### 3. PostFeedSection: Multiple Issues
+**Status:** Not Started  
+**Location:** `src/components/section/PostFeedSection.tsx`
+
+**Issues:**
+
+1. **React Key Anti-Pattern** ⚠️ HIGH
+   - Using `key={index}` instead of `key={post.id}` in map
+   - Can cause rendering bugs when items reorder
+
+2. **useEffect Dependency Array** ⚠️ HIGH
+   - `useEffect` uses `props.params` but doesn't list it in dependencies
+   - Violates React exhaustive-deps rule
+   - Feed won't reload when params change
+
+3. **No Error Handling** ⚠️ MEDIUM
+   - `getPostsAction` has no try-catch
+   - User gets no feedback when loading fails
+   - App could crash on network errors
+
+4. **Loading UX Problem** 🤔 MEDIUM
+   - Entire feed disappears during "Load More"
+   - Better: separate `loadingMore` state, keep feed visible
+
+5. **No Empty State** 📋 LOW
+   - No feedback when zero posts are returned
+   - User doesn't know if it's loading or empty
+
+6. **Race Condition Potential** 🐛 LOW
+   - Rapid clicking "Load More" could duplicate posts
+   - Should disable button while loading
+
+**Proposed Solutions:**
+- Change to `key={post.id}`
+- Add `props.params` to useEffect dependencies or use `useCallback`
+- Add try-catch with error state
+- Separate `loadingMore` state for better UX
+- Add empty state component
+- Disable Load More button while `loading === true`
+
+**Created:** 2026-01-05  
+**Test Coverage:** Basic tests exist, should add error state tests after refactor
+
+---
+
+### 4. Post Actions: Error Handling
 
 **Status:** Not Started  
 **Location:** `src/actions/post.action.tsx`
@@ -74,7 +119,7 @@ This file tracks technical debt and refactoring tasks identified during developm
 
 ---
 
-### 4. Design System: Hidden Class Override
+### 5. Design System: Hidden Class Override
 
 **Status:** Workaround Applied, Upstream Issue Reported  
 **Package:** `@krrli/cm-designsystem`
