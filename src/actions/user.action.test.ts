@@ -8,19 +8,12 @@ vi.mock("@/lib/auth/server", () => ({
   AuthServer: vi.fn(),
 }));
 
-import { UserApi } from "@/lib/api/users/user.api";
-import { AuthServer } from "@/lib/auth/server";
 import { redirect } from "next/navigation";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { getUserAction, isCurrentUserAction } from "./user.action";
-
-const createMockUser = (overrides = {}) => ({
-  id: "test-user-id",
-  username: "testuser",
-  firstname: "Test",
-  lastname: "User",
-  ...overrides,
-});
+import { createMockUser } from "@/test-utils/createMockUser";
+import { mockAuthServer } from "@/test-utils/mockAuthServer";
+import { mockGetUserById } from "@/test-utils/mockUserApi";
 
 describe("User Action Tests", () => {
   beforeEach(() => {
@@ -34,38 +27,13 @@ describe("User Action Tests", () => {
         username: "currentuser",
       });
 
-      // Spy on UserApi prototype method
-      vi.spyOn(UserApi.prototype, "getById").mockResolvedValue({
-        data: testUser,
-        hasError: false,
-      });
-
-      /**
-       * Mock AuthServer instance:
-       * - vi.mocked(AuthServer) gets mocked class constructor
-       * - .mockImplementation(function (this: any) { ... }) defines what happens wen new AuthServer() is called
-       * - must be a function, does not work with arrow function
-       * (because usage of "this" - this does not exist on arrow functions)
-       * remember: this only exists with new keyword
-       * - this.getAuthUser = mockGetAuthUser sets property to new instance
-       *
-       * ==> redefine what constructor does 🙈🙈🙈
-       */
-
-      const mockGetAuthUser = vi.fn().mockResolvedValue({
-        identifier: "current-user-123",
-      });
-
-      vi.mocked(AuthServer).mockImplementation(function (this: any) {
-        this.getAuthUser = mockGetAuthUser;
-      } as any);
+      const getUserByIdSpy = mockGetUserById(testUser);
+      const { mockGetAuthUser } = mockAuthServer("current-user-123");
 
       const result = await getUserAction();
 
       expect(result).toEqual(testUser);
-      expect(UserApi.prototype.getById).toHaveBeenCalledWith(
-        "current-user-123"
-      );
+      expect(getUserByIdSpy).toHaveBeenCalledWith("current-user-123");
       expect(mockGetAuthUser).toHaveBeenCalled();
     });
     it("returns current user when id is provided", async () => {
@@ -74,25 +42,16 @@ describe("User Action Tests", () => {
         username: "specificuser",
       });
 
-      vi.spyOn(UserApi.prototype, "getById").mockResolvedValue({
-        data: testUser,
-        hasError: false,
-      });
+      const getUserByIdSpy = mockGetUserById(testUser);
 
       const result = await getUserAction("user-123");
 
       expect(result).toEqual(testUser);
-      expect(UserApi.prototype.getById).toHaveBeenCalledWith("user-123");
+      expect(getUserByIdSpy).toHaveBeenCalledWith("user-123");
     });
 
     it("redirects to login when no auth user identifier", async () => {
-      const mockGetAuthUser = vi.fn().mockResolvedValue({
-        identifier: undefined,
-      });
-
-      vi.mocked(AuthServer).mockImplementation(function (this: any) {
-        this.getAuthUser = mockGetAuthUser;
-      } as any);
+      mockAuthServer(undefined);
 
       await getUserAction();
 
@@ -102,13 +61,7 @@ describe("User Action Tests", () => {
 
   describe("isCurrentUserAction", () => {
     it("returns true when id matches current user", async () => {
-      const mockGetAuthUser = vi.fn().mockResolvedValue({
-        identifier: "user-123",
-      });
-
-      vi.mocked(AuthServer).mockImplementation(function (this: any) {
-        this.getAuthUser = mockGetAuthUser;
-      } as any);
+      mockAuthServer("user-123");
 
       const result = await isCurrentUserAction("user-123");
 
@@ -116,13 +69,7 @@ describe("User Action Tests", () => {
     });
 
     it("returns false when id does not match current user", async () => {
-      const mockGetAuthUser = vi.fn().mockResolvedValue({
-        identifier: "user-123",
-      });
-
-      vi.mocked(AuthServer).mockImplementation(function (this: any) {
-        this.getAuthUser = mockGetAuthUser;
-      } as any);
+      mockAuthServer("user-123");
 
       const result = await isCurrentUserAction("other-user");
 
