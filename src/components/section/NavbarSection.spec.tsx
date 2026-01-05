@@ -1,8 +1,7 @@
 import { cleanup, render, screen } from "@testing-library/react";
-
+import { getUserAction } from "@/actions/user.action";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import NavbarSection from "./NavbarSection";
-import { getUserAction } from "@/actions/user.action";
 
 vi.mock("@/actions/user.action");
 vi.mock("next/navigation", () => ({
