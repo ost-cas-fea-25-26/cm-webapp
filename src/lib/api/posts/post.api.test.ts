@@ -6,13 +6,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ApiClient } from "../client";
 import { PostApi } from "./post.api";
 import { createMockImageFile } from "@/test-utils/createMockFile";
-import { Post } from "./post.types";
-
-const createMockPost = (overrides = {}): Post => ({
-  id: "test-post-id",
-  text: "This is a test post",
-  ...overrides,
-});
+import { createMockPost } from "@/test-utils/createMockPost";
 
 const createMockFetchResponse = (data: any, ok = true, status = 200) => ({
   data,
