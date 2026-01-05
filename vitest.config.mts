@@ -6,7 +6,8 @@ export default defineConfig({
   plugins: [tsconfigPaths(), react()],
   test: {
     environment: "jsdom",
-    include: ["**/*.test.{ts,tsx}"],
+    setupFiles: ["./vitest.setup.ts"],
+    include: ["**/*.test.{ts,tsx}", "**/*.spec.{ts,tsx}"],
     exclude: ["node_modules", "dist", ".next", "tests/e2e/**"],
     env: {
       ZITADEL_CLIENT_ID: "test-client-id",
