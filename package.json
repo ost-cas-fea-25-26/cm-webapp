@@ -45,7 +45,7 @@
     "eslint-config-next": "16.1.1",
     "eslint-config-prettier": "10.1.8",
     "jsdom": "^27.4.0",
-    "knip": "5.79.0",
+    "knip": "5.80.0",
     "openapi-typescript": "^7.10.1",
     "postcss": "8.5.6",
     "prettier": "3.7.4",
