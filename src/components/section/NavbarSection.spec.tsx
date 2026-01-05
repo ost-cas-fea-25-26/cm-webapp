@@ -33,19 +33,14 @@ describe("NavbarSection", () => {
   });
 
   it("should render Navbar with login button when user is not authenticated", async () => {
-    /**
-     * render NavbarSection without userContext
-     * - mock all child components
-     * assert logout button is present but avatar/settings are not
-     */
     vi.mocked(getUserAction).mockResolvedValue(undefined);
 
     render(await NavbarSection());
-    // Avatar and Settings should not be visible
+
+    // wihtout a user logged in, only logout button is visible (does only make 50% sense, see refactor list)
     expect(screen.queryByTestId("profile-avatar")).not.toBeInTheDocument();
     expect(screen.queryByTestId("settings-button")).not.toBeInTheDocument();
 
-    // Logout Button should be present (TODO: refactor - should be conditional)
     expect(screen.getByTestId("logout-button")).toBeInTheDocument();
   });
   it("should render Navbar with user avatar, settings button and logout button when user is authenticated", async () => {
