@@ -3,6 +3,8 @@ type MockUserOverrides = Partial<{
   username: string;
   firstname: string;
   lastname: string;
+  displayName?: string;
+  avatarUrl?: string;
 }>;
 
 export const createMockUser = (overrides: MockUserOverrides = {}) => ({
