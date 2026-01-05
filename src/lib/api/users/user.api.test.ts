@@ -5,6 +5,7 @@ vi.mock("next/cache", () => ({
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { UserApi } from "./user.api";
 import { ApiClient } from "../client";
+import { createMockAvatarFile } from "@/test-utils/createMockFile";
 
 // Test Helpers
 const createMockUser = (overrides = {}) => ({
@@ -77,7 +78,7 @@ describe("User API", () => {
       });
       vi.stubGlobal("fetch", mockFetch);
 
-      const file = new File(["content"], "avatar.png", { type: "image/png" });
+      const file = createMockAvatarFile();
       const result = await userApi.updateAvatar("user-id", file);
 
       expect(result.hasError).toBe(false);

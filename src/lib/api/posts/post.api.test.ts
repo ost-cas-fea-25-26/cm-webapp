@@ -5,6 +5,7 @@ vi.mock("next/cache", () => ({
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ApiClient } from "../client";
 import { PostApi } from "./post.api";
+import { createMockImageFile } from "@/test-utils/createMockFile";
 import { Post } from "./post.types";
 
 const createMockPost = (overrides = {}): Post => ({
@@ -166,9 +167,7 @@ describe("Post API", () => {
         Authorization: "Bearer test-token",
       });
 
-      const mockFile = new File(["image content"], "test-image.jpg", {
-        type: "image/jpeg",
-      });
+      const mockFile = createMockImageFile();
 
       const result = await postApi.create("Check out this image!", mockFile);
 
