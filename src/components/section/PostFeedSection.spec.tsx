@@ -4,6 +4,7 @@ import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import { describe, afterEach, vi, it, expect } from "vitest";
 import PostFeedSection from "./PostFeedSection";
 import { createMockPost } from "@/test-utils/createMockPost";
+import userEvent from "@testing-library/user-event";
 
 /**
  * todo: mocks
@@ -69,5 +70,35 @@ describe("PostFeedSection ", () => {
     const posts = screen.getAllByTestId("post");
     expect(posts).toHaveLength(5);
     expect(screen.getByTestId("load-more-button")).toBeInTheDocument();
+  });
+
+  it("should load more posts upon clicking load more button", async () => {
+    vi.mocked(getPostsAction)
+      .mockResolvedValueOnce(mockPosts)
+      .mockResolvedValueOnce([
+        createMockPost({ id: "post-6", text: "Sixth post" }),
+        createMockPost({ id: "post-7", text: "Seventh post" }),
+      ]);
+
+    render(<PostFeedSection />);
+
+    // wait til loading is done
+    await waitFor(() => {
+      expect(screen.queryByTestId("loading")).not.toBeInTheDocument();
+    });
+
+    const posts = screen.getAllByTestId("post");
+    expect(posts).toHaveLength(5);
+    expect(screen.getByTestId("load-more-button")).toBeInTheDocument();
+
+    const loadMoreButton = screen.getByRole("button", { name: /load more/i });
+    await userEvent.click(loadMoreButton);
+
+    await waitFor(() => {
+      expect(screen.queryByTestId("loading")).not.toBeInTheDocument();
+    });
+
+    const postsAfterLoadMore = screen.getAllByTestId("post");
+    expect(postsAfterLoadMore).toHaveLength(7);
   });
 });
