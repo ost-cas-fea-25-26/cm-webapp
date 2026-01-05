@@ -1,9 +1,9 @@
-import { render, screen, cleanup } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
-import MumbleFollow from "./MumbleFollow";
 import { followUser } from "@/actions/user.action";
+import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useRouter } from "next/navigation";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import MumbleFollow from "./MumbleFollow";
 
 vi.mock("@/actions/user.action");
 vi.mock("next/navigation", () => ({
