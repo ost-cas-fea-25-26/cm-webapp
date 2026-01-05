@@ -53,6 +53,7 @@ This file tracks technical debt and refactoring tasks identified during developm
 ## Medium Priority
 
 ### 3. PostFeedSection: Multiple Issues
+
 **Status:** Not Started  
 **Location:** `src/components/section/PostFeedSection.tsx`
 
@@ -85,6 +86,7 @@ This file tracks technical debt and refactoring tasks identified during developm
    - Should disable button while loading
 
 **Proposed Solutions:**
+
 - Change to `key={post.id}`
 - Add `props.params` to useEffect dependencies or use `useCallback`
 - Add try-catch with error state
