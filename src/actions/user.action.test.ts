@@ -12,7 +12,7 @@ import { UserApi } from "@/lib/api/users/user.api";
 import { AuthServer } from "@/lib/auth/server";
 import { redirect } from "next/navigation";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { getUserAction } from "./user.action";
+import { getUserAction, isCurrentUserAction } from "./user.action";
 
 const createMockUser = (overrides = {}) => ({
   id: "test-user-id",
@@ -97,6 +97,36 @@ describe("User Action Tests", () => {
       await getUserAction();
 
       expect(redirect).toHaveBeenCalledWith("/login");
+    });
+  });
+
+  describe("isCurrentUserAction", () => {
+    it("returns true when id matches current user", async () => {
+      const mockGetAuthUser = vi.fn().mockResolvedValue({
+        identifier: "user-123",
+      });
+
+      vi.mocked(AuthServer).mockImplementation(function (this: any) {
+        this.getAuthUser = mockGetAuthUser;
+      } as any);
+
+      const result = await isCurrentUserAction("user-123");
+
+      expect(result).toBe(true);
+    });
+
+    it("returns false when id does not match current user", async () => {
+      const mockGetAuthUser = vi.fn().mockResolvedValue({
+        identifier: "user-123",
+      });
+
+      vi.mocked(AuthServer).mockImplementation(function (this: any) {
+        this.getAuthUser = mockGetAuthUser;
+      } as any);
+
+      const result = await isCurrentUserAction("other-user");
+
+      expect(result).toBe(false);
     });
   });
 });
