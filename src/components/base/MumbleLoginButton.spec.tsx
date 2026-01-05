@@ -1,12 +1,12 @@
-vi.mock("@/lib/auth/client", () => ({
-  AuthClient: vi.fn(),
-}));
-
 import { AuthClient } from "@/lib/auth/client";
 import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import MumbleLoginButton from "./MumbleLoginButton";
+
+vi.mock("@/lib/auth/client", () => ({
+  AuthClient: vi.fn(),
+}));
 
 describe("Mumble Login Button", () => {
   afterEach(() => {

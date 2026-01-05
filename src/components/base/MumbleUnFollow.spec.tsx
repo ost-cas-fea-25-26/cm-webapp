@@ -1,14 +1,14 @@
+vi.mock("@/actions/user.action");
+vi.mock("next/navigation", () => ({
+  useRouter: vi.fn(),
+}));
+
 import { render, screen, cleanup } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import MumbleUnFollow from "./MumbleUnFollow";
 import { unfollowUser } from "@/actions/user.action";
 import userEvent from "@testing-library/user-event";
 import { useRouter } from "next/navigation";
-
-vi.mock("@/actions/user.action");
-vi.mock("next/navigation", () => ({
-  useRouter: vi.fn(),
-}));
 
 describe("MumbleUnFollow", () => {
   afterEach(() => {
