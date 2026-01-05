@@ -26,4 +26,14 @@
   .md\:hidden {
     display: none;
   }
+
+  /* Fix for design system bug: duplicate .hidden class overriding md:inline */
+  .md\:inline.hidden {
+    display: inline !important;
+  }
+
+  /* Alternative: target the button label spans directly */
+  button span.md\:inline {
+    display: inline !important;
+  }
 }
