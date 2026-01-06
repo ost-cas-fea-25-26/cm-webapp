@@ -14,10 +14,10 @@ const MumbleProfileBanner = (props: MumbleProfileBannerProps) => {
   const router = useRouter();
   return (
     <ProfileBanner
-      avatarAlt="Avatar image"
+      avatarAlt="Profile avatar"
       avatarSrc={props.user.avatarUrl ? props.user.avatarUrl : "data:,"}
       displayName={props.user.displayName}
-      imageAlt="Profile banner image"
+      imageAlt="Profile banner"
       joinedTimestamp={new Date()}
       location="Location"
       userName={props.user.username}
