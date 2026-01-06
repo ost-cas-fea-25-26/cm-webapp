@@ -15,5 +15,8 @@ export default defineConfig({
       AUTH_SECRET: "test-auth-secret",
       MUMBLE_API_URL: "http://localhost:8080",
     },
+    coverage: {
+      provider: "v8",
+    },
   },
 });
