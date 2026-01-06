@@ -11,8 +11,8 @@ type MumblePostReplyProps = {
 };
 
 const MumblePostReply = ({ reply }: MumblePostReplyProps) => {
-  const replyDetailPageUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/posts/${reply.parentId}#reply-${reply.id}`;
-  const profilePageUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/profile/${reply.creator?.id}`;
+  const replyDetailPageUrl = `${process.env.NEXT_PUBLIC_VERCEL_URL}/posts/${reply.parentId}#reply-${reply.id}`;
+  const profilePageUrl = `${process.env.NEXT_PUBLIC_VERCEL_URL}/profile/${reply.creator?.id}`;
   const goToProfilePage = () => redirect(profilePageUrl);
 
   const goToReplyDetailPage = () => {

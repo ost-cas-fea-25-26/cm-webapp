@@ -9,7 +9,7 @@ export type MumbleProfileAvatarProps = {
 };
 
 const MumbleProfileAvatar = (props: MumbleProfileAvatarProps) => {
-  const profilePageUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/profile/${props.userId}`;
+  const profilePageUrl = `${process.env.NEXT_PUBLIC_VERCEL_URL}/profile/${props.userId}`;
   const goToProfile = () => redirect(profilePageUrl);
 
   return (

@@ -14,7 +14,7 @@ export type MumblePostCreatorProps = {
 };
 
 const MumblePostCreator = (props: MumblePostCreatorProps) => {
-  const profilePageUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/profile/${props.user?.id}`;
+  const profilePageUrl = `${process.env.NEXT_PUBLIC_VERCEL_URL}/profile/${props.user?.id}`;
   const goToProfilePage = () => redirect(profilePageUrl);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
