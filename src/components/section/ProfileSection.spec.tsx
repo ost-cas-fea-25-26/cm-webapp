@@ -26,7 +26,7 @@ describe("ProfileSection ", () => {
     vi.clearAllMocks();
   });
 
-  it("render profile section for users own profile (profile tabs visible, no follow/unfollwo button)", async () => {
+  it("render profile section for users own profile (profile tabs visible, no follow/unfollow button)", async () => {
     vi.mocked(isCurrentUserAction).mockResolvedValueOnce(true);
 
     render(
