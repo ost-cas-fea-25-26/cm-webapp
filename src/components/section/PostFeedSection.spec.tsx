@@ -6,14 +6,6 @@ import PostFeedSection from "./PostFeedSection";
 import { createMockPost } from "@/test-utils/createMockPost";
 import userEvent from "@testing-library/user-event";
 
-/**
- * todo: mocks
- * - loadPosts
- * - getPostsAction
- * -
- *
- */
-
 vi.mock("../base/MumbleLoading", () => ({
   default: () => <div data-testid="loading">Loading...</div>,
 }));
