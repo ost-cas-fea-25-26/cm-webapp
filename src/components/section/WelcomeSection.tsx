@@ -15,10 +15,10 @@ const WelcomeSection = async () => {
   const { base, title, subtitle } = welcomeSectionStyles();
   return (
     <div className={base()}>
-      <Heading as="h2" size="2" className={title()}>
+      <Heading as="h1" size="2" className={title()}>
         Welcome to Mumble
       </Heading>
-      <Heading as="h4" size="4" className={subtitle()}>
+      <Heading as="h2" size="4" className={subtitle()}>
         Voluptatem qui cumque voluptatem quia tempora dolores distinctio vel
         repellat dicta.
       </Heading>
