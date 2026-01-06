@@ -50,6 +50,24 @@ This file tracks technical debt and refactoring tasks identified during developm
 
 ---
 
+### 3. User Settings: Return Updated User Object
+**Status:** Not Started  
+**Location:** User settings/profile update flow
+
+**Issue:**
+- After updating user settings (e.g., username), the displayed username reverts to old value after page reload
+- Settings update action doesn't return the updated user object
+- Client state becomes out of sync with server state
+
+**Proposed Solution:**
+- Update settings action should return the updated user object
+- Update client-side state/cache with returned user data
+- Consider revalidating user session after settings change
+
+**Created:** 2026-01-06
+
+---
+
 ## Medium Priority
 
 ### 3. PostFeedSection: Multiple Issues
