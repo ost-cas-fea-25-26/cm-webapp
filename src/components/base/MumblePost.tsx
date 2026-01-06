@@ -5,14 +5,15 @@ import { redirect } from "next/navigation";
 import { decodeTime } from "ulid";
 import { Post } from "../../lib/api/posts/post.types";
 import { likePostAction, unlikePostAction } from "@/actions/post.action";
+import { getBaseUrl } from "@/lib/utils/link";
 
 export type MumbleProps = {
   post: Post;
 };
 
 const MumblePost = (props: MumbleProps) => {
-  const postDetailPageUrl = `${process.env.NEXT_PUBLIC_VERCEL_URL}/posts/${props.post.id}`;
-  const profilePageUrl = `${process.env.NEXT_PUBLIC_VERCEL_URL}/profile/${props.post.creator?.id}`;
+  const postDetailPageUrl = `${getBaseUrl()}/posts/${props.post.id}`;
+  const profilePageUrl = `${getBaseUrl()}/profile/${props.post.creator?.id}`;
   const goToProfilePage = () => redirect(profilePageUrl);
   const goToPostDetailPage = () => redirect(postDetailPageUrl);
   const copyLinkToClipboard = () =>
@@ -41,7 +42,7 @@ const MumblePost = (props: MumbleProps) => {
       onCommentClick={goToPostDetailPage}
       onLikeClick={onLikeButtonClick}
       onShareClick={copyLinkToClipboard}
-      detailLink={postDetailPageUrl}
+      onPostClick={goToPostDetailPage}
     ></PostComponent>
   );
 };

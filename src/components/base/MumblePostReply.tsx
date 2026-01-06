@@ -2,6 +2,7 @@
 
 import { likePostAction, unlikePostAction } from "@/actions/post.action";
 import { Reply } from "@/lib/api/posts/post.types";
+import { getBaseUrl } from "@/lib/utils/link";
 import { Response } from "@krrli/cm-designsystem";
 import { redirect } from "next/navigation";
 import { decodeTime } from "ulid";
@@ -11,8 +12,8 @@ type MumblePostReplyProps = {
 };
 
 const MumblePostReply = ({ reply }: MumblePostReplyProps) => {
-  const replyDetailPageUrl = `${process.env.NEXT_PUBLIC_VERCEL_URL}/posts/${reply.parentId}#reply-${reply.id}`;
-  const profilePageUrl = `${process.env.NEXT_PUBLIC_VERCEL_URL}/profile/${reply.creator?.id}`;
+  const replyDetailPageUrl = `${getBaseUrl()}/posts/${reply.parentId}#reply-${reply.id}`;
+  const profilePageUrl = `$${getBaseUrl()}/profile/${reply.creator?.id}`;
   const goToProfilePage = () => redirect(profilePageUrl);
 
   const goToReplyDetailPage = () => {

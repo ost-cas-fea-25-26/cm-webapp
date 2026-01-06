@@ -8,13 +8,14 @@ import { redirect } from "next/navigation";
 import MumblePost from "./MumblePost";
 import { useState } from "react";
 import MumbleLoading from "./MumbleLoading";
+import { getBaseUrl } from "@/lib/utils/link";
 
 export type MumblePostCreatorProps = {
   user: User;
 };
 
 const MumblePostCreator = (props: MumblePostCreatorProps) => {
-  const profilePageUrl = `${process.env.NEXT_PUBLIC_VERCEL_URL}/profile/${props.user?.id}`;
+  const profilePageUrl = `${getBaseUrl()}/profile/${props.user?.id}`;
   const goToProfilePage = () => redirect(profilePageUrl);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState<boolean>(false);

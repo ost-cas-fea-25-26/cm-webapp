@@ -1,5 +1,6 @@
 "use client";
 
+import { getBaseUrl } from "@/lib/utils/link";
 import { Avatar } from "@krrli/cm-designsystem";
 import { redirect } from "next/navigation";
 
@@ -9,7 +10,7 @@ export type MumbleProfileAvatarProps = {
 };
 
 const MumbleProfileAvatar = (props: MumbleProfileAvatarProps) => {
-  const profilePageUrl = `${process.env.NEXT_PUBLIC_VERCEL_URL}/profile/${props.userId}`;
+  const profilePageUrl = `${getBaseUrl()}/profile/${props.userId}`;
   const goToProfile = () => redirect(profilePageUrl);
 
   return (
