@@ -24,7 +24,7 @@ export class AuthServer {
         },
       },
     },
-    baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+    baseURL: process.env.NEXT_PUBLIC_VERCEL_URL,
     plugins: [
       nextCookies(),
       genericOAuth({
