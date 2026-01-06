@@ -4,6 +4,7 @@ import { genericOAuth } from "better-auth/plugins";
 import { headers } from "next/headers";
 import { AuthUser } from "./auth.types";
 import { cache } from "react";
+import { getBaseUrl } from "../utils/link";
 
 const PROVIDER_ID = "zitadel";
 
@@ -24,7 +25,7 @@ export class AuthServer {
         },
       },
     },
-    baseURL: process.env.NEXT_PUBLIC_VERCEL_URL,
+    baseURL: getBaseUrl(),
     plugins: [
       nextCookies(),
       genericOAuth({
