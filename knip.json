@@ -5,10 +5,12 @@
     "type": true
   },
   "tags": ["-lintignore"],
-  "ignoreDependencies": [
-    "eslint-config-next",
-    "@testing-library/dom",
-    "@testing-library/react"
-  ],
-  "entry": ["**/*.test.ts", "**/*.test.tsx", "tests/**/*.spec.ts"]
+  "ignoreDependencies": ["eslint-config-next"],
+  "entry": [
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "tests/**/*.spec.ts"
+  ]
 }
