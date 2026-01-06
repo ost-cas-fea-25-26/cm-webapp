@@ -174,6 +174,44 @@ This file tracks technical debt and refactoring tasks identified during developm
 
 ---
 
+### 6. ProfileSection: Server-Logik von UI trennen
+**Status:** Not Started  
+**Location:** `src/components/section/ProfileSection.tsx`
+
+**Issue:**
+- ProfileSection ist eine async Server-Komponente, was Komponententests erschwert
+- Tests mit `render()` funktionieren nicht wie erwartet, weil die Komponente nie gerendert wird
+- Logik (Datenbeschaffung) und UI sind nicht sauber getrennt
+
+**Proposed Solution:**
+- Trenne Datenlogik und UI:
+  - Erstelle z.B. `getProfileSectionState(userId)` als Server-Helper
+  - Mache ProfileSection zu einer synchronen UI-Komponente, die Props wie `isCurrentUser` und `following` erhält
+- Dadurch wird die Komponente testbar und die Logik bleibt klar
+
+**Beispiel:**
+```ts
+// ProfileSection.server.ts
+export async function getProfileSectionState(userId: string) {
+  return {
+    following: await isFollowing(userId),
+    isCurrentUser: await isCurrentUserAction(userId),
+  };
+}
+
+// ProfileSection.tsx (sync!)
+type Props = ProfileSectionProps & {
+  following: boolean;
+  isCurrentUser: boolean;
+};
+
+const ProfileSection = ({ following, isCurrentUser, ...props }: Props) => { ... };
+```
+
+**Created:** 2026-01-06
+
+---
+
 ## Notes
 
 - This list should be updated whenever new refactoring needs are identified
