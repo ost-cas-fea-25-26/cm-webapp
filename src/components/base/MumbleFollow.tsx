@@ -23,7 +23,9 @@ const MumbleFollow = (props: MumbleFollowProps) => {
 
   return (
     <div className={base()}>
-      <Label size="md">You currently do not follow {props.displayName}</Label>
+      <Label as="span" size="md">
+        You currently do not follow {props.displayName}
+      </Label>
       <Button
         size="md"
         intent="primary"
