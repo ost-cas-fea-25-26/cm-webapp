@@ -19,6 +19,7 @@ export default async function TimelinePage() {
   return (
     <div className={base()}>
       {getBaseUrl()}
+      {"NODE_ENV: " + process.env.NODE_ENV}
       <WelcomeSection />
       <div className={timeline()}>
         <MumblePostCreator user={mumbleUser!}></MumblePostCreator>
