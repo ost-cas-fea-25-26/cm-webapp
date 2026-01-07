@@ -132,6 +132,34 @@ npx playwright test
 npx playwright test --ui
 ```
 
+## Auth
+
+This project uses **better-auth** in combination with a **PostgreSQL** database.
+
+### Setup
+
+Authentication requires a database to function correctly. To start the database, run the following command from the root of the project:
+
+```bash
+docker-compose up -d
+```
+
+This command initializes and runs the PostgreSQL database in detached mode.
+
+Next, add the following database connection string to your `.env` file:
+
+```bash
+MUMBLE_DATABASE_URL="postgres://admin:MyPassword123@localhost:5432/auth"
+```
+
+After configuring the environment variable, create the required database schema by running:
+
+```bash
+npx @better-auth/cli@latest migrate --config src/lib/auth/auth.config.ts
+```
+
+Once the migration completes successfully, authentication should be fully operational.
+
 ---
 
 ## Resources
