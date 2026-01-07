@@ -2,6 +2,7 @@ import { getUserAction } from "@/actions/user.action";
 import MumblePostCreator from "@/components/base/MumblePostCreator";
 import PostFeedSection from "@/components/section/PostFeedSection";
 import WelcomeSection from "@/components/section/WelcomeSection";
+import { getBaseUrl } from "@/lib/utils/link";
 import { tv } from "tailwind-variants";
 
 const timelineStyles = tv({
@@ -17,6 +18,7 @@ export default async function TimelinePage() {
 
   return (
     <div className={base()}>
+      {getBaseUrl()}
       <WelcomeSection />
       <div className={timeline()}>
         <MumblePostCreator user={mumbleUser!}></MumblePostCreator>
