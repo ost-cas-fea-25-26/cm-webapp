@@ -1,11 +1,10 @@
 import { test, expect } from "@playwright/test";
 
 test("Forward to Zitadel on login", async ({ page }) => {
-  // App öffnen, Login suchen und klicken, Wetierleitung zu Zitadel prüfen
+  // Open app, look for login and click, check redirection to Zitadel
   await page.goto("/");
   await expect(page).toHaveURL(/\/login/);
 
-  // Login-Button klicken
   const loginButton = page.getByRole("button", { name: /login/i });
   await expect(loginButton).toBeVisible();
   await loginButton.click();
