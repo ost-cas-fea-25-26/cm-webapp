@@ -41,23 +41,11 @@ const SettingsForm = ({
         <div
           style={{ display: "flex", gap: "1rem", justifyContent: "flex-end" }}
         >
-          <Button
-            intent="primary"
-            size="md"
-            onClick={onCancel}
-            icon={Cancel}
-            // disabled={isSubmitting}
-          >
-            Abbrechen
+          <Button intent="primary" size="md" onClick={onCancel} icon={Cancel}>
+            Cancel
           </Button>
-          <Button
-            type="submit"
-            intent="secondary"
-            size="md"
-            icon={Checkmark}
-            // disabled={isSubmitting}
-          >
-            {isSubmitting ? "Speichert..." : "Speichern"}
+          <Button type="submit" intent="secondary" size="md" icon={Checkmark}>
+            {isSubmitting ? "Saving..." : "Save"}
           </Button>
         </div>
       }
