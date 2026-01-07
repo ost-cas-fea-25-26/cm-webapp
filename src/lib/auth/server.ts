@@ -16,7 +16,7 @@ if (!clientId) {
 
 export const auth = betterAuth({
   database: new Pool({
-    connectionString: process.env.AUTH_DB_CONNECTION,
+    connectionString: process.env.MUMBLE_DATABASE_URL,
   }),
   user: {
     additionalFields: {

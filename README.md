@@ -149,7 +149,7 @@ This command initializes and runs the PostgreSQL database in detached mode.
 Next, add the following database connection string to your `.env` file:
 
 ```bash
-AUTH_DB_CONNECTION="postgres://admin:MyPassword123@localhost:5432/auth"
+MUMBLE_DATABASE_URL="postgres://admin:MyPassword123@localhost:5432/auth"
 ```
 
 After configuring the environment variable, create the required database schema by running:
