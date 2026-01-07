@@ -37,6 +37,7 @@ const MumblePost = (props: MumbleProps) => {
       timestamp={postTimeStamp}
       text={props.post.text || ""}
       avatarSrc={props.post.creator?.avatarUrl || ""}
+      avatarAlt={"Avatar of " + props.post.creator?.displayName}
       imageSrc={props.post.mediaUrl || ""}
       nbrOfComments={props.post.replies ?? 0}
       nbrOfLikes={props.post.likes ?? 0}
