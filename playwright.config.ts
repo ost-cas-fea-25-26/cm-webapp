@@ -48,7 +48,17 @@ export default defineConfig({
       },
     },
     {
+      name: "logged-out",
+      testMatch: /.*\.logged-out\.spec\.ts/, // Nur spezielle Dateien scannen
+      use: {
+        ...devices["Desktop Chrome"],
+        storageState: { cookies: [], origins: [] }, // Explizit leerer State
+      },
+    },
+    {
       name: "chromium",
+
+      testIgnore: /.*\.setup\.ts/,
       use: {
         ...devices["Desktop Chrome"],
         storageState: "playwright/.auth/user.json",
@@ -57,6 +67,7 @@ export default defineConfig({
     },
     {
       name: "firefox",
+      testIgnore: /.*\.setup\.ts/,
       use: {
         ...devices["Desktop Firefox"],
         storageState: "playwright/.auth/user.json",
@@ -66,6 +77,7 @@ export default defineConfig({
 
     {
       name: "webkit",
+      testIgnore: /.*\.setup\.ts/,
       use: {
         ...devices["Desktop Safari"],
         storageState: "playwright/.auth/user.json",

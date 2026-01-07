@@ -16,7 +16,7 @@ export default async function TimelinePage() {
   const mumbleUser = await getUserAction();
 
   return (
-    <div className={base()}>
+    <div className={base()} data-testid="timeline-page">
       <WelcomeSection />
       <div className={timeline()}>
         <MumblePostCreator user={mumbleUser!}></MumblePostCreator>
