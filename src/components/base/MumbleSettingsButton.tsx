@@ -72,7 +72,7 @@ const MumbleSettingsButton = (props: MumbleSettingsButtonProps) => {
       <Modal
         open={settingsModalOpen}
         onOpenChange={setSettingsModalOpen}
-        title="Einstellungen"
+        title="Settings"
       >
         <ModalBody>
           <SettingsForm
