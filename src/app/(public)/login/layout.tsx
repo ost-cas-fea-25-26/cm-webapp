@@ -2,6 +2,7 @@ import "../../globals.css";
 import MumbleNavbar from "@/components/base/MumbleNavbar";
 import MumbleLoginButton from "@/components/base/MumbleLoginButton";
 import { tv } from "tailwind-variants";
+import { getBaseUrl } from "@/lib/utils/link";
 
 const loginLayoutStyles = tv({
   slots: {
@@ -21,6 +22,7 @@ export default async function LoginLayout({
       <MumbleNavbar>
         <MumbleLoginButton />
       </MumbleNavbar>
+      {getBaseUrl()}
       <main className={base()}>{children}</main>
     </>
   );
