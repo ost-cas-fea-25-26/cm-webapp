@@ -22,8 +22,6 @@ export default async function LoginLayout({
       <MumbleNavbar>
         <MumbleLoginButton />
       </MumbleNavbar>
-      {getBaseUrl()}
-      {"NODE_ENV: " + process.env.NODE_ENV}
       <main className={base()}>{children}</main>
     </>
   );
