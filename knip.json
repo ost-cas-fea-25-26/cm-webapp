@@ -8,7 +8,6 @@
   "ignoreDependencies": ["eslint-config-next"],
   "entry": [
     "**/*.test.ts",
-    "**/*.test.tsx",
     "**/*.spec.ts",
     "**/*.spec.tsx",
     "tests/**/*.spec.ts"

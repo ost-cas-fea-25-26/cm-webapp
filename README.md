@@ -155,7 +155,7 @@ MUMBLE_DATABASE_URL="postgres://admin:MyPassword123@localhost:5432/auth"
 After configuring the environment variable, create the required database schema by running:
 
 ```bash
-npx @better-auth/cli@latest migrate --config src/lib/auth/server.ts
+npx @better-auth/cli@latest migrate --config src/lib/auth/auth.config.ts
 ```
 
 Once the migration completes successfully, authentication should be fully operational.
