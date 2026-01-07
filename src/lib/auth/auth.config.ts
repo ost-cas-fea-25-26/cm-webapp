@@ -10,6 +10,7 @@ const clientId = process.env.ZITADEL_CLIENT_ID;
 if (!clientId) {
   throw new Error("ZITADEL_CLIENT_ID is not set");
 }
+
 export const auth = betterAuth({
   database: new Pool({
     connectionString: process.env.MUMBLE_DATABASE_URL,
