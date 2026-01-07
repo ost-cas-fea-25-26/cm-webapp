@@ -2,7 +2,6 @@ import "../../globals.css";
 import MumbleNavbar from "@/components/base/MumbleNavbar";
 import MumbleLoginButton from "@/components/base/MumbleLoginButton";
 import { tv } from "tailwind-variants";
-import { getBaseUrl } from "@/lib/utils/link";
 
 const loginLayoutStyles = tv({
   slots: {
