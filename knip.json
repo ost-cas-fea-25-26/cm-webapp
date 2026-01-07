@@ -6,6 +6,7 @@
   },
   "tags": ["-lintignore"],
   "ignoreDependencies": ["eslint-config-next"],
+  "ignore": ["tests/auth.setup.ts"],
   "entry": [
     "**/*.test.ts",
     "**/*.spec.ts",
