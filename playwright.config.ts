@@ -1,6 +1,10 @@
 import { defineConfig, devices } from "@playwright/test";
+import dotenv from "dotenv";
+import path from "path";
 
 const BASE_URL = process.env.TEST_BASE_URL || "http://localhost:3000";
+// load .env file
+dotenv.config({ path: path.resolve(__dirname, ".env") });
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -35,25 +39,56 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
+    // Setup Projekt
+    {
+      name: "setup",
+      testMatch: /.*\.setup\.ts/,
+      use: {
+        ...devices["Desktop Chrome"],
+      },
+    },
+    {
+      name: "logged-out",
+      testMatch: /.*\.logged-out\.spec\.ts/, // Nur spezielle Dateien scannen
+      use: {
+        ...devices["Desktop Chrome"],
+        storageState: { cookies: [], origins: [] }, // Explizit leerer State
+      },
+    },
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
-    },
 
+      testIgnore: /.*\.setup\.ts/,
+      use: {
+        ...devices["Desktop Chrome"],
+        storageState: "playwright/.auth/user.json",
+      },
+      dependencies: ["setup"],
+    },
     {
       name: "firefox",
-      use: { ...devices["Desktop Firefox"] },
+      testIgnore: /.*\.setup\.ts/,
+      use: {
+        ...devices["Desktop Firefox"],
+        storageState: "playwright/.auth/user.json",
+      },
+      dependencies: ["setup"],
     },
 
     {
       name: "webkit",
-      use: { ...devices["Desktop Safari"] },
+      testIgnore: /.*\.setup\.ts/,
+      use: {
+        ...devices["Desktop Safari"],
+        storageState: "playwright/.auth/user.json",
+      },
+      dependencies: ["setup"],
     },
   ],
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: "npm run dev",
+    command: "NEXT_PUBLIC_IS_E2E_TEST=true npm run dev",
     url: BASE_URL,
     reuseExistingServer: !process.env.CI,
   },

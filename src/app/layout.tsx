@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { register } from "../instrumentation";
 import { tv } from "tailwind-variants";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import { MSWProvider } from "../../tests/msw/msw-provider";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -25,11 +27,17 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // MSW für E2E-Tests aktivieren (nur im Node.js-Server-Kontext)
+  if (typeof window === "undefined") {
+    await register();
+  }
   const { base } = rootLayoutStyles();
 
   return (
     <html lang="en" className={poppins.variable}>
-      <body className={base()}>{children}</body>
+      <body className={base()}>
+        <MSWProvider>{children}</MSWProvider>
+      </body>
     </html>
   );
 }
