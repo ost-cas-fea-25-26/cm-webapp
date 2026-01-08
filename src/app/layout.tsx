@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { register } from "../instrumentation";
 import { tv } from "tailwind-variants";
 import { Poppins } from "next/font/google";
 import "./globals.css";
@@ -25,6 +26,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // MSW für E2E-Tests aktivieren (nur im Node.js-Server-Kontext)
+  if (typeof window === "undefined") {
+    await register();
+  }
   const { base } = rootLayoutStyles();
 
   return (
