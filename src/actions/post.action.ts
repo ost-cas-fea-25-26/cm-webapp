@@ -4,11 +4,14 @@ import { ApiClient } from "@/lib/api/client";
 import { PostApi } from "@/lib/api/posts/post.api";
 import { Post, PostQueryParams, Reply } from "@/lib/api/posts/post.types";
 
-const apiUrl = process.env.MUMBLE_API_URL;
+const apiEnv = process.env.MUMBLE_API_ENV || "prod";
+const apiUrl =
+  apiEnv === "mock"
+    ? process.env.MUMBLE_API_URL_MOCK
+    : process.env.MUMBLE_API_URL;
 if (!apiUrl) {
   throw new Error("MUMBLE_API_URL is not set");
 }
-
 const apiClient = new ApiClient(apiUrl);
 const postApiClient = new PostApi(apiClient);
 

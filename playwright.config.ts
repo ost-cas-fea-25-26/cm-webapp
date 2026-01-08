@@ -6,6 +6,11 @@ const BASE_URL = process.env.TEST_BASE_URL || "http://localhost:3000";
 // load .env file
 dotenv.config({ path: path.resolve(__dirname, ".env") });
 
+// Setze MUMBLE_API_ENV auf 'mock', falls nicht gesetzt
+if (!process.env.MUMBLE_API_ENV) {
+  process.env.MUMBLE_API_ENV = "mock";
+}
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
