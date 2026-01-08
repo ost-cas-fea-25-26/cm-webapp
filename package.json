@@ -16,11 +16,13 @@
     "prettier:check": "prettier . --check",
     "knip": "knip",
     "types:generate": "npx openapi-typescript https://mumble-api-prod-714602723919.europe-west6.run.app/swagger/v1/swagger.json -o src/types/api.d.ts",
-    "test": "vitest"
+    "test": "vitest",
+    "e2e:mock": "MUMBLE_API_ENV=mock playwright test"
   },
   "dependencies": {
     "@krrli/cm-designsystem": "1.37.5",
     "better-auth": "1.4.10",
+    "dotenv": "^17.2.3",
     "next": "16.1.1",
     "openapi-fetch": "0.15.0",
     "pg": "^8.16.3",
@@ -50,6 +52,7 @@
     "eslint-config-next": "16.1.1",
     "eslint-config-prettier": "10.1.8",
     "jsdom": "^27.4.0",
+    "json-server": "^1.0.0-beta.3",
     "knip": "5.80.0",
     "openapi-typescript": "^7.10.1",
     "postcss": "8.5.6",

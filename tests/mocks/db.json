@@ -1,0 +1,25 @@
+{
+  "api": {
+    "auth": {
+      "get-session": {
+        "user": {
+          "id": "me",
+          "username": "E2E-Tester",
+          "email": "test@example.com"
+        },
+        "session": {
+          "id": "fake-session-123",
+          "userId": "me",
+          "expiresAt": "2030-01-01T00:00:00.000Z"
+        }
+      }
+    }
+  },
+  "posts": [
+    {
+      "id": "1",
+      "text": "Dieser Post MUSS erscheinen!",
+      "creator": { "id": "me", "username": "E2E-Tester" }
+    }
+  ]
+}

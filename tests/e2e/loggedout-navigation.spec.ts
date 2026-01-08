@@ -1,7 +1,11 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
+import { resetCookieConfig } from "../utils/test.utils";
 
 test.describe("Navigation", () => {
-  test("should visit home and click login", async ({ page }) => {
+  test("should visit home and click login", async ({ browser }) => {
+    // reset cookies to ensure logged-out state
+    const page = await resetCookieConfig(browser);
+
     // Visit home page
     await page.goto("/");
 
@@ -16,7 +20,10 @@ test.describe("Navigation", () => {
     await loginButton.click();
   });
 
-  test("should visit home and click login on mobile", async ({ page }) => {
+  test("should visit home and click login on mobile", async ({ browser }) => {
+    // reset cookies to ensure logged-out state
+    const page = await resetCookieConfig(browser);
+
     // Set mobile viewport
     await page.setViewportSize({ width: 375, height: 667 });
 

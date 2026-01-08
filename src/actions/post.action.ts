@@ -9,6 +9,12 @@ if (!apiUrl) {
   throw new Error("MUMBLE_API_URL is not set");
 }
 
+console.log("🚀 NEXT.JS SERVER SENDET REQUEST AN:", apiUrl);
+console.log(
+  "🛑 ABSOLUTER SERVER-CHECK - API URL IST:",
+  process.env.MUMBLE_API_URL
+);
+
 const apiClient = new ApiClient(apiUrl);
 const postApiClient = new PostApi(apiClient);
 

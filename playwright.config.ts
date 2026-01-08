@@ -1,60 +1,74 @@
 import { defineConfig, devices } from "@playwright/test";
+import dotenv from "dotenv";
+import path from "path";
 
-const BASE_URL = process.env.TEST_BASE_URL || "http://localhost:3000";
+dotenv.config({ path: path.resolve(__dirname, ".env") });
 
-/**
- * See https://playwright.dev/docs/test-configuration.
- */
+const BASE_URL = "http://localhost:3000";
+const MOCK_API_URL = "http://localhost:4000";
+
 export default defineConfig({
   testDir: "./tests",
-  /* Run tests in files in parallel */
   fullyParallel: true,
-  /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
-  /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
-  /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 2 : undefined,
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: process.env.CI ? "blob" : "html",
-  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-  use: {
-    /* Base URL to use in actions like `await page.goto('')`. */
-    baseURL: BASE_URL,
 
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+  use: {
+    baseURL: BASE_URL,
     trace: "on-first-retry",
   },
 
   expect: {
     toHaveScreenshot: {
-      maxDiffPixelRatio: 0.04, // 4% - allow for minor font rendering differences
+      maxDiffPixelRatio: 0.04,
       animations: "disabled",
     },
   },
 
-  /* Configure projects for major browsers */
   projects: [
+    // 1. Auth Setup (Erstellt die user.json)
     {
-      name: "chromium",
+      name: "setup",
+      testMatch: /.*\.setup\.ts/,
       use: { ...devices["Desktop Chrome"] },
     },
-
+    // 2. Tests ohne Login (z.B. Redirect Check)
     {
-      name: "firefox",
-      use: { ...devices["Desktop Firefox"] },
+      name: "logged-out",
+      testMatch: /.*\.logged-out\.spec\.ts/,
+      use: {
+        ...devices["Desktop Chrome"],
+        storageState: { cookies: [], origins: [] },
+      },
     },
-
+    // 3. Haupt-Tests (Eingeloggt)
     {
-      name: "webkit",
-      use: { ...devices["Desktop Safari"] },
+      name: "chromium",
+      // Wir ignorieren Setups UND die Logged-out Specs
+      testIgnore: [/.*\.setup\.ts/, /.*\.logged-out\.spec\.ts/],
+      use: {
+        ...devices["Desktop Chrome"],
+        storageState: "playwright/.auth/user.json",
+      },
+      dependencies: ["setup"],
     },
   ],
 
-  /* Run your local dev server before starting the tests */
-  webServer: {
-    command: "npm run dev",
-    url: BASE_URL,
-    reuseExistingServer: !process.env.CI,
-  },
+  /* Wir starten immer beide Server */
+  webServer: [
+    {
+      name: "mock-api",
+      command: `npx json-server tests/mocks/db.json --port 4000`,
+      port: 4000,
+      reuseExistingServer: !process.env.CI,
+    },
+    {
+      name: "next-app",
+      command: `MUMBLE_API_URL=http://127.0.0.1:4000 NEXT_PUBLIC_MUMBLE_API_URL=http://127.0.0.1:4000 npm run dev`,
+      url: "http://localhost:3000",
+      reuseExistingServer: !process.env.CI,
+    },
+  ],
 });
