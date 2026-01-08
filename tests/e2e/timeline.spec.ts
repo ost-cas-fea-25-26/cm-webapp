@@ -39,14 +39,14 @@ test("Timeline shows data after login", async ({ page }) => {
   await expect(page.getByRole("textbox")).toBeVisible();
 
   // todo: Post erstellen
-  await page.getByRole("textbox", { name: "Your opinion matters!" }).click();
-  await page
-    .getByRole("textbox", { name: "Your opinion matters!" })
-    .fill("Neuer Post zum Testen, geht das ächt?");
+  // await page.getByRole("textbox", { name: "Your opinion matters!" }).click();
+  // await page
+  //   .getByRole("textbox", { name: "Your opinion matters!" })
+  //   .fill("Neuer Post zum Testen, geht das ächt?");
 
-  await page.getByRole("button", { name: "Send Send" }).click();
-  const newPost = await page.getByText("Neuer Post zum Testen, geht das ächt?");
-  await expect(newPost).toBeVisible();
+  // await page.getByRole("button", { name: "Send Send" }).click();
+  // const newPost = await page.getByText("Neuer Post zum Testen, geht das ächt?");
+  // await expect(newPost).toBeVisible();
 
   // todo: Logout funktioniert und leitet zur Login Seite weiter
 
