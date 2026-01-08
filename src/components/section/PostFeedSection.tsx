@@ -1,7 +1,7 @@
 "use client";
 
 import { getPostsAction } from "@/actions/post.action";
-import { Repost, RoundButton } from "@krrli/cm-designsystem";
+import { ArrowDown, RoundButton } from "@krrli/cm-designsystem";
 import { useEffect, useState } from "react";
 import { tv } from "tailwind-variants";
 import { Post, PostQueryParams } from "../../lib/api/posts/post.types";
@@ -11,7 +11,7 @@ import MumblePost from "../base/MumblePost";
 const postFeedSectionStyles = tv({
   slots: {
     base: ["flex", "flex-col", "gap-4"],
-    more: ["flex", "justify-center", "pb-4"],
+    more: ["flex", "justify-center", "pb-4", "animate-bounce"],
   },
 });
 
@@ -58,7 +58,7 @@ const PostFeedSection = (props: PostFeedProps) => {
         <div className={more()}>
           <RoundButton
             ariaLabel="Load more posts"
-            icon={Repost}
+            icon={ArrowDown}
             intent="primary"
             onClick={loadMorePosts}
           />

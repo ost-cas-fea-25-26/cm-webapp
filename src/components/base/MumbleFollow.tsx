@@ -4,6 +4,8 @@ import { followUser } from "@/actions/user.action";
 import { Button, Eye, Label } from "@krrli/cm-designsystem";
 import { useRouter } from "next/navigation";
 import { tv } from "tailwind-variants";
+import MumbleLoading from "./MumbleLoading";
+import { useState } from "react";
 
 const mumbleFollowStyles = tv({
   slots: {
@@ -20,24 +22,30 @@ export type MumbleFollowProps = {
 const MumbleFollow = (props: MumbleFollowProps) => {
   const { base, button } = mumbleFollowStyles();
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   return (
     <div className={base()}>
       <Label as="span" size="md">
         You currently do not follow {props.displayName}
       </Label>
-      <Button
-        size="md"
-        intent="primary"
-        icon={Eye}
-        className={button()}
-        onClick={async () => {
-          await followUser(props.userId);
-          router.refresh();
-        }}
-      >
-        Follow
-      </Button>
+      {loading ? (
+        <MumbleLoading />
+      ) : (
+        <Button
+          size="md"
+          intent="primary"
+          icon={Eye}
+          className={button()}
+          onClick={async () => {
+            setLoading(true);
+            await followUser(props.userId);
+            router.refresh();
+          }}
+        >
+          Follow
+        </Button>
+      )}
     </div>
   );
 };
