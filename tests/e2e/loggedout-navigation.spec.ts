@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { resetCookieConfig } from "../test.utils";
+import { resetCookieConfig } from "../utils/test.utils";
 
 test.describe("Navigation", () => {
   test("should visit home and click login", async ({ browser }) => {
