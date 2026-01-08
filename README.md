@@ -1,4 +1,3 @@
-Here is the cleaned-up, consolidated version of your README. I’ve merged the duplicate "High Priority Tasks" and the "Known Limitations" into a single, cohesive section.
 
 ---
 
