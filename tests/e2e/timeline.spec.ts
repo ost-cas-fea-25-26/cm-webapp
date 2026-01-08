@@ -38,6 +38,10 @@ test("Timeline shows data after login", async ({ page }) => {
   // check if post creator is visible (todo: improve by checking for test id)
   await expect(page.getByRole("textbox")).toBeVisible();
 
+  // Prüfen, ob der Text aus unserer db.json erscheint
+  const mockPost = page.getByText("Hoi vom Standalone Mock Server!");
+  await expect(mockPost).toBeVisible();
+
   // todo: Post erstellen
   // await page.getByRole("textbox", { name: "Your opinion matters!" }).click();
   // await page
