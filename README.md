@@ -31,19 +31,19 @@ npm install
 
 # Run development server
 npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) to view the application.
-
----
-
-## Development
-
-### API Schema Generation
-
-Generate TypeScript types from the OpenAPI schema:
-
 ```bash
+# Unit & Component Tests
+npm run test
+
+# E2E Tests (Mock-API, headless)
+npx playwright test
+
+# E2E Tests (echte API, headless)
+E2E_ENV=prod npx playwright test
+
+# E2E Tests (interactive UI, Mock-API)
+npx playwright test --ui
+```
 npx openapi-typescript https://mumble-api-prod-714602723919.europe-west6.run.app/swagger/v1/swagger.json -o ./src/lib/api/api.d.ts
 ```
 
@@ -125,10 +125,13 @@ Multi-layered testing approach with clear priorities and guidelines.
 # Unit & Component Tests
 npm run test
 
-# E2E Tests (headless)
+# E2E Tests (Mock-API, headless)
 npx playwright test
 
-# E2E Tests (interactive UI)
+# E2E Tests (echte API, headless)
+E2E_ENV=prod npx playwright test
+
+# E2E Tests (interactive UI, Mock-API)
 npx playwright test --ui
 ```
 

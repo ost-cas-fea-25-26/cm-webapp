@@ -25,6 +25,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  if (typeof window !== "undefined") {
+    fetch("http://127.0.0.1:4000/posts")
+      .then((res) => res.json())
+      .then((data) => console.log("🚨 HOLZHAMMER-TEST ERGEBNIS:", data))
+      .catch((err) => console.error("🚨 HOLZHAMMER-TEST FEHLGESCHLAGEN:", err));
+  }
+
   const { base } = rootLayoutStyles();
 
   return (

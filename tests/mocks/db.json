@@ -1,18 +1,25 @@
 {
+  "api": {
+    "auth": {
+      "get-session": {
+        "user": {
+          "id": "me",
+          "username": "E2E-Tester",
+          "email": "test@example.com"
+        },
+        "session": {
+          "id": "fake-session-123",
+          "userId": "me",
+          "expiresAt": "2030-01-01T00:00:00.000Z"
+        }
+      }
+    }
+  },
   "posts": [
     {
       "id": "1",
-      "text": "Hoi vom Standalone Mock Server!",
-      "creator": {
-        "id": "user-1",
-        "username": "E2ETester",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/1"
-      },
-      "mediaUrl": null,
-      "likes": 0,
-      "replies": 0,
-      "createdAt": "2026-01-08T12:00:00.000Z"
+      "text": "Dieser Post MUSS erscheinen!",
+      "creator": { "id": "me", "username": "E2E-Tester" }
     }
-  ],
-  "users": []
+  ]
 }

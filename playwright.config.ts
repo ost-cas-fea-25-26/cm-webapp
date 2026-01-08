@@ -59,17 +59,15 @@ export default defineConfig({
   /* Wir starten immer beide Server */
   webServer: [
     {
-      name: "next-app",
-      // Wir erzwingen die Mock-URL für Server und Client
-      command: `MUMBLE_API_URL=${MOCK_API_URL} NEXT_PUBLIC_MUMBLE_API_URL=${MOCK_API_URL} npm run dev`,
-      url: BASE_URL,
+      name: "mock-api",
+      command: `npx json-server tests/mocks/db.json --port 4000`,
+      port: 4000,
       reuseExistingServer: !process.env.CI,
-      stdout: "pipe",
     },
     {
-      name: "mock-api",
-      command: `npx json-server --watch tests/mocks/db.json --port 4000`,
-      port: 4000,
+      name: "next-app",
+      command: `MUMBLE_API_URL=http://127.0.0.1:4000 NEXT_PUBLIC_MUMBLE_API_URL=http://127.0.0.1:4000 npm run dev`,
+      url: "http://localhost:3000",
       reuseExistingServer: !process.env.CI,
     },
   ],
