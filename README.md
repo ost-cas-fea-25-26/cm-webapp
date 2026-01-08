@@ -124,6 +124,7 @@ Currently, the app "blindly" trusts the API. For production, we would implement 
 * **Reliable List Rendering:** Replace `key={index}` with `key={post.id}` in all maps to prevent rendering glitches.
 * **UX & Error States:** - Add "Try-Catch" blocks to all data-fetching to show friendly error messages.
 * Improve the "Load More" button to hide itself when the API reports no further data.
+* Improve handling of loading states e.g Follow/Unfollow, Avatar Image update, ...
 
 
 * **Testability (Decoupling):** Split components like `ProfileSection` into a **Data Helper** (Server Logic) and a **UI Component** (Synchronous/Testable).
