@@ -4,15 +4,12 @@ A modern social media platform built with Next.js 16, featuring a robust testing
 
 ## Table of Contents
 
-- [Getting Started](#getting-started)
-- [Development](#development)
-  - [API Schema Generation](#api-schema-generation)
-  - [Code Quality](#code-quality)
-- [Testing Strategy](#testing-strategy)
-  - [Test Types](#test-types)
-  - [Testing Philosophy](#testing-philosophy)
-  - [Running Tests](#running-tests)
-- [Resources](#resources)
+- [Getting Started](https://www.google.com/search?q=%23getting-started)
+- [Development](https://www.google.com/search?q=%23development)
+- [Testing Strategy](https://www.google.com/search?q=%23testing-strategy)
+- [Auth](https://www.google.com/search?q=%23auth)
+- [Future Recommendations & Technical Debt](https://www.google.com/search?q=%23future-recommendations--technical-debt)
+- [Resources](https://www.google.com/search?q=%23resources)
 
 ---
 
@@ -31,6 +28,7 @@ npm install
 
 # Run development server
 npm run dev
+
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to view the application.
@@ -45,15 +43,15 @@ Generate TypeScript types from the OpenAPI schema:
 
 ```bash
 npx openapi-typescript https://mumble-api-prod-714602723919.europe-west6.run.app/swagger/v1/swagger.json -o ./src/lib/api/api.d.ts
+
 ```
 
 ### Code Quality
 
 This project enforces consistent code style using EditorConfig:
 
-- Install the [EditorConfig extension](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) for VS Code
-- `.editorconfig` handles indentation, line endings, and trailing whitespace
-- `.vscode/settings.json` provides additional VS Code-specific settings
+- Install the **EditorConfig extension** for VS Code.
+- `.editorconfig` handles indentation, line endings, and whitespace.
 
 **Key Commands:**
 
@@ -61,110 +59,83 @@ This project enforces consistent code style using EditorConfig:
 npm run lint          # Run ESLint
 npm run prettier      # Format code
 npm run typecheck     # Check TypeScript
-npm run build         # Build for production
-npm run preflight     # Run all checks
-```
+npm run preflight     # Run all checks (Lint, Typecheck, Test)
 
----
+```
 
 ---
 
 ## Testing Strategy
 
-Multi-layered testing approach with clear priorities and guidelines.
-
 ### Test Types
 
-| Type          | Framework    | Location     | Files        | Priority  |
-| ------------- | ------------ | ------------ | ------------ | --------- |
-| **Unit**      | Vitest + RTL | Colocated    | `*.test.ts`  | 🔴 High   |
-| **Component** | Vitest + RTL | Colocated    | `*.test.tsx` | 🟡 Medium |
-| **E2E**       | Playwright   | `tests/e2e/` | `*.spec.ts`  | 🔴 High   |
-
-#### Unit Tests (`*.test.ts`)
-
-- **Purpose:** Services, Utils, API Client, Validators, Server-only Logic
-- **Why:** Isolated layers, easy to test, foundation for everything else
-
-#### Component Tests (`*.test.tsx`)
-
-- **Purpose:** React Client Components in isolation
-- **Why:** Simple to test, good coverage for interactive UI
-- **⚠️ Note:** Async Server Components cannot be tested with Vitest/RTL
-
-#### E2E Tests (`*.spec.ts`)
-
-- **Purpose:** Complete user flows and critical paths
-- **Why:** Validates real user experience end-to-end
+| Type          | Framework    | Location     | Priority  |
+| ------------- | ------------ | ------------ | --------- |
+| **Unit**      | Vitest + RTL | Colocated    | 🔴 High   |
+| **Component** | Vitest + RTL | Colocated    | 🟡 Medium |
+| **E2E**       | Playwright   | `tests/e2e/` | 🔴 High   |
 
 ### Testing Philosophy
 
-**Priority Order:**
+1. **API Layer** → Foundation
+2. **Server Actions** → Business logic
+3. **Interactive Components** → UI features
+4. **E2E Happy Paths** → User journeys
 
-1. API Layer → Foundation
-2. Server Actions → Business logic
-3. Interactive Components → UI features
-4. E2E Happy Paths → User journeys
+**Note:** Async Server Components cannot be tested with Vitest/RTL; we prioritize E2E tests for these sections.
 
-**When to Test:**
-
-- 🔄 Before refactoring (test-first approach)
-- 👁️ User-facing features (write E2E tests)
-- 🐛 Bug fixes (failing test first, then fix)
-
-**What NOT to Test:**
-
-- Framework code (Next.js, React)
-- External libraries
-- Auto-generated types
-- Simple pass-through components
-
-### Running Tests
-
-```bash
-# Unit & Component Tests
-npm run test
-
-# E2E Tests (headless)
-npx playwright test
-
-# E2E Tests (interactive UI)
-npx playwright test --ui
-```
+---
 
 ## Auth
 
-This project uses **better-auth** in combination with a **PostgreSQL** database.
+This project uses **better-auth** with a **PostgreSQL** database.
 
 ### Setup
 
-Authentication requires a database to function correctly. To start the database, run the following command from the root of the project:
+1. Start the database: `docker-compose up -d`
+2. Add to `.env`: `MUMBLE_DATABASE_URL="postgres://admin:MyPassword123@localhost:5432/auth"`
+3. Run migrations: `npx @better-auth/cli@latest migrate --config src/lib/auth/auth.config.ts`
 
-```bash
-docker-compose up -d
-```
+---
 
-This command initializes and runs the PostgreSQL database in detached mode.
+## Future Recommendations & Technical Debt
 
-Next, add the following database connection string to your `.env` file:
+This section documents the technical gaps and the improvements we would implement for a production-ready release.
 
-```bash
-MUMBLE_DATABASE_URL="postgres://admin:MyPassword123@localhost:5432/auth"
-```
+### 🛠 Architectural Recommendation: Zod Validation Layer
 
-After configuring the environment variable, create the required database schema by running:
+Currently, the app "blindly" trusts the API. For production, we would implement a **Domain Validation Layer** using **Zod**.
 
-```bash
-npx @better-auth/cli@latest migrate --config src/lib/auth/auth.config.ts
-```
+- **Crash Prevention:** Catch unexpected API data at the "entrance" before it breaks UI components.
+- **Data Cleanup:** Automatically convert ISO-strings into real JavaScript `Date` objects.
+- **Independence:** If the API structure changes, we only update the Zod Schema in one file instead of fixing components across the project.
 
-Once the migration completes successfully, authentication should be fully operational.
+### 🔴 High Priority "Missing" Features
+
+- **Robust API Client:** Refactor Server Actions, introduce Error Handling and remove the Initialization when de module is loaded.
+- **User Profile Sync:** - Update settings actions to return the new user data for instant UI updates.
+- Add missing fields like **First Name** and **Last Name** to the settings page.
+
+### 🟡 Medium Priority Improvements
+
+- **Reliable List Rendering:** Replace `key={index}` with `key={post.id}` in all maps to prevent rendering glitches.
+- **UX & Error States:** - Add "Try-Catch" blocks to all data-fetching to show friendly error messages.
+- Improve the "Load More" button to hide itself when the API reports no further data.
+- Improve handling of loading states e.g Follow/Unfollow, Avatar Image update, ...
+
+- **Testability (Decoupling):** Split components like `ProfileSection` into a **Data Helper** (Server Logic) and a **UI Component** (Synchronous/Testable).
+
+### ⚪ Known Constraints (External Factors)
+
+- **Media Optimization:** Lighthouse scores are limited because the external API provides fixed image sizes. In production, we would use an Image Proxy/CDN.
+- **Framework Agnostic Design System:** We chose a framework-agnostic DS (`@krrli/cm-designsystem`). Consequently, we cannot use Next.js-specific optimizations like `next/image` or `next/link` inside DS components.
+- **Upstream UI Issues:** A known CSS conflict in the Design System hides some buttons on mobile. We have applied a temporary CSS fix in `globals.css`.
 
 ---
 
 ## Resources
 
 - [Next.js Documentation](https://nextjs.org/docs)
-- [Playwright Documentation](https://playwright.dev)
-- [Vitest Documentation](https://vitest.dev)
-- [Testing Library](https://testing-library.com/react)
+- [Better-Auth](https://www.google.com/search?q=https://www.better-auth.com/)
+- [Vitest](https://vitest.dev)
+- [Playwright](https://playwright.dev)
