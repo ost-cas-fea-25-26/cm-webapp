@@ -3,6 +3,7 @@ import { register } from "../instrumentation";
 import { tv } from "tailwind-variants";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import { MSWProvider } from "../../tests/msw/msw-provider";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -34,7 +35,9 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={poppins.variable}>
-      <body className={base()}>{children}</body>
+      <body className={base()}>
+        <MSWProvider>{children}</MSWProvider>
+      </body>
     </html>
   );
 }
