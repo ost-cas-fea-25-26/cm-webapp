@@ -22,7 +22,7 @@
     "@krrli/cm-designsystem": "1.37.7",
     "better-auth": "1.4.18",
     "next": "16.1.6",
-    "openapi-fetch": "0.15.0",
+    "openapi-fetch": "0.16.0",
     "pg": "^8.16.3",
     "react": "19.2.3",
     "react-dom": "19.2.3",
