@@ -1,0 +1,51 @@
+import { getPostByIdAction } from "@/actions/post.action";
+import { getUserAction } from "@/actions/user.action";
+import PostReplies from "@/components/section/PostRepliesSection";
+import MumblePostResponseCreator from "@/components/base/MumblePostResponseCreator";
+import { notFound } from "next/navigation";
+import { tv } from "tailwind-variants";
+import MumblePost from "@/components/base/MumblePost";
+
+const postDetailStyles = tv({
+  base: [
+    "mx-auto",
+    "w-full",
+    "max-w-5xl",
+    "my-4",
+    "sm:my-12",
+    "bg-white",
+    "flex",
+    "flex-col",
+    "gap-1",
+    "rounded-lg",
+  ],
+});
+
+type PostDetailPageProps = {
+  params: Promise<{ id: string }>;
+};
+
+export default async function PostDetailPage({ params }: PostDetailPageProps) {
+  const { id } = await params;
+  const post = await getPostByIdAction(id);
+  const currentUser = await getUserAction();
+  if (!post) {
+    notFound();
+  }
+
+  return (
+    <div className={postDetailStyles()}>
+      <MumblePost post={post} />
+
+      {currentUser && post.id && (
+        <MumblePostResponseCreator
+          displayName={currentUser?.displayName ?? "Anonymous"}
+          userName={currentUser?.username ?? "Anonymous"}
+          avatarSrc={currentUser?.avatarUrl ?? undefined}
+          postId={post.id}
+        />
+      )}
+      {post.id && <PostReplies postId={post.id} />}
+    </div>
+  );
+}
