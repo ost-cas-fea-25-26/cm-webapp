@@ -52,7 +52,7 @@
     "jsdom": "^27.4.0",
     "knip": "5.88.1",
     "openapi-typescript": "^7.10.1",
-    "postcss": "8.5.8",
+    "postcss": "8.5.9",
     "prettier": "3.8.1",
     "prettier-plugin-tailwindcss": "0.7.2",
     "tailwind-merge": "^3.4.0",
