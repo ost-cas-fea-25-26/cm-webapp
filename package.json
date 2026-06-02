@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@krrli/cm-designsystem": "1.37.7",
-    "better-auth": "1.6.13",
+    "better-auth": "1.6.14",
     "next": "16.2.7",
     "openapi-fetch": "0.17.0",
     "pg": "^8.16.3",
