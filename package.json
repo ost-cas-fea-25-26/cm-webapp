@@ -57,7 +57,7 @@
     "prettier-plugin-tailwindcss": "0.8.0",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "4",
-    "typescript": "5.9.3",
+    "typescript": "6.0.3",
     "vite-tsconfig-paths": "^6.0.3",
     "vitest": "^4.0.16"
   }
