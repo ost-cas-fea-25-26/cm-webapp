@@ -19,7 +19,7 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@krrli/cm-designsystem": "1.37.7",
+    "@krrli/cm-designsystem": "1.37.8",
     "better-auth": "1.6.25",
     "next": "16.2.12",
     "openapi-fetch": "0.17.0",
